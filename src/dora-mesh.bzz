@@ -5,44 +5,6 @@ include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/buzz_utils/obstacle_avoidance.bzz"
 
 
-var risk_belief
-
-
-function log_metrics(){
-  if (debug.msgqueue != nil and failed != 1) {
-    log_datasize(debug.msgqueue.total, current_step)
-  }
-  if (id == 0) {
-    risk_belief.foreach(function(key, data, robot){
-      log_datum(key, data, current_step)
-    })
-  }
-}
-
-function key_to_vec2(key) {
-  split_key = string.split(get_current_key(), "_")
-  x = string.toint(split_key[0])
-  y = string.toint(split_key[1])
-
-  return math.vec2.new(x, y)
-}
-
-function init_stigmergy() {
-  risk_belief = stigmergy.create(1)
-  risk_belief.onconflict(function(k, l, r){
-    return l
-    })
-}
-
-function update_risk() {
-  new_value = get_radiation_intensity() + math.rng.gaussian(0,0.1)
-  current_key = get_current_key()
-  if (risk_belief.get(current_key) != nil){
-    new_value = 0.5 * new_value + 0.5 * risk_belief.get(current_key)
-  }
-  risk_belief.put(current_key, new_value)
-}
-
 function move() {
   # Test different topologies / formations
 }
