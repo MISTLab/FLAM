@@ -2,8 +2,23 @@ include "risk.bzz"
 include "routing.bzz"
 include "storage.bzz"
 
+fitness = -1.0
+max_neighbor_fitness = -1.0
+
+function init_fitness() {
+    neighbors.listen("key", function(vid, value, neighbor_id) {
+            max_neighbor_fitness = math.max(value, max_neighbor_fitness)
+    })
+}
 
 function get_fitness() {
     return get_available_storage() / (get_risk() * get_hop_count_to_base())
 }
 
+function is_fit() {
+    return fitness > max_neighbor_fitness
+}
+
+function broadcast_fitness() {
+    neighbors.broadcast("fitness", get_fitness())
+}
