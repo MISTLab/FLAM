@@ -16,7 +16,7 @@ var query_types = {
 
 function init_queries() {
     foreach(query_types, function(query_type, handler) {
-        neighbors.listen(query_type, function(vid, value, neighbor_id) {
+        neighbors.listen(query_type, function(vid, query, neighbor_id) {
             handler(query)
         })
     })
