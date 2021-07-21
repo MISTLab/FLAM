@@ -12,7 +12,7 @@ function init_hop_count() {
 
 # Periodically use to forward most recent lowest hop count
 function broadcast_lowest_hop_count() {
-    neighbors.broadcast("hop", get_min_hop_count())
+    neighbors.broadcast("hop", get_min_hop_count() + 1)
 }
 
 function get_min_hop_id() {
