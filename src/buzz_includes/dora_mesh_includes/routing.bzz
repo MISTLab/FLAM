@@ -1,2 +1,24 @@
-function get_hop_count_to_base {
+include "buzz_includes/buzz_utils/table.bzz"
+
+
+var hop_counts = {}
+
+
+function init_hop_count() {
+    neighbors.listen("hop", function(vid, value, neighbor_id) {
+        hop_counts[neighbor_id] = value
+    })
+}
+
+# Periodically use to forward most recent lowest hop count
+function broadcast_lowest_hop_count() {
+    neighbors.broadcast("hop", get_min_hop_count())
+}
+
+function get_min_hop_id() {
+    return table.minkey(hop_counts)
+}
+
+function get_min_hop_count() {
+    return hop_counts[get_min_hop_id()]
 }
