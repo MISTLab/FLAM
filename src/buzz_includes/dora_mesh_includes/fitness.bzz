@@ -6,8 +6,8 @@ fitness = -1.0
 max_neighbor_fitness = -1.0
 
 function init_fitness() {
-    neighbors.listen("key", function(vid, value, neighbor_id) {
-            max_neighbor_fitness = math.max(value, max_neighbor_fitness)
+    neighbors.listen("fitness", function(vid, value, neighbor_id) {
+        max_neighbor_fitness = math.max(value, max_neighbor_fitness)
     })
 }
 
