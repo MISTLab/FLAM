@@ -2,45 +2,26 @@ include "buzz_includes/debug.bzz"
 include "buzz_includes/buzz_utils/vec2.bzz"
 include "buzz_includes/buzz_utils/string.bzz"
 include "buzz_includes/dora_mesh_includes/constants.bzz"
-include "buzz_includes/buzz_utils/obstacle_avoidance.bzz"
-
 
 function move() {
-  # Test different topologies / formations
-}
-
-function failure() {
-  rand = math.rng.uniform(0.2, 1.0)
-  intensity = get_radiation_intensity()
-  if (current_step > NO_FAIL_DELAY and rand < intensity) {
-    log("Robot ", id, ": Failure with ", intensity," > ", rand)
-    return 1
-  }
-  return 0
+  #Test different topologies / formations
+  set_wheels(5.0,5.0)
 }
 
 # Executed at init time
 function init() {
-  # Show trajectory for debugging
-  show_colored_trajectory(NUMBER_OF_ROBOTS)
-
   set_leds(0,255,0)
-  init_stigmergies()
-  failed = 0
+  current_step = 0
   math.rng.setseed(id)
 }
 
 # Executed every time step
 function step() {
-  if (current_step < EXPERIMENT_LENGHT) {
-    if (current_step % NEW_POSE_DELAY and failed == 0) {
-      move()
-      failed = failure()
-    }
-    log_metrics()
+  if (current_step < 300) {
+    move()
   }
 
-  if (current_step > EXPERIMENT_LENGHT or failed != 0){
+  if (current_step > 300){
     set_wheels(0.0,0.0)
     set_leds(255,0,0)
   }
