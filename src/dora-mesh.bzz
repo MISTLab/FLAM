@@ -3,6 +3,7 @@ include "buzz_includes/buzz_utils/vec2.bzz"
 include "buzz_includes/buzz_utils/string.bzz"
 include "buzz_includes/buzz_utils/table.bzz"
 include "buzz_includes/dora_mesh_includes/constants.bzz"
+include "buzz_includes/dora_mesh_includes/storage.bzz"
 
 function move() {
   #Test different topologies / formations
@@ -11,15 +12,26 @@ function move() {
 
 # Executed at init time
 function init() {
-  set_leds(0,255,0)
   current_step = 0
+  set_leds(0,255,0)
   math.rng.setseed(id)
+
+  #Available storage stigmergy
+  init_storage_stig()
+  init_available_storage()
 }
 
 # Executed every time step
 function step() {
+
   if (current_step < EXPERIMENT_LENGHT) {
     move()
+
+    if (id == 0){
+      update_available_storage("store")
+      log(get_available_storage())
+    }
+    
   }
 
   if (current_step > EXPERIMENT_LENGHT){
