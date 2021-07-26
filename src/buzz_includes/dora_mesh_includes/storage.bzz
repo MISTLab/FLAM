@@ -1,2 +1,23 @@
-function get_available_storage {
+
+storage_capacity = 10
+file_size = 1
+
+function init_storage_stig() {
+    storage_stig = stigmergy.create(1)
+}
+
+function init_available_storage(){
+    stig_key = id
+    storage_stig.put(stig_key, storage_capacity)
+}
+
+function update_available_storage(){
+    stig_key = id
+    initial_storage = storage_stig.get(stig_key)
+    updated_storage = initial_storage - file_size
+    storage_stig.put(stig_key, updated_storage)
+}
+
+function get_available_storage(robot_id) {
+    return storage_stig.get(robot_id)
 }
