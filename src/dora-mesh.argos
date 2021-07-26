@@ -30,7 +30,7 @@
                              show_rays="false" noise_std_dev="0" />
         <positioning         implementation="default" />
       </sensors>
-      <params bytecode_file="dora.bo" debug_file="dora.bdb">
+      <params bytecode_file="dora-mesh.bo" debug_file="dora-mesh.bdb">
               <wheel_turning hard_turn_angle_threshold="90"
                        soft_turn_angle_threshold="70"
                        no_turn_angle_threshold="0"
@@ -69,7 +69,7 @@
     <distribute>
       <position method="uniform" min="-6,-6,0" max="6,6,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="15" max_trials="100">
+      <entity quantity="5" max_trials="100">
         <kheperaiv id="sp" rab_range="1000000" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
