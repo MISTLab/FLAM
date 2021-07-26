@@ -1,1 +1,17 @@
 NO_FAIL_DELAY = 20
+
+# Search space parameters
+SEARCH_SPACE = { .minx = -8.0, .miny = -8.0, .maxx = 8.0, .maxy = 8.0}
+
+# Searching drones parameters
+NUMBER_OF_ROBOTS = 5
+NEW_POSE_DELAY = 10
+SEARCH_SPEED = 80.0
+DELTA_REACHED_POS = 1.0
+
+# Targets parameters
+TARGET_SPEED_MAX = 20.0
+TARGET_SPEED_STDEV = 0.5
+
+# Experiment parameters
+EXPERIMENT_LENGHT = 300
