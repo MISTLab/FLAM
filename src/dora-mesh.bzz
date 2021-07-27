@@ -16,8 +16,7 @@ function init() {
   set_leds(0,255,0)
   math.rng.setseed(id)
 
-  #Available storage stigmergy
-  init_storage_stig()
+  #Available storage
   init_available_storage()
 }
 
