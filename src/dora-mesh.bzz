@@ -7,11 +7,6 @@ include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"
 include "buzz_includes/dora_mesh_includes/move.bzz"
 
-function move() {
-  #Test different topologies / formations
-  set_wheels(5.0,5.0)
-}
-
 # Executed at init time
 function init() {
   current_step = 0
