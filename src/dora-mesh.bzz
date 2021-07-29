@@ -4,6 +4,7 @@ include "buzz_includes/buzz_utils/string.bzz"
 include "buzz_includes/buzz_utils/table.bzz"
 include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/dora_mesh_includes/storage.bzz"
+include "buzz_includes/dora_mesh_includes/risk.bzz"
 
 function move() {
   #Test different topologies / formations
@@ -18,6 +19,9 @@ function init() {
 
   #Available storage
   init_available_storage()
+
+  #Risk stigmergy
+  init_stigmergy()
 }
 
 # Executed every time step
@@ -25,10 +29,12 @@ function step() {
 
   if (current_step < EXPERIMENT_LENGHT) {
     move()
+    update_risk()
 
     if (id == 0){
       update_available_storage("store")
       log(get_available_storage())
+      log(get_risk())
     }
     
   }
