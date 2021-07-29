@@ -1,6 +1,6 @@
-include "risk.bzz"
-include "routing.bzz"
-include "storage.bzz"
+#include "risk.bzz"
+#include "routing.bzz"
+#include "storage.bzz"
 
 
 fitness = -1.0
@@ -14,7 +14,8 @@ function init_fitness() {
 }
 
 function get_fitness() {
-    return get_available_storage() / (get_risk() * get_min_hop_count())
+    #return get_available_storage() / (get_risk() * get_min_hop_count())
+    return get_available_storage() / (get_risk() * get_dist())
 }
 
 function is_fit() {

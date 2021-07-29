@@ -7,6 +7,7 @@ include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"
 include "buzz_includes/dora_mesh_includes/move.bzz"
 include "buzz_includes/dora_mesh_includes/gradient.bzz"
+include "buzz_includes/dora_mesh_includes/fitness.bzz"
 
 function init() {
   current_step = 0
@@ -30,15 +31,8 @@ function step() {
     hexagon()
     update_risk()
     gradient_step()
-
-    if (id == 1){
-      #update_available_storage(-FILE_SIZE)
-      #log(get_available_storage())
-      #log(get_risk())
-    }
     
-  log(id, ": ", get_dist())
-
+  log(id, ": ", get_fitness())
   }
 
   #Stop robots when experiment is over
