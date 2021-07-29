@@ -5,6 +5,7 @@ include "buzz_includes/buzz_utils/table.bzz"
 include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"
+include "buzz_includes/dora_mesh_includes/move.bzz"
 
 function move() {
   #Test different topologies / formations
@@ -28,7 +29,7 @@ function init() {
 function step() {
 
   if (current_step < EXPERIMENT_LENGHT) {
-    move()
+    hexagon()
     update_risk()
 
     if (id == 0){
