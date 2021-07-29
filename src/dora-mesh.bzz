@@ -6,8 +6,8 @@ include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"
 include "buzz_includes/dora_mesh_includes/move.bzz"
+include "buzz_includes/dora_mesh_includes/gradient.bzz"
 
-# Executed at init time
 function init() {
   current_step = 0
   set_leds(0,255,0)
@@ -18,23 +18,30 @@ function init() {
 
   #Risk stigmergy
   init_stigmergy()
+
+  #Gradient
+  gradient_init()
 }
 
-# Executed every time step
 function step() {
 
+  # Executed every time step
   if (current_step < EXPERIMENT_LENGHT) {
     hexagon()
     update_risk()
+    gradient_step()
 
-    if (id == 0){
-      update_available_storage(-FILE_SIZE)
-      log(get_available_storage())
-      log(get_risk())
+    if (id == 1){
+      #update_available_storage(-FILE_SIZE)
+      #log(get_available_storage())
+      #log(get_risk())
     }
     
+  log(id, ": ", get_dist())
+
   }
 
+  #Stop robots when experiment is over
   if (current_step > EXPERIMENT_LENGHT){
     set_wheels(0.0,0.0)
     set_leds(255,0,0)
@@ -46,6 +53,5 @@ function step() {
 function reset() {
 }
  
-# Execute at exit
 function destroy() {
 }
