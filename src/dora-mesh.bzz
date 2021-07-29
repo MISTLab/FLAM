@@ -32,7 +32,7 @@ function step() {
     update_risk()
 
     if (id == 0){
-      update_available_storage("store")
+      update_available_storage(-FILE_SIZE)
       log(get_available_storage())
       log(get_risk())
     }

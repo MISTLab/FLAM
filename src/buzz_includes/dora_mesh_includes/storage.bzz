@@ -4,7 +4,17 @@ function init_available_storage(){
 }
 
 function update_available_storage(size){
-    storage = storage + size
+    updated_storage = storage + size
+
+    if (updated_storage > 0 and updated_storage < STORAGE_CAPACITY){
+        storage = updated_storage
+    }
+    else if (updated_storage > STORAGE_CAPACITY){
+        storage = STORAGE_CAPACITY
+    }
+    else {
+        storage = 0
+    }
 }
 
 function get_available_storage() {
