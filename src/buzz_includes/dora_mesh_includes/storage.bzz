@@ -1,18 +1,10 @@
 
-STORAGE_CAPACITY = 10
-FILE_SIZE = 1
-
 function init_available_storage(){
     storage = STORAGE_CAPACITY
 }
 
-function update_available_storage(type){
-    if (type == "store"){
-        storage = storage - FILE_SIZE
-    }
-    if (type == "erase"){
-        storage = storage + FILE_SIZE
-    } 
+function update_available_storage(size){
+    storage = storage + size
 }
 
 function get_available_storage() {

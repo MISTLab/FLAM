@@ -15,3 +15,7 @@ TARGET_SPEED_STDEV = 0.5
 
 # Experiment parameters
 EXPERIMENT_LENGHT = 300
+
+#Storage parameters
+FILE_SIZE = 1
+STORAGE_CAPACITY = 10
