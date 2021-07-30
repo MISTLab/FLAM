@@ -43,6 +43,7 @@ target_link_libraries(argos3plugin_buzz_simulator_drone
   argos3plugin_simulator_genericrobot
   argos3plugin_simulator_spiri
   argos3plugin_simulator_buzz
+  argos3plugin_simulator_kheperaiv
   buzz
   jsoncpp
   )
