@@ -4,7 +4,7 @@
   <!-- ************************* -->
   <!-- * General configuration * -->
   <!-- ************************* -->
-<framework>
+  <framework>
     <system threads="10" />
     <experiment length="300"
                 ticks_per_second="5" 
@@ -47,7 +47,7 @@
     <radiation radius="0.5"/>
   </loop_functions>
 
-<!-- *********************** -->
+  <!-- *********************** -->
   <!-- * Arena configuration * -->
   <!-- *********************** -->
   <arena size="8, 8, 2" center="0,0,1">
@@ -93,7 +93,7 @@
     <led id="leds" />
   </media>
 
-   <!-- ****************** -->
+  <!-- ****************** -->
   <!-- * Visualization * -->
   <!-- ****************** -->
   <visualization>

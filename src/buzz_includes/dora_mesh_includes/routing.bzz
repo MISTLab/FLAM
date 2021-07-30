@@ -1,4 +1,5 @@
 include "buzz_includes/buzz_utils/table.bzz"
+include "buzz_includes/dora_mesh_includes/constants.bzz"
 
 
 var hop_counts = {}
@@ -12,13 +13,16 @@ function init_hop_count() {
 
 # Periodically use to forward most recent lowest hop count
 function broadcast_lowest_hop_count() {
+    log(get_min_hop_count())
     neighbors.broadcast("hop", get_min_hop_count() + 1)
 }
 
-function get_min_hop_id() {
-    return table.minkey(hop_counts)
-}
-
 function get_min_hop_count() {
-    return hop_counts[get_min_hop_id()]
+    if (id == 0) {
+        return 0  # Base Station has 0 hop count to itself
+    } else if (size(hop_counts) > 0) {
+        return table.min(hop_counts)
+    } else {
+        return INFINITY
+    }
 }

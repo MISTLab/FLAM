@@ -8,11 +8,9 @@ function update_available_storage(size){
 
     if (updated_storage > 0 and updated_storage < STORAGE_CAPACITY){
         storage = updated_storage
-    }
-    else if (updated_storage > STORAGE_CAPACITY){
+    } else if (updated_storage > STORAGE_CAPACITY){
         storage = STORAGE_CAPACITY
-    }
-    else {
+    } else {
         storage = 0
     }
 }

@@ -6,42 +6,40 @@ include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"
 include "buzz_includes/dora_mesh_includes/move.bzz"
-include "buzz_includes/dora_mesh_includes/gradient.bzz"
 include "buzz_includes/dora_mesh_includes/fitness.bzz"
+include "buzz_includes/dora_mesh_includes/routing.bzz"
+
 
 function init() {
-  current_step = 0
-  set_leds(0,255,0)
-  math.rng.setseed(id)
+    current_step = 0
+    set_leds(0,255,0)
+    math.rng.setseed(id)
 
-  #Available storage
-  init_available_storage()
-
-  #Risk stigmergy
-  init_stigmergy()
-
-  #Gradient
-  gradient_init()
+    init_available_storage()
+    init_stigmergy()
+    init_hop_count()
+    init_fitness()
 }
 
+# Executed every time step
 function step() {
+    if (current_step < EXPERIMENT_LENGTH) {
+        move_hexagon()
+        update_risk()
 
-  # Executed every time step
-  if (current_step < EXPERIMENT_LENGHT) {
-    hexagon()
-    update_risk()
-    gradient_step()
-    
-  log(id, ": ", get_fitness())
-  }
+        broadcast_lowest_hop_count()
+        broadcast_fitness()
 
-  #Stop robots when experiment is over
-  if (current_step > EXPERIMENT_LENGHT){
-    set_wheels(0.0,0.0)
-    set_leds(255,0,0)
-  }
+        log(id, ": ", get_fitness())
+    }
 
-  current_step = current_step + 1
+    # Stop robots when experiment is over
+    if (current_step > EXPERIMENT_LENGTH) {
+        set_wheels(0.0, 0.0)
+        set_leds(255, 0, 0)
+    }
+
+    current_step = current_step + 1
 }
 
 function reset() {

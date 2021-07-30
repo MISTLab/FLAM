@@ -2,9 +2,9 @@ var risk_belief
 
 
 function init_stigmergy() {
-  risk_belief = stigmergy.create(1)
-  risk_belief.onconflict(function(k, l, r){
-    return l
+    risk_belief = stigmergy.create(1)
+    risk_belief.onconflict(function(k, l, r){
+        return l
     })
 }
 
@@ -13,10 +13,12 @@ function get_risk() {
 }
 
 function update_risk() {
-  new_value = get_radiation_intensity() + math.rng.gaussian(0,0.1)
-  current_key = get_current_key()
-  if (risk_belief.get(current_key) != nil){
-    new_value = 0.5 * new_value + 0.5 * risk_belief.get(current_key)
-  }
-  risk_belief.put(current_key, new_value)
+    new_value = get_radiation_intensity() + math.rng.gaussian(0,0.1)
+    current_key = get_current_key()
+
+    if (risk_belief.get(current_key) != nil){
+        new_value = 0.5 * new_value + 0.5 * risk_belief.get(current_key)
+    }
+    
+    risk_belief.put(current_key, new_value)
 }
