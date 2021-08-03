@@ -3,12 +3,12 @@ include "vec2.bzz"
 include "string.bzz"
 include "table.bzz"
 
-include "buzz_includes/dora_mesh_includes/constants.bzz"
-include "buzz_includes/dora_mesh_includes/storage.bzz"
-include "buzz_includes/dora_mesh_includes/risk.bzz"
-include "buzz_includes/dora_mesh_includes/move.bzz"
-include "buzz_includes/dora_mesh_includes/fitness.bzz"
-include "buzz_includes/dora_mesh_includes/routing.bzz"
+include "includes/constants.bzz"
+include "includes/storage.bzz"
+include "includes/risk.bzz"
+include "includes/move.bzz"
+include "includes/fitness.bzz"
+include "includes/routing.bzz"
 
 
 function init() {

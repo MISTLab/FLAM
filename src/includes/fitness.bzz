@@ -1,6 +1,6 @@
-include "buzz_includes/dora_mesh_includes/risk.bzz"
-include "buzz_includes/dora_mesh_includes/routing.bzz"
-include "buzz_includes/dora_mesh_includes/storage.bzz"
+include "includes/risk.bzz"
+include "includes/routing.bzz"
+include "includes/storage.bzz"
 
 
 fitness = -1.0
