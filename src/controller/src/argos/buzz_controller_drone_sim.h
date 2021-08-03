@@ -33,6 +33,8 @@ public:
       return random_engine_;
    }
 
+   size_t HashString(std::string data);
+
    bool HasReached(const CVector2& position, const float& delta);
 
    std::string GetCurrentKey();

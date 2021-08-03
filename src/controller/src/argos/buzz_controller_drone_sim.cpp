@@ -52,6 +52,15 @@ void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node)  {
 /****************************************/
 /****************************************/
 
+size_t CBuzzControllerDroneSim::HashString(const std::string data) {
+   std::hash<std::string> hashed_string;
+
+   return hashed_string(data);
+}
+
+/****************************************/
+/****************************************/
+
 bool CBuzzControllerDroneSim::HasReached(const CVector2& position, const float& delta) {
    float difference = std::sqrt(
       std::pow(m_pcPos->GetReading().Position.GetX() - position.GetX(),2)+

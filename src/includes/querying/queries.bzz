@@ -1,16 +1,13 @@
 include "query_msg.bzz"
+include "includes/storage.bzz"
 
 
 var query_types = { 
     .put = query_put,
-    .store = query_store,
-    .erase = query_erase,
+    .post = query_post,
+    .delete = query_delete,
     .get = query_get,
-    .count = query_count,
-    .sum = query_sum,
-    .average = query_average,
-    .min = query_min,
-    .max = query_max
+    .response = query_response
 }
 
 
@@ -22,42 +19,30 @@ function init_queries() {
     })
 }
 
-function broadcast_query(destination, query) {
-    neighbors.broadcast()
-}
-
 function query_put(query) {
-    log("put")
+    storage_create(query.data)
 }
 
-function query_store(query) {
-    log("store")
+function query_post(query) {
+    storage_update(query.data)
 }
 
-function query_erase(query) {
-    log("erase")
+function query_delete(query) {
+    storage_delete(query.data)
 }
 
 function query_get(query) {
-    log("get")
+    # TODO: Properly add to transmission queue
+    #       Find a way to unicast
+    
+    msg = query_msg.new("response", id, query.source, storage_get(query.data))
+    neighbors.broadcast("response", msg)
 }
 
-function query_count(query) {
-    log("count")
-}
-
-function query_sum(query) {
-    log("sum")
-}
-
-function query_average(query) {
-    log("average")
-}
-
-function query_min(query) {
-    log("min")
-}
-
-function query_max(query) {
-    log("max")
+function query_response(query) {
+    if (query.destination != id) {
+        neighbors.broadcast("response", query)
+    } else {
+        # Do something with query data
+    }
 }

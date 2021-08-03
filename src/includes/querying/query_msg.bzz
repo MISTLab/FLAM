@@ -6,17 +6,17 @@ query_msg = {}
 
 #
 # Creates a new query_msg.
-# PARAM type: The query type (get, put, store...).
-# PARAM params: The query parameters, can be a table for genericity.
+# PARAM type: The query type (get, put, post...).
 # PARAM source: The query source (a robot's ID).
 # PARAM destination: The query destination (a robot's ID).
+# PARAM data: The query data.
 # RETURN: A new query_msg.
 #
-query_msg.new = function(type, params, source, destination) {
+query_msg.new = function(type, source, destination, data) {
     return { 
         .type = type,
-        .params = params,
         .source = source,
-        .destination = destination
+        .destination = destination,
+        .data = data
     }
 }

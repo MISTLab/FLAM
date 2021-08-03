@@ -101,6 +101,29 @@ static int BuzzRandGauss(buzzvm_t vm){
 /****************************************/
 /****************************************/
 
+static int BuzzHashString(buzzvm_t vm){
+   /* Push the string */
+   buzzvm_lload(vm, 1);
+
+   /* Create the string */
+   std::string data_string = buzzvm_stack_at(vm, 1)->s.value.str;
+
+   /* Get pointer to the controller */
+   buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
+   buzzvm_gload(vm);
+
+   /* Call function */
+   size_t hashed_string = 
+      reinterpret_cast<CBuzzControllerDroneSim*>(buzzvm_stack_at(vm, 1)->u.value)->HashString(data_string);
+   
+   buzzvm_pushi(vm, hashed_string);
+
+   return buzzvm_ret1(vm);
+}
+
+/****************************************/
+/****************************************/
+
 static int BuzzHasReached(buzzvm_t vm) {
    /* Push the vector components */
    buzzvm_lload(vm, 1);
@@ -302,6 +325,10 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "has_reached", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzHasReached));
+   buzzvm_gstore(m_tBuzzVM);
+
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "hash_string", 1));
+   buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzHashString));
    buzzvm_gstore(m_tBuzzVM);
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "get_current_key", 1));
