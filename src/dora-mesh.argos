@@ -25,9 +25,9 @@
         <range_and_bearing     implementation="default" />
       </actuators>
       <sensors>
-        <kheperaiv_proximity implementation="default" show_rays="true" />
+        <kheperaiv_proximity implementation="default" show_rays="false" />
         <range_and_bearing   implementation="medium" medium="rab"
-                             show_rays="false" noise_std_dev="0" />
+                             show_rays="true" noise_std_dev="0" />
         <positioning         implementation="default" />
       </sensors>
       <params bytecode_file="dora-mesh.bo" debug_file="dora-mesh.bdb">
@@ -70,7 +70,7 @@
       <position method="uniform" min="-3,-3,0" max="3,3,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
       <entity quantity="8" max_trials="100">
-        <kheperaiv id="sp" rab_range="1000000" rab_data_size="100000">
+        <kheperaiv id="sp" rab_range="3" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>

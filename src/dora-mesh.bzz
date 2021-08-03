@@ -1,8 +1,8 @@
-include "includes/debug.bzz"
 include "vec2.bzz"
 include "string.bzz"
 include "table.bzz"
 
+include "includes/debug.bzz"
 include "includes/constants.bzz"
 include "includes/storage.bzz"
 include "includes/risk.bzz"
