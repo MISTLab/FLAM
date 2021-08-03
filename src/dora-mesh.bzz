@@ -1,4 +1,4 @@
-include "buzz_includes/debug.bzz"
+include "includes/debug.bzz"
 include "vec2.bzz"
 include "string.bzz"
 include "table.bzz"
