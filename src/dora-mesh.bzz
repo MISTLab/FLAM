@@ -1,7 +1,8 @@
 include "buzz_includes/debug.bzz"
-include "buzz_includes/buzz_utils/vec2.bzz"
-include "buzz_includes/buzz_utils/string.bzz"
-include "buzz_includes/buzz_utils/table.bzz"
+include "vec2.bzz"
+include "string.bzz"
+include "table.bzz"
+
 include "buzz_includes/dora_mesh_includes/constants.bzz"
 include "buzz_includes/dora_mesh_includes/storage.bzz"
 include "buzz_includes/dora_mesh_includes/risk.bzz"

@@ -1,4 +1,4 @@
-include "buzz_includes/buzz_utils/table.bzz"
+include "table.bzz"
 include "buzz_includes/dora_mesh_includes/constants.bzz"
 
 
