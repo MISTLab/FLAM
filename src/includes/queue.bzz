@@ -1,0 +1,81 @@
+include "table.bzz"
+
+
+#################################################################
+###### WARNING: DO NOT USE size(q), USE queue.size(q)
+#################################################################
+
+
+#
+# Create a new namespace for queues.
+# Buzz queues are based on Buzz tables with numeric indices.
+#
+queue = {}
+
+
+QUEUE_SIZE_INCREASE_FACTOR = 2
+QUEUE_INITIAL_SIZE = 1
+
+
+#
+# Creates a new queue.
+# RETURN: A new queue.
+#
+queue.new = function() {
+    return {
+        .next_increase_size = QUEUE_SIZE_INCREASE_FACTOR,
+        .data = {}
+    }
+}
+
+#
+# Pushes an item to the end of a queue. 
+# Automatically reorganizes indices to allow for growth.
+# PARAM q: The queue to which an item must be appended.
+# PARAM item: The item to be pushed at the end of the queue.
+#
+queue.push = function(q, item) {
+    if (size(q.data) + 1 >= q.next_increase_size and table.minkey(q.data) != 0) {
+        log("up")
+        data_copy = {}
+        
+        foreach(table.copy(q.data), function(k, v) {
+            table.append(data_copy, v)
+        })
+
+        q.data = data_copy
+        q.next_increase_size = q.next_increase_size * QUEUE_SIZE_INCREASE_FACTOR
+    }
+
+    table.append(q.data, item)
+}
+
+#
+# Pops an item from the beginning of a queue. 
+# PARAM q: The queue to which an item must be appended.
+# RETURN: The the popped item.
+#
+queue.pop = function(q) {
+    data_copy = table.copy(q.data)
+    q.data[table.minkey(q.data)] = nil
+
+    return data_copy[table.minkey(data_copy)]
+}
+
+#
+# Returns the size of the queue 
+# PARAM q: The queue on which the check is performed.
+# RETURN: The result of the size check.
+#
+queue.size = function(q) {
+    return size(q.data)
+}
+
+#
+# Verifies if a queue is empty, i.e. if its data has 0 item. 
+# PARAM q: The queue on which the check is performed.
+# RETURN: The result of the emptiness check.
+#
+queue.empty = function(q) {
+    return queue.size(q) == 0
+}

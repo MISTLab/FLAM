@@ -9,6 +9,7 @@ include "includes/risk.bzz"
 include "includes/move.bzz"
 include "includes/fitness.bzz"
 include "includes/routing.bzz"
+include "includes/queue.bzz"
 
 
 function init() {

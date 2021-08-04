@@ -1,0 +1,22 @@
+#
+# Create a new namespace for stored items metadata
+#
+metadata = {}
+
+
+#
+# Creates a new query_msg.
+# PARAM timestamp_created: The timestamp at which the item was stored.
+# PARAM timestamp_used: The timestamp at which the item was last used (created, modified or accessed).
+# PARAM size: The item's size.
+# PARAM key: The item's key (its hash).
+# RETURN: A new metadata.
+#
+metadata.new = function(timestamp_created, timestamp_used, size, key) {
+    return { 
+        .timestamp_created = timestamp_created,
+        .timestamp_used = timestamp_used,
+        .size = size,
+        .key = key
+    }
+}
