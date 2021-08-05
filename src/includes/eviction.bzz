@@ -1,0 +1,16 @@
+
+function init_eviction_queue() {
+    eviction_queue = queue.new()
+}
+
+function evict() {
+    #TODO determine which item 
+    queue.push(eviction_queue, item_hash)
+    msg = query_msg.new("eviction", id, query.source, storage_get(queue.pop(eviction_queue)))
+    neighbors.broadcast("post", msg)
+}
+
+function complete_eviction(key) {
+    storage_delete(key)
+}
+
