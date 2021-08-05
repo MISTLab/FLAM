@@ -25,10 +25,18 @@ function query_put(query) {
 
 function query_post(query) {
     storage_update(query.data)
+
+    if (query_type == "eviction") {
+        msg = query_msg.new("eviction", id, query.source, hash_string(query.data))
+    }
 }
 
 function query_delete(query) {
     storage_delete(query.data)
+
+    if (query.type == "eviction") {
+        complete_eviction()
+    }
 }
 
 function query_get(query) {
