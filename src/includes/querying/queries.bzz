@@ -35,7 +35,7 @@ function query_delete(query) {
     storage_delete(query.data)
 
     if (query.type == "eviction") {
-        complete_eviction()
+        complete_eviction(query.data)
     }
 }
 
