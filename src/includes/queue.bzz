@@ -52,7 +52,7 @@ queue.push = function(q, item) {
 
 #
 # Pops an item from the beginning of a queue. 
-# PARAM q: The queue to which an item must be appended.
+# PARAM q: The queue from which an item must be popped.
 # RETURN: The the popped item.
 #
 queue.pop = function(q) {
@@ -60,6 +60,15 @@ queue.pop = function(q) {
     q.data[table.minkey(q.data)] = nil
 
     return data_copy[table.minkey(data_copy)]
+}
+
+#
+# Peeks at the item from the beginning of a queue without removing it. 
+# PARAM q: The queue from which an item must be peeked.
+# RETURN: The the peeked item.
+#
+queue.peek = function(q) {
+    return q.data[table.minkey(q.data)]
 }
 
 #
