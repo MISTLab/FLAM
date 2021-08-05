@@ -100,7 +100,7 @@
     <qt-opengl>
       <camera>
         <placements>
-          <placement index="0" position="0,0,100" look_at="0,0,0" up="0,1,0" lens_focal_length="100" />
+          <placement index="0" position="0,0,100" look_at="0,0,0" up="0,1,0" lens_focal_length="300" />
         </placements>
       </camera>
        <frame_grabbing directory="log/"
