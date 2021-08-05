@@ -9,7 +9,10 @@ max_neighbor_fitness = -1.0
 
 function init_fitness() {
     neighbors.listen("fitness", function(vid, value, neighbor_id) {
-        max_neighbor_fitness = math.max(value, max_neighbor_fitness)
+        if (value > max_neighbor_fitness) {
+            max_neighbor_fitness = value
+            id_max_neighbor_fitness = neighbor_id
+        }
     })
 }
 
@@ -17,8 +20,16 @@ function get_fitness() {
     return get_available_storage() / (get_risk() * get_min_hop_count())
 }
 
+function get_max_neighbor_fitness() {
+    return max_neighbor_fitness
+}
+
+function get_id_max_neighbor_fitness() {
+    return id_max_neighbor_fitness
+}
+
 function is_fit() {
-    return fitness > max_neighbor_fitness
+    return get_fitness() > get_max_neighbor_fitness()
 }
 
 function broadcast_fitness() {
