@@ -11,5 +11,5 @@ To compile C++ controller:
 
 To run the experiment:
 
-- Compile the Buzz script: `bzzc dora-mesh.bzz`
+- Compile the Buzz script: `make`
 - Launch `argos3 -c dora-mesh.argos`
