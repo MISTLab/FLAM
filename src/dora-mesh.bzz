@@ -1,6 +1,7 @@
 include "vec2.bzz"
 include "string.bzz"
 include "table.bzz"
+include "queue.bzz"
 
 include "includes/debug.bzz"
 include "includes/constants.bzz"
@@ -9,7 +10,6 @@ include "includes/risk.bzz"
 include "includes/move.bzz"
 include "includes/fitness.bzz"
 include "includes/routing.bzz"
-include "includes/queue.bzz"
 
 
 function init() {
