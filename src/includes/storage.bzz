@@ -4,11 +4,13 @@ function init_available_storage() {
 }
 
 function storage_create(value) {
+    #TODO create metadata associated
     storage[hash_string(value)] = value
 }
 
 # Updates the value stored at hash(value), which is the key
 function storage_update(value) {
+    #TODO update metadata associated timestamp
     storage[hash_string(value)] = value
 }
 
@@ -18,6 +20,7 @@ function storage_delete(key) {
 }
 
 function storage_get(key) {
+    #TODO update metadata associated timestamp
     return storage[key]
 }
 
