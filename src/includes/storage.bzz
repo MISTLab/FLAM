@@ -19,7 +19,6 @@ function storage_update(coordinates, value) {
     } else {
         storage_create(coordinates, value)
     }
-}
 
 # Receives the coordinates of the value to be deleted as a key
 function storage_delete(coordinates) {
