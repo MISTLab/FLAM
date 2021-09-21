@@ -10,13 +10,15 @@ query_msg = {}
 # PARAM source: The query source (a robot's ID).
 # PARAM destination: The query destination (a robot's ID).
 # PARAM data: The query data.
+# PARAM coordinates: The string representing the coordinates from where the data originates.
 # RETURN: A new query_msg.
 #
-query_msg.new = function(type, source, destination, data) {
+query_msg.new = function(type, source, destination, data, coordinates) {
     return { 
         .type = type,
         .source = source,
         .destination = destination,
-        .data = data
+        .data = data,
+        .coordinates = coordinates
     }
 }

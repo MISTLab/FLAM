@@ -3,13 +3,15 @@ include "string.bzz"
 include "table.bzz"
 include "queue.bzz"
 
-include "includes/debug.bzz"
 include "includes/constants.bzz"
-include "includes/storage.bzz"
-include "includes/risk.bzz"
-include "includes/move.bzz"
+include "includes/debug.bzz"
+include "includes/eviction.bzz"
 include "includes/fitness.bzz"
+include "includes/move.bzz"
+include "includes/querying/queries.bzz"
+include "includes/risk.bzz"
 include "includes/routing.bzz"
+include "includes/storage.bzz"
 
 
 function init() {
@@ -21,6 +23,7 @@ function init() {
     init_stigmergy()
     init_hop_count()
     init_fitness()
+    init_queries()
 }
 
 # Executed every time step
@@ -32,7 +35,15 @@ function step() {
         broadcast_lowest_hop_count()
         broadcast_fitness()
 
-        log(id, ": ", get_fitness())
+        if (id == 1 and get_available_storage() < 5) {
+            evict()
+        }
+
+        if (id == 1) {
+            storage_create(string.tostring(current_step), current_step)
+        } else {
+            log("storage size: ", size(storage))
+        }
     }
 
     # Stop robots when experiment is over

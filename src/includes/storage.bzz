@@ -1,26 +1,51 @@
+include "includes/metadata.bzz"
+
 
 function init_available_storage() {
     storage = {}
 }
 
-function storage_create(value) {
-    storage[hash_string(value)] = value
+function storage_create(coordinates, value) {
+    storage[coordinates] = {
+        .value = value,
+        .metadata = metadata.new(current_step, current_step, nil, coordinates)
+    }
 }
 
-# Updates the value stored at hash(value), which is the key
-function storage_update(value) {
-    storage[hash_string(value)] = value
+function storage_update(coordinates, value) {
+    if (storage[coordinates] != nil) {
+        storage[coordinates].value = value
+        storage[coordinates].metadata.timestamp_used = current_step
+    } else {
+        storage_create(coordinates, value)
+    }
 }
 
-# Receives the hash of the value to be deleted as a key
-function storage_delete(key) {
-    storage[key] = nil
+# Receives the coordinates of the value to be deleted as a key
+function storage_delete(coordinates) {
+    storage[coordinates] = nil
 }
 
-function storage_get(key) {
-    return storage[key]
+function storage_get(coordinates) {
+    storage[coordinates].metadata.timestamp_used = current_step
+
+    return storage[coordinates]
 }
 
 function get_available_storage() {
     return STORAGE_CAPACITY - size(storage)
+}
+
+function storage_least_recently_used_id() {
+    lru_timestamp = INFINITY
+    lru_id = nil
+
+    foreach(storage, function(coordinates, item) {
+        if (item.metadata.timestamp_used < lru_timestamp) {
+            lru_timestamp = item.metadata.timestamp_used
+            lru_id = coordinates
+        }
+    })
+
+    return lru_id
 }

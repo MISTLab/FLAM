@@ -17,6 +17,9 @@ function init_fitness() {
 }
 
 function get_fitness() {
+    if (id == 0) {
+        return INFINITY  # Base station has infinite fitness
+    }
     return get_available_storage() / (get_risk() * get_min_hop_count())
 }
 
