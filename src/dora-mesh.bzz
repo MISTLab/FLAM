@@ -36,7 +36,7 @@ function step() {
     }
 
     # Stop robots when experiment is over
-    if (current_step > EXPERIMENT_LENGTH) {
+    if (current_step == EXPERIMENT_LENGTH) {
         set_wheels(0.0, 0.0)
         set_leds(255, 0, 0)
     }
