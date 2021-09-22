@@ -1,0 +1,10 @@
+include "includes/storage.bzz"
+
+function generate_data(){
+    if (get_available_storage() == 0){
+        storage_delete(storage_least_recently_used_id())
+        log("Lost 1 image")
+    }
+
+    storage_create(get_current_key(), current_step)
+}
