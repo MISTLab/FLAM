@@ -20,22 +20,26 @@ function init_queries() {
 }
 
 function query_put(query) {
-    storage_create(query.coordinates, query.data)
+    if (get_available_storage() > 0){
+        storage_create(query.coordinates, query.data)
+    }
 }
 
 function query_post(query) {
-    storage_update(query.coordinates, query.data)
+    if (get_available_storage() > 0){
+        storage_update(query.coordinates, query.data)
 
-    if (query.type == "eviction") {
-        msg = query_msg.new("eviction", id, query.source, nil, query.coordinates)
-        neighbors.broadcast("delete", msg)
+        if (query.type == "eviction") {
+            msg = query_msg.new("eviction", id, query.source, nil, query.coordinates)
+            neighbors.broadcast("delete", msg)
+        }
     }
 }
 
 function query_delete(query) {
-    if (query.type == "eviction" and query.destination == id) {
-        storage_delete(query.coordinates)
-    }
+    # if (query.type == "eviction" and query.destination == id) {
+    #     storage_delete(query.coordinates)
+    # }
 }
 
 function query_get(query) {
