@@ -22,26 +22,35 @@ function init() {
     math.rng.setseed(id)
 
     init_available_storage()
-    init_stigmergy()
+    #init_stigmergy()
     init_hop_count()
     init_fitness()
     init_queries()
+    init_random_search()
 }
 
 # Executed every time step
 function step() {
     if (current_step < EXPERIMENT_LENGTH) {
-        move_hexagon()
-        update_risk()
-
         broadcast_lowest_hop_count()
         broadcast_fitness()
 
-        if (not is_fit()){
-            evict()
+        if (id != 0 and (not is_failed())){
+            random_search()
+            #update_risk()
+
+            if (not is_fit()){
+                evict()
+            }
+
+            generate_data()
         }
 
-        generate_data()
+        if (id == 0){
+            log("Base station storage: ", size(storage))
+        }
+
+        log(id, " : ", get_fitness())
 
     }
 
