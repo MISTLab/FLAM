@@ -30,3 +30,24 @@ function move_hexagon() {
     # Move according to vector
     gotoc(accum.x, accum.y)
 }
+
+# Random walk search
+
+function init_random_search(){
+ # Set first search position
+    next_position = {}
+    next_position.x = pose.position.x
+    next_position.y = pose.position.y 
+}
+
+function random_search()
+{ 
+  next_position.x = uniform(math.max(next_position.x-SEARCH_SPEED/100, SEARCH_SPACE.minx), math.min(next_position.x+SEARCH_SPEED/100, SEARCH_SPACE.maxx))
+  next_position.y = uniform(math.max(next_position.y-SEARCH_SPEED/100, SEARCH_SPACE.miny), math.min(next_position.y+SEARCH_SPEED/100, SEARCH_SPACE.maxy))
+
+  next_position_local = math.vec2.rotate(math.vec2.sub(next_position, pose.position), -pose.orientation.yaw)
+
+  scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
+
+  gotoc(scaled_direction.x, scaled_direction.y)
+}
