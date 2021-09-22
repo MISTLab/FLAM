@@ -10,7 +10,7 @@ function failure() {
     set_wheels(0.0, 0.0)
     
     log("Robot ", id, ": Failure with ", intensity," > ", rand)
-    log("Lost ", size(storage), " images")
+    log("Robot ", id, " lost ", size(storage), " images")
 
     return 1
   }
