@@ -12,6 +12,8 @@ include "includes/querying/queries.bzz"
 include "includes/risk.bzz"
 include "includes/routing.bzz"
 include "includes/storage.bzz"
+include "includes/data.bzz"
+include "includes/failure.bzz"
 
 
 function init() {
@@ -35,15 +37,12 @@ function step() {
         broadcast_lowest_hop_count()
         broadcast_fitness()
 
-        if (id == 1 and get_available_storage() < 5) {
+        if (not is_fit()){
             evict()
         }
 
-        if (id == 1) {
-            storage_create(string.tostring(current_step), current_step)
-        } else {
-            log("storage size: ", size(storage))
-        }
+        generate_data()
+
     }
 
     # Stop robots when experiment is over
