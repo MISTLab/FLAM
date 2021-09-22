@@ -19,6 +19,7 @@ function storage_update(coordinates, value) {
     } else {
         storage_create(coordinates, value)
     }
+}
 
 # Receives the coordinates of the value to be deleted as a key
 function storage_delete(coordinates) {
@@ -32,6 +33,9 @@ function storage_get(coordinates) {
 }
 
 function get_available_storage() {
+    if (id == 0){
+        return INFINITY
+    }
     return STORAGE_CAPACITY - size(storage)
 }
 
