@@ -1,0 +1,26 @@
+
+failed = 0
+
+function failure() {
+  rand = math.rng.uniform(0.2, 1.0)
+  intensity = get_radiation_intensity()
+
+  if (rand < intensity) {  
+    failed = 1 
+    set_wheels(0.0, 0.0)
+    
+    log("Robot ", id, ": Failure with ", intensity," > ", rand)
+    log("Lost ", size(storage), " images")
+
+    return 1
+  }
+  return 0
+}
+
+function is_failed(){
+    if (not failed){
+        return failure()
+    }
+
+    return failed
+}
