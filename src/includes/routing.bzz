@@ -22,6 +22,6 @@ function get_min_hop_count() {
     } else if (size(hop_counts) > 0) {
         return table.min(hop_counts)
     } else {
-        return INFINITY
+        return NUMBER_OF_ROBOTS + 1
     }
 }
