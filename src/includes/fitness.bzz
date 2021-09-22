@@ -9,7 +9,7 @@ max_neighbor_fitness = -1.0
 
 function init_fitness() {
     neighbors.listen("fitness", function(vid, value, neighbor_id) {
-        if (value > max_neighbor_fitness) {
+        if (value > max_neighbor_fitness and value > 0) {
             max_neighbor_fitness = value
             id_max_neighbor_fitness = neighbor_id
         }
@@ -20,7 +20,7 @@ function get_fitness() {
     if (id == 0) {
         return INFINITY  # Base station has infinite fitness
     }
-    return get_available_storage() / (get_risk() * get_min_hop_count())
+    return get_available_storage() / (get_radiation_intensity() * get_min_hop_count())
 }
 
 function get_max_neighbor_fitness() {
