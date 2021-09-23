@@ -39,7 +39,7 @@ function step() {
             random_search()
             #update_risk()
 
-            if (not is_fit()){
+            if ((not is_fit()) and (neighbors.count() > 0)){
                 evict()
             }
 
@@ -48,10 +48,9 @@ function step() {
 
         if (id == 0){
             log("Base station storage: ", size(storage))
+        } else {
+            log("Robot #", id, " - fitness = ", get_fitness(), " - storage = ", size(storage))
         }
-
-        log(id, " : ", get_fitness())
-
     }
 
     # Stop robots when experiment is over

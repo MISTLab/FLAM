@@ -1,17 +1,33 @@
+include "table.bzz"
 include "includes/risk.bzz"
 include "includes/routing.bzz"
 include "includes/storage.bzz"
 
 
-fitness = -1.0
+FITNESS_TOLERANCE = 1.5  # 150%
+
+
 max_neighbor_fitness = -1.0
+fitness = -1.0
+neighbor_fitnesses = {}
 
 
 function init_fitness() {
     neighbors.listen("fitness", function(vid, value, neighbor_id) {
-        if (value > max_neighbor_fitness and value > 0) {
-            max_neighbor_fitness = value
-            id_max_neighbor_fitness = neighbor_id
+        neighbor_fitnesses[neighbor_id] = value
+    })
+}
+
+function update_neighborhood_fitness() {
+    connected_robots = {}
+
+    neighbors.foreach(function(robot_id, data) {
+        connected_robots[robot_id] = 1
+    })
+
+    foreach(neighbor_fitnesses, function(robot_id, data) {
+        if (connected_robots[robot_id] == nil) {
+            neighbor_fitnesses[robot_id] = nil
         }
     })
 }
@@ -24,15 +40,15 @@ function get_fitness() {
 }
 
 function get_max_neighbor_fitness() {
-    return max_neighbor_fitness
+    return table.max(neighbor_fitnesses)
 }
 
 function get_id_max_neighbor_fitness() {
-    return id_max_neighbor_fitness
+    return table.maxkey(neighbor_fitnesses)
 }
 
 function is_fit() {
-    return get_fitness() > get_max_neighbor_fitness()
+    return get_fitness() * FITNESS_TOLERANCE > get_max_neighbor_fitness()
 }
 
 function broadcast_fitness() {

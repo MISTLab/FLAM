@@ -1,7 +1,7 @@
 include "includes/storage.bzz"
 
 function generate_data(){
-    if (get_available_storage() == 0){
+    if (get_available_storage() <= 0){
         storage_delete(storage_least_recently_used_id())
         log("Robot ", id,  " lost 1 image")
     }
