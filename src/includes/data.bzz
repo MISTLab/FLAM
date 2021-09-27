@@ -4,19 +4,15 @@ include "includes/storage.bzz"
 function generate_data(){
     data_category = math.rng.uniform(2)
     data = nil
-    data_size = 0
 
     if (data_category == 0) {
-        data_size = 1
         data = "Some string data."
     } else if (data_category == 1) {
-        data_size = 1
         data = {
             .x = pose.position.x,
             .y = pose.position.y
         }
     } else if (data_category == 2) {
-        data_size = 6  # 3 keys + 3 values
         data = { 
             .radiation = math.rng.gaussian(),
             .temperature = math.rng.gaussian(10.0, 15.0),
@@ -24,8 +20,8 @@ function generate_data(){
         }
     }
     
-    clear_missing_storage(data_size)
-    storage_create(get_current_key(), data, data_size)
+    clear_missing_storage(get_data_size(data))
+    storage_create(get_current_key(), data)
 }
 
 function clear_missing_storage(data_size) {

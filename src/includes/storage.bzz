@@ -5,10 +5,10 @@ function init_available_storage() {
     storage = {}
 }
 
-function storage_create(coordinates, value, data_size) {
+function storage_create(coordinates, value) {
     storage[coordinates] = {
         .value = value,
-        .metadata = metadata.new(current_step, current_step, data_size, coordinates)
+        .metadata = metadata.new(current_step, current_step, get_data_size(value), coordinates)
     }
 }
 
@@ -57,4 +57,12 @@ function storage_least_recently_used_id() {
     })
 
     return lru_id
+}
+
+function get_data_size(data) {
+    if (type(data) == "float" or type(data == "string")) {
+        return 1
+    } else if (type(data) == "table") {
+        return 2 * size(data)
+    }
 }
