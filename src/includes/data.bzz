@@ -25,7 +25,7 @@ function generate_data(){
     }
     
     clear_missing_storage(data_size)
-    storage_create(get_current_key(), data)
+    storage_create(get_current_key(), data, data_size)
 }
 
 function clear_missing_storage(data_size) {
