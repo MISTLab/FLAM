@@ -20,19 +20,5 @@ function generate_data(){
         }
     }
     
-    clear_missing_storage(get_data_size(data))
     storage_create(get_current_key(), data)
-}
-
-function clear_missing_storage(data_size) {
-    nb_deleted_data = 0
-
-    while (get_available_storage() - data_size < 0) {
-        storage_delete(storage_least_recently_used_id())
-        nb_deleted_data = nb_deleted_data + 1
-    }
-
-    if (nb_deleted_data > 0) {
-        log("Robot ", id,  " lost ", nb_deleted_data, " data")
-    }
 }

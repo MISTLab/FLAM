@@ -3,9 +3,12 @@ include "includes/metadata.bzz"
 
 function init_available_storage() {
     storage = {}
+    nb_lost_data = 0
 }
 
 function storage_create(coordinates, value) {
+    clear_missing_storage(get_data_size(data))
+
     storage[coordinates] = {
         .value = value,
         .metadata = metadata.new(current_step, current_step, get_data_size(value), coordinates)
@@ -14,8 +17,11 @@ function storage_create(coordinates, value) {
 
 function storage_update(coordinates, value) {
     if (storage[coordinates] != nil) {
+        clear_missing_storage(get_data_size(value))
+
         storage[coordinates].value = value
         storage[coordinates].metadata.timestamp_used = current_step
+        storage[coordinates].metadata.size = get_data_size(value)
     } else {
         storage_create(coordinates, value)
     }
@@ -64,5 +70,19 @@ function get_data_size(data) {
         return 1
     } else if (type(data) == "table") {
         return 2 * size(data)
+    }
+}
+
+function clear_missing_storage(data_size) {
+    nb_deleted_data = 0
+
+    while (get_available_storage() - data_size < 0) {
+        storage_delete(storage_least_recently_used_id())
+        nb_deleted_data = nb_deleted_data + 1
+    }
+
+    if (nb_deleted_data > 0) {
+        nb_lost_data = nb_lost_data + nb_deleted_data
+        log("Robot ", id,  " lost ", nb_deleted_data, " data")
     }
 }
