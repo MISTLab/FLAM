@@ -11,7 +11,7 @@ function evict() {
         neighbors.broadcast("post", msg)
 
         log(id, " evicting")
-        table.print(neighbor_fitnesses)
+        # table.print(neighbor_fitnesses)
         # log(id, " evicting to ", get_id_max_neighbor_fitness(), ":", get_max_neighbor_fitness(), ", nb neighbors: ", neighbors.count())
 
         storage_delete(evicted_coordinates)

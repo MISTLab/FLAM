@@ -20,15 +20,19 @@ function init_fitness() {
 
 function update_neighborhood_fitness() {
     connected_robots = {}
-
-    neighbors.foreach(function(robot_id, data) {
-        connected_robots[robot_id] = 1
+    neighbors.foreach(function(neighbor_id, data) {
+        connected_robots[neighbor_id] = 1
     })
 
-    foreach(neighbor_fitnesses, function(robot_id, data) {
-        if (connected_robots[robot_id] == nil) {
-            neighbor_fitnesses[robot_id] = nil
+    to_delete = {}
+    foreach(neighbor_fitnesses, function(neighbor_id, data) {
+        if (connected_robots[neighbor_id] == nil) {
+            to_delete[neighbor_id] = 1
         }
+    })
+    
+    foreach(to_delete, function(neighbor_id, value) {
+        neighbor_fitnesses[neighbor_id] = nil
     })
 }
 
@@ -48,6 +52,8 @@ function get_id_max_neighbor_fitness() {
 }
 
 function is_fit() {
+    update_neighborhood_fitness()
+
     return get_fitness() * FITNESS_TOLERANCE > get_max_neighbor_fitness()
 }
 
