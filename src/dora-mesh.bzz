@@ -14,6 +14,7 @@ include "includes/routing.bzz"
 include "includes/storage.bzz"
 include "includes/data.bzz"
 include "includes/failure.bzz"
+include "includes/logging.bzz"
 
 
 function init() {
@@ -27,6 +28,10 @@ function init() {
     init_fitness()
     init_queries()
     init_random_search()
+
+    reliability_logger = CSVLogger.new("reliability.csv", "step,number_of_images_created,number_of_images_lost")
+    storage_logger = CSVLogger.new("storage.csv", "step,number_of_images")
+    speed_logger = CSVLogger.new("speed.csv", "step,arrival_time,creation_time")
 }
 
 # Executed every time step
@@ -51,6 +56,9 @@ function step() {
         } else {
             log("Robot #", id, " - fitness = ", get_fitness(), " - storage = ", size(storage))
         }
+
+        #Logging metrics to assess performance
+        storage_logger.write_row(size(storage))
     }
 
     # Stop robots when experiment is over
