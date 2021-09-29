@@ -1,0 +1,42 @@
+
+#
+# Class: CSVLogger
+# Description: A generic CSV logger using standard Buzz IO functions.
+#
+CSVLogger = {
+
+    #
+    # Constructor
+    # PARAM file_name: The file name.
+    # PARAM header: A string representing the column headers.
+    # RETURN: A new CSVLogger
+    #
+    .new = function(file_name, header) {
+        result_file = io.fopen(file_name, "w")
+        io.fwrite(result_file, header)
+        io.fclose(result_file)
+
+        return {
+            .file_name = file_name,
+            .write_row = CSVLogger.write_row
+        }
+    }
+
+    #
+    # Writes a row into the CSV file using the provided data.
+    # PARAM data: The data, in a table format.
+    #             The keys correspond to the CSV columns.
+    # RETURN: nil
+    #
+    .write_row = function(data) {
+        comma_separated_data = ""
+
+        foreach(data, function(key, value) {
+            comma_separated_data = string.concat(comma_separated_data, value, ",")
+        })
+
+        result_file = io.fopen(self.file_name, "a")
+        io.fwrite(result_file, comma_separated_data)
+        io.fclose(result_file)
+    }
+}
