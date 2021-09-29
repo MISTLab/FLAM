@@ -20,7 +20,6 @@ function storage_create(coordinates, value, creation_time) {
 }
 
 function storage_update(coordinates, value, creation_time) {
-    log("creation time ", creation_time)
     if (storage[coordinates] != nil) {
         clear_missing_storage(get_data_size(value))
 
