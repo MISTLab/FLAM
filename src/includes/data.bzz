@@ -1,6 +1,9 @@
 include "includes/storage.bzz"
 
 
+nb_created_data = 0
+
+
 function generate_data(){
     data_category = math.rng.uniform(2)
     data = nil
@@ -21,4 +24,9 @@ function generate_data(){
     }
     
     storage_create(get_current_key(), data)
+    nb_created_data = nb_created_data + 1
+}
+
+function get_nb_created_data() {
+    return nb_created_data
 }

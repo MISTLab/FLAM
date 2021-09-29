@@ -30,9 +30,21 @@ function init() {
     init_random_search()
 
     CSVLogger.update_current_run()
-    reliability_logger = CSVLogger.new("reliability.csv", "run,step,number_of_images_created,number_of_images_lost")
-    storage_logger = CSVLogger.new("storage.csv", "run,step,number_of_images")
-    speed_logger = CSVLogger.new("speed.csv", "run,step,arrival_time,creation_time")
+    reliability_logger = CSVLogger.new("reliability.csv", "nb_created_data,nb_lost_data")
+    storage_logger = CSVLogger.new("storage.csv", "nb_data")
+
+    if (id == 0) {
+        speed_logger = CSVLogger.new("speed.csv", "arrival_time,creation_time")
+    }
+}
+
+#
+# Calls all required loggers to save metrics
+# RETURN: nil
+#
+function log_metrics() {
+    storage_logger.write_row({ .nb_data = size(storage) })
+    reliability_logger.write_row({ .nb_created_data = get_nb_created_data(), .nb_lost_data = get_nb_lost_data() })
 }
 
 # Executed every time step
@@ -52,14 +64,7 @@ function step() {
             generate_data()
         }
 
-        if (id == 0){
-            log("Base station storage: ", size(storage))
-        } else {
-            log("Robot #", id, " - fitness = ", get_fitness(), " - storage = ", size(storage))
-        }
-
-        #Logging metrics to assess performance
-        storage_logger.write_row({ .number_of_images = size(storage) })
+        log_metrics()
     }
 
     # Stop robots when experiment is over

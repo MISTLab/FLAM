@@ -10,10 +10,6 @@ function evict() {
         msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), storage_get(evicted_coordinates), evicted_coordinates)
         neighbors.broadcast("post", msg)
 
-        log(id, " evicting")
-        # table.print(neighbor_fitnesses)
-        # log(id, " evicting to ", get_id_max_neighbor_fitness(), ":", get_max_neighbor_fitness(), ", nb neighbors: ", neighbors.count())
-
         storage_delete(evicted_coordinates)
     }
 }

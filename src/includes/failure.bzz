@@ -10,9 +10,6 @@ function failure() {
     set_wheels(0.0, 0.0)
     set_leds(255, 0, 0)
     
-    log("Robot ", id, ": Failure with ", intensity," > ", rand)
-    log("Robot ", id, " lost ", size(storage), " images")
-
     return 1
   }
   return 0

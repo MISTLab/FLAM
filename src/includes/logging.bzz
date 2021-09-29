@@ -40,7 +40,7 @@ CSVLogger = {
         # If file is nil, it means it was not created before and we can initialize it
         if (verification_file == nil) {
             result_file = io.fopen(string.concat(FILE_PREFIX, file_name), "w")
-            io.fwrite(result_file, header)
+            io.fwrite(result_file, string.concat("run,step,", header))
             io.fclose(result_file)
         } else {
             io.fclose(verification_file)
