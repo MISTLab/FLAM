@@ -43,7 +43,7 @@ function init() {
 # RETURN: nil
 #
 function log_metrics() {
-    storage_logger.write_row({ .0 = size(storage) })
+    storage_logger.write_row({ .0 = get_storage_used()})
     reliability_logger.write_row({ .0 = get_nb_created_data(), .1 = get_nb_lost_data() })
 }
 
