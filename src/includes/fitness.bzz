@@ -41,7 +41,7 @@ function get_fitness() {
         return INFINITY  # Base station has infinite fitness
     }
     else if (is_failed()){
-        return nil
+        return 0
     }
     return get_available_storage() / (get_radiation_intensity() * get_min_hop_count())
 }
