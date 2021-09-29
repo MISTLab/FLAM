@@ -5,7 +5,7 @@ function failure() {
   rand = math.rng.uniform(0.2, 1.0)
   intensity = get_radiation_intensity()
 
-  if (rand < intensity) {  
+  if (rand < intensity and id != 0) {  
     failed = 1 
     set_wheels(0.0, 0.0)
     set_leds(255, 0, 0)
