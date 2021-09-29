@@ -29,10 +29,10 @@ CSVLogger = {
     # RETURN: nil
     #
     .write_row = function(data) {
-        comma_separated_data = ""
+        comma_separated_data = string.tostring(current_step)
 
         foreach(data, function(key, value) {
-            comma_separated_data = string.concat(comma_separated_data, value, ",")
+            comma_separated_data = string.concat(comma_separated_data, ",", value)
         })
 
         result_file = io.fopen(self.file_name, "a")
