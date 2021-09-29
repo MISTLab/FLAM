@@ -6,24 +6,33 @@ function init_available_storage() {
     nb_lost_data = 0
 }
 
-function storage_create(coordinates, value) {
+function storage_create(coordinates, value, creation_time) {
     clear_missing_storage(get_data_size(data))
 
     storage[coordinates] = {
         .value = value,
-        .metadata = metadata.new(current_step, current_step, get_data_size(value), coordinates)
+        .metadata = metadata.new(creation_time, current_step, get_data_size(value), coordinates)
+    }
+
+    if (id == 0) {
+        speed_logger.write_row({ .0 = current_step, .1 = creation_time })
     }
 }
 
-function storage_update(coordinates, value) {
+function storage_update(coordinates, value, creation_time) {
+    log("creation time ", creation_time)
     if (storage[coordinates] != nil) {
         clear_missing_storage(get_data_size(value))
 
         storage[coordinates].value = value
         storage[coordinates].metadata.timestamp_used = current_step
         storage[coordinates].metadata.size = get_data_size(value)
+
+        if (id == 0) {
+            speed_logger.write_row({ .0 = current_step, .1 = creation_time })
+        }
     } else {
-        storage_create(coordinates, value)
+        storage_create(coordinates, value, creation_time)
     }
 }
 

@@ -13,12 +13,13 @@ query_msg = {}
 # PARAM coordinates: The string representing the coordinates from where the data originates.
 # RETURN: A new query_msg.
 #
-query_msg.new = function(type, source, destination, data, coordinates) {
+query_msg.new = function(type, source, destination, data, coordinates, creation_time) {
     return { 
         .type = type,
         .source = source,
         .destination = destination,
         .data = data,
-        .coordinates = coordinates
+        .coordinates = coordinates,
+        .creation_time = creation_time
     }
 }

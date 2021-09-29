@@ -21,16 +21,16 @@ function init_queries() {
 
 function query_put(query) {
     if (get_available_storage() > 0){
-        storage_create(query.coordinates, query.data)
+        storage_create(query.coordinates, query.data, query.creation_time)
     }
 }
 
 function query_post(query) {
     if (get_available_storage() > 0){
-        storage_update(query.coordinates, query.data)
+        storage_update(query.coordinates, query.data, query.creation_time)
 
         if (query.type == "eviction") {
-            msg = query_msg.new("eviction", id, query.source, nil, query.coordinates)
+            msg = query_msg.new("eviction", id, query.source, nil, query.coordinates, query.creation_time)
             neighbors.broadcast("delete", msg)
         }
     }

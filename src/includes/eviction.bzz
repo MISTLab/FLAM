@@ -1,13 +1,14 @@
 include "includes/fitness.bzz"
 include "includes/querying/query_msg.bzz"
 include "includes/storage.bzz"
-include "table.bzz"
+
 
 function evict() {
     if (size(storage) != 0){
         evicted_coordinates = storage_least_recently_used_id()
+        item = storage_get(evicted_coordinates)
 
-        msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), storage_get(evicted_coordinates), evicted_coordinates)
+        msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), item.value, evicted_coordinates, item.metadata.creation_time)
         neighbors.broadcast("post", msg)
 
         storage_delete(evicted_coordinates)

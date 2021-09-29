@@ -50,7 +50,9 @@ CSVLogger = {
     #
     # Writes a row into the CSV file using the provided data.
     # PARAM data: The data, in a table format.
-    #             The keys correspond to the CSV columns.
+    #             The integer keys correspond to the CSV column order.
+    #             For example, { .1 = "1", .0 = "0", .2 = "2"} is stored as "0,1,2".
+    #             This order excludes the run and step columns, which are always at the start.
     # RETURN: nil
     #
     .write_row = function(data) {

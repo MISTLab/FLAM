@@ -18,6 +18,9 @@ include "includes/logging.bzz"
 
 
 function init() {
+    foreach({ .2 = "a", .0 = "c", .1 = "b"}, function(key, value) {
+        log(key)
+    })
     current_step = 0
     set_leds(0,255,0)
     math.rng.setseed(id)
@@ -43,8 +46,8 @@ function init() {
 # RETURN: nil
 #
 function log_metrics() {
-    storage_logger.write_row({ .nb_data = size(storage) })
-    reliability_logger.write_row({ .nb_created_data = get_nb_created_data(), .nb_lost_data = get_nb_lost_data() })
+    storage_logger.write_row({ .0 = size(storage) })
+    reliability_logger.write_row({ .0 = get_nb_created_data(), .1 = get_nb_lost_data() })
 }
 
 # Executed every time step

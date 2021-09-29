@@ -6,15 +6,15 @@ metadata = {}
 
 #
 # Creates a new query_msg.
-# PARAM timestamp_created: The timestamp at which the item was stored.
+# PARAM creation_time: The timestamp at which the item was created.
 # PARAM timestamp_used: The timestamp at which the item was last used (created, modified or accessed).
 # PARAM size: The item's size.
 # PARAM key: The item's key (its hash).
 # RETURN: A new metadata.
 #
-metadata.new = function(timestamp_created, timestamp_used, size, key) {
+metadata.new = function(creation_time, timestamp_used, size, key) {
     return { 
-        .timestamp_created = timestamp_created,
+        .creation_time = creation_time,
         .timestamp_used = timestamp_used,
         .size = size,
         .key = key

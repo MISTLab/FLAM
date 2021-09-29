@@ -23,7 +23,7 @@ function generate_data(){
         }
     }
     
-    storage_create(get_current_key(), data)
+    storage_create(get_current_key(), data, current_step)
     nb_created_data = nb_created_data + 1
 }
 
