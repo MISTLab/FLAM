@@ -3,7 +3,16 @@ include "includes/querying/query_msg.bzz"
 include "includes/storage.bzz"
 
 
+last_evicted_coordinates = ""
+
+
 function evict() {
+    # We wait one  step before deleting data
+    if (last_evicted_coordinates != "") {
+        storage_delete(last_evicted_coordinates)
+        last_evicted_coordinates = ""
+    }
+
     if (size(storage) != 0){
         evicted_coordinates = storage_least_recently_used_id()
         item = storage_get(evicted_coordinates)
@@ -11,6 +20,6 @@ function evict() {
         msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), item.value, evicted_coordinates, item.metadata.creation_time)
         neighbors.broadcast("post", msg)
 
-        storage_delete(evicted_coordinates)
+        last_evicted_coordinates = evicted_coordinates
     }
 }
