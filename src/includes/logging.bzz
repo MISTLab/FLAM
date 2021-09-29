@@ -1,9 +1,16 @@
+include "string.bzz"
+
+
+FILE_PREFIX = string.concat("results/", string.tostring(id), "_")
+
 
 #
 # Class: CSVLogger
 # Description: A generic CSV logger using standard Buzz IO functions.
 #
 CSVLogger = {
+    # Static attribute
+    .current_run = 0,
 
     #
     # Constructor
@@ -12,13 +19,31 @@ CSVLogger = {
     # RETURN: A new CSVLogger
     #
     .new = function(file_name, header) {
-        result_file = io.fopen(file_name, "w")
-        io.fwrite(result_file, header)
-        io.fclose(result_file)
+        CSVLogger.init_file(file_name, header)
 
         return {
-            .file_name = file_name,
+            .file_name = string.concat(FILE_PREFIX, file_name),
+            .current_run = CSVLogger.current_run,
             .write_row = CSVLogger.write_row
+        }
+    },
+
+    #
+    # If the file did not previously exist, create it (and its header).
+    # PARAM file_name: The file name.
+    # PARAM header: A string representing the column headers.
+    # RETURN: nil
+    #
+    .init_file = function(file_name, header) {
+        verification_file = io.fopen(string.concat(FILE_PREFIX, file_name), "r")
+
+        # If file is nil, it means it was not created before and we can initialize it
+        if (verification_file == nil) {
+            result_file = io.fopen(string.concat(FILE_PREFIX, file_name), "w")
+            io.fwrite(result_file, header)
+            io.fclose(result_file)
+        } else {
+            io.fclose(verification_file)
         }
     },
 
@@ -29,14 +54,31 @@ CSVLogger = {
     # RETURN: nil
     #
     .write_row = function(data) {
-        comma_separated_data = string.tostring(current_step)
+        comma_separated_data = string.concat(string.tostring(self.current_run), ",", string.tostring(current_step))
 
         foreach(data, function(key, value) {
-            comma_separated_data = string.concat(comma_separated_data, ",", value)
+            comma_separated_data = string.concat(comma_separated_data, ",", string.tostring(value))
         })
 
         result_file = io.fopen(self.file_name, "a")
         io.fwrite(result_file, comma_separated_data)
         io.fclose(result_file)
+    },
+
+    #
+    # Updates the current run number.
+    # RETURN: nil
+    #
+    .update_current_run = function() {
+        CSVLogger.current_run = 0
+
+        run_file = io.fopen(string.concat("results/run_", string.tostring(id), ".txt"), "a+")
+
+        io.fforeach(run_file, function(line) {
+            CSVLogger.current_run = CSVLogger.current_run + 1
+        })
+        
+        io.fwrite(run_file, CSVLogger.current_run)
+        io.fclose(run_file)
     }
 }
