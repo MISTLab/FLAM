@@ -51,12 +51,16 @@ function get_available_storage() {
         return INFINITY
     }
 
+    return STORAGE_CAPACITY - get_storage_used()
+}
+
+function get_storage_used() {
     storage_used = 0
     foreach(storage, function(key, value) {
         storage_used = storage_used + value.metadata.size
     })
 
-    return STORAGE_CAPACITY - storage_used
+    return storage_used
 }
 
 function storage_least_recently_used_id() {
