@@ -20,7 +20,7 @@ CSVLogger = {
             .file_name = file_name,
             .write_row = CSVLogger.write_row
         }
-    }
+    },
 
     #
     # Writes a row into the CSV file using the provided data.
