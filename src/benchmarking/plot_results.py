@@ -8,7 +8,7 @@ matplotlib.use('Agg')
 figures_folder = "figures/"
 #folders = ["../results/dora_mesh", "../results/hop_count", "../results/stigmergy"]
 folders = ["../results/dora_mesh"]
-MAX_NB_STEPS = 200
+MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
 
@@ -35,12 +35,12 @@ def parse_storage() -> np.ndarray:
                     step_storage_sum += int(line[3])
                 else:
                     storage_capacity[folder_id, run, step - 1] = step_storage_sum
-                    step_storage_sum = 0
+                    step_storage_sum = int(line[3])
                 
                 previous_step = step
 
 
-            storage_capacity[folder_id, run, step:MAX_NB_STEPS] = storage_capacity[folder_id, run, step]
+            storage_capacity[folder_id, run, step:MAX_NB_STEPS] = step_storage_sum
 
     return storage_capacity
 
@@ -110,7 +110,7 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_nam
 
     for f in range(len(folders)):
         plt.bar(list(metric_data[f].keys()), metric_data[f].values(), color=colors[f])
-        plt.show()
+        plt.savefig(figures_folder + file_name)
 
 
 def plot_metrics() -> None:       
