@@ -23,7 +23,9 @@ function generate_data(){
         }
     }
     
-    storage_create(get_current_key(), data, current_step)
+    # storage_create(get_current_key(), data, current_step)
+    storage_create(string.concat(string.tostring(id),string.tostring(current_step)), data, current_step)
+
     nb_created_data = nb_created_data + 1
 }
 
