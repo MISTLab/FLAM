@@ -44,6 +44,7 @@ function init() {
 #
 function log_metrics() {
     storage_logger.write_row({ .0 = get_storage_used()})
+    # storage_logger.write_row({ .0 = size(storage)})
     reliability_logger.write_row({ .0 = get_nb_created_data(), .1 = get_nb_lost_data() })
 }
 
@@ -54,7 +55,8 @@ function step() {
         broadcast_fitness()
 
         if (id != 0 and (not is_failed())){
-            random_search()
+            #random_search()
+            move_hexagon()
             #update_risk()
 
             if ((not is_fit()) and (neighbors.count() > 0)){
