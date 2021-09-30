@@ -2,9 +2,10 @@ include "table.bzz"
 include "includes/risk.bzz"
 include "includes/routing.bzz"
 include "includes/storage.bzz"
+include "includes/constants.bzz"
 
 
-FITNESS_TOLERANCE = 1.5  # 150%
+FITNESS_TOLERANCE = 1.2  # 120%
 
 
 max_neighbor_fitness = -1.0
@@ -43,7 +44,7 @@ function get_fitness() {
     else if (is_failed()){
         return 0
     }
-    return get_available_storage() / (get_radiation_intensity() * get_min_hop_count())
+    return get_available_storage() / (get_radiation_intensity() * get_min_hop_count() * STORAGE_CAPACITY) 
 }
 
 function get_max_neighbor_fitness() {
