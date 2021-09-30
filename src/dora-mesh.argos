@@ -69,8 +69,8 @@
     <distribute>
       <position method="uniform" min="-4,-4,0" max="4,4,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="5" max_trials="100">
-        <kheperaiv id="sp" rab_range="2" rab_data_size="100000">
+      <entity quantity="15" max_trials="100">
+        <kheperaiv id="sp" rab_range="4" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>
@@ -100,7 +100,7 @@
     <qt-opengl>
       <camera>
         <placements>
-          <placement index="0" position="0,0,100" look_at="0,0,0" up="0,1,0" lens_focal_length="300" />
+          <placement index="0" position="0,0,100" look_at="0,0,0" up="0,1,0" lens_focal_length="200" />
         </placements>
       </camera>
        <frame_grabbing directory="log/"
