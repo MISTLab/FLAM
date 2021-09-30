@@ -9,6 +9,7 @@ function failure() {
     failed = 1 
     set_wheels(0.0, 0.0)
     set_leds(255, 0, 0)
+    nb_lost_data = nb_lost_data + size(storage)
     
     return 1
   }
