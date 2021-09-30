@@ -53,6 +53,7 @@ function step() {
     if (current_step < EXPERIMENT_LENGTH) {
         broadcast_lowest_hop_count()
         broadcast_fitness()
+        log(id, " , ", get_fitness())
 
         if (id != 0 and (not is_failed())){
             #random_search()
@@ -63,7 +64,10 @@ function step() {
                 evict()
             }
 
-            generate_data()
+            if (current_step % 10 == 0){
+                generate_data()
+            }
+            #generate_data()
         }
 
         log_metrics()
