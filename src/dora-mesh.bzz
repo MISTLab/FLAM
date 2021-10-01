@@ -51,7 +51,7 @@ function step() {
     if (current_step < EXPERIMENT_LENGTH) {
         broadcast_lowest_hop_count()
         broadcast_fitness()
-
+        
         if (id != 0){
             move_hexagon()
             #update_risk()

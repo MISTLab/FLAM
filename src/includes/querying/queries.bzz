@@ -26,7 +26,7 @@ function query_put(query) {
 }
 
 function query_post(query) {
-    if (get_available_storage() > 0){
+    if (get_available_storage() > 0 and query.destination == id){
         storage_update(query.coordinates, query.data, query.creation_time)
 
         if (query.type == "eviction") {

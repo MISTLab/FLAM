@@ -1,4 +1,5 @@
 *.bdb
 *.bo
+results/
 .vscode/
 build/

@@ -10,7 +10,7 @@ FITNESS_TOLERANCE = 1.2  # 120%
 
 max_neighbor_fitness = -1.0
 fitness = -1.0
-neighbor_fitnesses = {}
+neighbor_fitnesses = { .0 = INFINITY }
 
 
 function init_fitness() {
@@ -60,7 +60,14 @@ function get_max_neighbor_fitness() {
 }
 
 function get_id_max_neighbor_fitness() {
-    return table.maxkey(neighbor_fitnesses)
+    most_fit_robot_id = nil
+    foreach(neighbor_fitnesses, function(robot_id, fitness) {
+        if (fitness == get_max_neighbor_fitness()) {
+            most_fit_robot_id = robot_id
+        }
+    })
+
+    return most_fit_robot_id
 }
 
 function is_fit() {

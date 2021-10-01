@@ -2,18 +2,18 @@
 failed = 0
 
 function failure() {
-  rand = math.rng.uniform(0.2, 1.0)
-  intensity = get_radiation_intensity()
+    rand = math.rng.uniform(0.2, 1.0)
+    intensity = get_radiation_intensity()
 
-  if (rand < intensity and id != 0) {  
-    failed = 1 
-    set_wheels(0.0, 0.0)
-    set_leds(255, 0, 0)
-    nb_lost_data = nb_lost_data + size(storage)
-    
-    return 1
-  }
-  return 0
+    if (rand < intensity and id != 0) {  
+        failed = 1 
+        set_wheels(0.0, 0.0)
+        set_leds(255, 0, 0)
+        nb_lost_data = nb_lost_data + size(storage)
+        
+        return 1
+    }
+    return 0
 }
 
 function is_failed(){
@@ -25,28 +25,21 @@ function is_failed(){
 }
 
 function data_corruption(){
+    if (id != 0) {
+        to_delete = {}
+        intensity = get_radiation_intensity()
 
-  if (id != 0){
-    to_delete = {}
-    intensity = get_radiation_intensity()
+        foreach(storage, function(key, value) {
+            rand = math.rng.uniform(0.1, 1.0)
 
-    foreach(storage, function(key, value) {
-      rand = math.rng.uniform(0.1, 1.0)
+            if (rand < intensity){
+                table.append(to_delete, key)
+            }
+        })
 
-      if (rand < intensity){
-        table.append(to_delete, key)
-      }
-
-    })
-
-    foreach(to_delete, function(key, value) {
-      storage_delete(value)
-      nb_lost_data = nb_lost_data + 1
-    })
-
-    if (size(to_delete) != 0){
-      log("Robot ", id, " lost ", size(to_delete), " data because of corruption : ", size(storage))
+        foreach(to_delete, function(key, value) {
+            storage_delete(value)
+            nb_lost_data = nb_lost_data + 1
+        })
     }
-  }
-
 }
