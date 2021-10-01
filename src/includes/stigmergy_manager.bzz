@@ -1,0 +1,64 @@
+#
+# Class: StigmergyManager
+# Description: Manages addition and deletion of data from a stigmergy.
+#
+StigmergyManager = {
+    # Static (class) variable
+    .nb_instances = 0,
+
+    #
+    # Constructor
+    # RETURN: A new StigmergyManager
+    #
+    .new = function() {
+        s = stigmergy.create(StigmergyManager.nb_instances)
+        s.onconflict(function(k, l, r) {
+            return l
+        })
+        StigmergyManager.nb_instances = StigmergyManager.nb_instances + 1
+
+        return {
+            .storage = s,
+            .nb_lost_data = 0,
+            .nb_created_data = 0,
+            .put = StigmergyManager.put,
+            .size = StigmergyManager.size,
+            .get_available_storage = StigmergyManager.get_available_storage
+        }
+    },
+
+    #
+    # Adds an item to the stigmergy only if there is enough space left.
+    # PARAM key: The key of the item.
+    # PARAM value: The item.
+    # RETURN: nil
+    #
+    .put = function(key, value) {
+        if (get_data_size(value) > self.get_available_storage()) {
+            self.nb_lost_data = self.nb_lost_data + 1
+        } else {
+            self.storage.put(key, value)
+        }
+    },
+
+    #
+    # Calculates the total size of the stored items.
+    # RETURN: The total size of the items.
+    #
+    .size = function() {
+        total_data_size = 0
+        self.storage.foreach(function(key, value, robot_id) {
+            total_data_size = total_data_size + get_data_size(value)
+        })
+
+        return total_data_size
+    },
+
+    #
+    # Calculates the space left in the stigmergy.
+    # RETURN: The space left.
+    #
+    .get_available_storage = function() {
+        return STORAGE_CAPACITY - self.size()
+    }
+}
