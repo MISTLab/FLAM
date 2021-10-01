@@ -34,6 +34,8 @@ StigmergyManager = {
     # RETURN: nil
     #
     .put = function(key, value) {
+        self.nb_created_data = self.nb_created_data + 1
+        
         if (get_data_size(value) > self.get_available_storage()) {
             self.nb_lost_data = self.nb_lost_data + 1
         } else {
