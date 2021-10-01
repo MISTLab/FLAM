@@ -40,20 +40,20 @@ function update_neighborhood_fitness() {
 function get_fitness() {
     if (id == 0) {
         return INFINITY  # Base station has infinite fitness
-    }
-    else if (is_failed()){
+    } else if (is_failed()){
         return 0
     }
+    
     return get_available_storage() / (get_radiation_intensity() * get_min_hop_count() * STORAGE_CAPACITY) 
 }
 
 function get_fitness_hop_only() {
     if (id == 0) {
         return INFINITY  # Base station has infinite fitness
-    }
-    else if (is_failed() or get_available_storage() == 0){
+    } else if (is_failed() or get_available_storage() == 0){
         return 0
     }
+
     return 1 / get_min_hop_count()
 }
 
@@ -69,6 +69,12 @@ function is_fit() {
     update_neighborhood_fitness()
 
     return get_fitness() * FITNESS_TOLERANCE > get_max_neighbor_fitness()
+}
+
+function is_fit_hop_only() {
+    update_neighborhood_fitness()
+
+    return get_fitness_hop_only() * FITNESS_TOLERANCE > get_max_neighbor_fitness()
 }
 
 function broadcast_fitness() {

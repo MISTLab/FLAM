@@ -51,13 +51,11 @@ function step() {
     if (current_step < EXPERIMENT_LENGTH) {
         broadcast_lowest_hop_count()
         broadcast_fitness()
-        log(id, " , ", get_fitness())
 
         if (id != 0 and (not is_failed())){
             move_hexagon()
-            #update_risk()
 
-            if ((not is_fit()) and (neighbors.count() > 0)){
+            if ((not is_fit_hop_only()) and (neighbors.count() > 0)){
                 evict()
             }
 
