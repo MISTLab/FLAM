@@ -47,6 +47,16 @@ function get_fitness() {
     return get_available_storage() / (get_radiation_intensity() * get_min_hop_count() * STORAGE_CAPACITY) 
 }
 
+function get_fitness_hop_only() {
+    if (id == 0) {
+        return INFINITY  # Base station has infinite fitness
+    }
+    else if (is_failed() or get_available_storage() == 0){
+        return 0
+    }
+    return 1 / get_min_hop_count()
+}
+
 function get_max_neighbor_fitness() {
     return table.max(neighbor_fitnesses)
 }
