@@ -23,3 +23,30 @@ function is_failed(){
 
     return failed
 }
+
+function data_corruption(){
+
+  if (id != 0){
+    to_delete = {}
+    intensity = get_radiation_intensity()
+
+    foreach(storage, function(key, value) {
+      rand = math.rng.uniform(0.1, 1.0)
+
+      if (rand < intensity){
+        table.append(to_delete, key)
+      }
+
+    })
+
+    foreach(to_delete, function(key, value) {
+      storage_delete(value)
+      nb_lost_data = nb_lost_data + 1
+    })
+
+    if (size(to_delete) != 0){
+      log("Robot ", id, " lost ", size(to_delete), " data because of corruption : ", size(storage))
+    }
+  }
+
+}

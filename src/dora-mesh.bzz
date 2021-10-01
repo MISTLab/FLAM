@@ -51,9 +51,8 @@ function step() {
     if (current_step < EXPERIMENT_LENGTH) {
         broadcast_lowest_hop_count()
         broadcast_fitness()
-        log(id, " , ", get_fitness())
 
-        if (id != 0 and (not is_failed())){
+        if (id != 0){
             move_hexagon()
             #update_risk()
 
@@ -64,6 +63,8 @@ function step() {
             if (current_step % 10 == 0){
                 generate_data()
             }
+
+            data_corruption()
         }
 
         log_metrics()
