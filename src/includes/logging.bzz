@@ -1,7 +1,7 @@
 include "string.bzz"
 
 
-FILE_PREFIX = string.concat("results/", string.tostring(id), "_")
+FILE_FOLDER = "results/"
 
 
 #
@@ -15,14 +15,16 @@ CSVLogger = {
     #
     # Constructor
     # PARAM file_name: The file name.
+    # PARAM experiment: The experiment name.
     # PARAM header: A string representing the column headers.
     # RETURN: A new CSVLogger
     #
-    .new = function(file_name, header) {
+    .new = function(experiment, file_name, header) {
+        full_file_path = string.concat(FILE_FOLDER, experiment, "/", string.tostring(id), "_", file_name)
         CSVLogger.init_file(file_name, header)
 
         return {
-            .file_name = string.concat(FILE_PREFIX, file_name),
+            .file_name = full_file_path,
             .current_run = CSVLogger.current_run,
             .write_row = CSVLogger.write_row
         }
@@ -30,16 +32,16 @@ CSVLogger = {
 
     #
     # If the file did not previously exist, create it (and its header).
-    # PARAM file_name: The file name.
+    # PARAM full_file_path: The file path.
     # PARAM header: A string representing the column headers.
     # RETURN: nil
     #
-    .init_file = function(file_name, header) {
-        verification_file = io.fopen(string.concat(FILE_PREFIX, file_name), "r")
+    .init_file = function(full_file_path, header) {
+        verification_file = io.fopen(string.concat(FILE_FOLDER, full_file_path), "r")
 
         # If file is nil, it means it was not created before and we can initialize it
         if (verification_file == nil) {
-            result_file = io.fopen(string.concat(FILE_PREFIX, file_name), "w")
+            result_file = io.fopen(string.concat(FILE_FOLDER, full_file_path), "w")
             io.fwrite(result_file, string.concat("id,run,step,", header))
             io.fclose(result_file)
         } else {

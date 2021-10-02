@@ -6,14 +6,13 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-#folders = ["../results/dora_mesh", "../results/hop_count", "../results/stigmergy"]
-folders = ["../results/dora_mesh"]
+folders = ["../results/dora_mesh", "../results/hop_count"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
 
 def find_nb_run() -> int:
-    with open("../results/dora_mesh/concatenated_storage.csv", "r") as f1:
+    with open("../results/hop_count/concatenated_storage.csv", "r") as f1:
         last_line = f1.readlines()[-1]
 
     return int(last_line.split(",")[1]) + 1

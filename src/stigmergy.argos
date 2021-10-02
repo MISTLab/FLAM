@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<argos-configuration>
+
+  <!-- ************************* -->
+  <!-- * General configuration * -->
+  <!-- ************************* -->
+  <framework>
+    <system threads="10" />
+    <experiment length="300"
+                ticks_per_second="5" 
+                random_seed="0"/>
+    <!--profiling file="profile.txt"
+             format="human_readable"
+             truncate_file="true" /-->
+  </framework>
+  
+  <!-- *************** -->
+  <!-- * Controllers * -->
+  <!-- *************** -->
+  <controllers>
+    <buzz_controller_drone_sim id="drone_controller">
+      <actuators>
+        <differential_steering implementation="default" />
+        <leds                  implementation="default" medium="leds" />
+        <range_and_bearing     implementation="default" />
+      </actuators>
+      <sensors>
+        <kheperaiv_proximity implementation="default" show_rays="false" />
+        <range_and_bearing   implementation="medium" medium="rab"
+                             show_rays="true" noise_std_dev="0" />
+        <positioning         implementation="default" />
+      </sensors>
+      <params bytecode_file="stigmergy.bo" debug_file="stigmergy.bdb">
+              <wheel_turning hard_turn_angle_threshold="90"
+                       soft_turn_angle_threshold="70"
+                       no_turn_angle_threshold="0"
+                       max_speed="80" />
+      </params>
+    </buzz_controller_drone_sim>
+  </controllers>
+
+
+  <!-- ****************** -->
+  <!-- * Loop Functions * -->
+  <!-- ****************** -->
+  <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
+    <radiation radius="0.5"/>
+  </loop_functions>
+
+  <!-- *********************** -->
+  <!-- * Arena configuration * -->
+  <!-- *********************** -->
+  <arena size="10, 10, 2" center="0,0,1">
+
+    <box id="wall_north" size="10,0.1,0.5" movable="false">
+      <body position="0,5,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_south" size="10,0.1,0.5" movable="false">
+      <body position="0,-5,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_east" size="0.1,10,0.5" movable="false">
+      <body position="5,0,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_west" size="0.1,10,0.5" movable="false">
+      <body position="-5,0,0" orientation="0,0,0" />
+    </box>
+
+    <!-- * Initial drones positions * -->
+    <distribute>
+      <position method="uniform" min="-4,-4,0" max="4,4,0" />
+      <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
+      <entity quantity="15" max_trials="100">
+        <kheperaiv id="sp" rab_range="4" rab_data_size="100000">
+          <controller config="drone_controller" />
+        </kheperaiv>
+      </entity>
+    </distribute>
+  </arena>
+
+  <!-- ******************* -->
+  <!-- * Physics engines * -->
+  <!-- ******************* -->
+  <physics_engines>
+    <pointmass3d id="pm3d" />
+    <dynamics2d id="dyn2d" />
+  </physics_engines>
+
+  <!-- ********* -->
+  <!-- * Media * -->
+  <!-- ********* -->
+  <media>
+    <range_and_bearing id="rab" />
+    <led id="leds" />
+  </media>
+
+  <!-- ****************** -->
+  <!-- * Visualization * -->
+  <!-- ****************** -->
+  <visualization>
+    <qt-opengl>
+      <camera>
+        <placements>
+          <placement index="0" position="0,0,100" look_at="0,0,0" up="0,1,0" lens_focal_length="200" />
+        </placements>
+      </camera>
+       <frame_grabbing directory="log/"
+                       base_name="frame_" 
+                       format="png"
+                       quality="100" /> 
+      <user_functions label="buzz_qt" show_buzz_editor="false"/>
+    </qt-opengl>
+  </visualization>
+
+</argos-configuration>

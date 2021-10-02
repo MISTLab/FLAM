@@ -34,6 +34,7 @@ function data_corruption(){
 
             if (rand < intensity){
                 table.append(to_delete, key)
+                log(id, " corrupted data: ", key)
             }
         })
 

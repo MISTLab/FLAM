@@ -4,7 +4,7 @@ import csv
 FOLDER_RESULTS_DORA_MESH = "../results/dora_mesh"
 FOLDER_RESULTS_HOP_COUNT = "../results/hop_count"
 FOLDER_RESULTS_STIGMERGY = "../results/stigmergy"
-ROBOT_IDS = [0, 1, 2, 3, 4]
+ROBOT_IDS = range(15)
 METRIC = ["storage", "reliability"]
 
 def aggregate_results(folder, metric) -> dict:
@@ -30,7 +30,7 @@ def store_stepwise_results(file_reader, stepwise_results: dict) -> None:
 
 
 def main():
-    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_STIGMERGY]:
+    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT]:
         for metric in METRIC:
             stepwise_results = aggregate_results(folder, metric)
 

@@ -29,11 +29,11 @@ function init() {
     init_random_search()
 
     CSVLogger.update_current_run()
-    reliability_logger = CSVLogger.new("reliability.csv", "nb_created_data,nb_lost_data")
-    storage_logger = CSVLogger.new("storage.csv", "nb_data")
+    reliability_logger = CSVLogger.new("dora_mesh", "reliability.csv", "nb_created_data,nb_lost_data")
+    storage_logger = CSVLogger.new("dora_mesh", "storage.csv", "nb_data")
 
     if (id == 0) {
-        speed_logger = CSVLogger.new("speed.csv", "arrival_time,creation_time")
+        speed_logger = CSVLogger.new("dora_mesh", "speed.csv", "arrival_time,creation_time")
     }
 }
 

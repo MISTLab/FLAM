@@ -52,7 +52,7 @@ function step() {
         broadcast_lowest_hop_count()
         broadcast_fitness()
 
-        if (id != 0 and (not is_failed())){
+        if (id != 0){
             move_hexagon()
 
             if ((not is_fit_hop_only()) and (neighbors.count() > 0)){
@@ -62,7 +62,10 @@ function step() {
             if (current_step % 10 == 0){
                 generate_data()
             }
+
+            data_corruption()
         }
+
 
         log_metrics()
     }
