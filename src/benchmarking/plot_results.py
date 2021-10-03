@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-folders = ["../results/dora_mesh", "../results/hop_count"]
+folders = ["../results/dora_mesh", "../results/hop_count", "../results/stigmergy"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
@@ -30,7 +30,7 @@ def parse_storage() -> np.ndarray:
                 run = int(line[1])
                 step = int(line[2])
 
-                if step == previous_step:
+                if step == previous_step and folder_name != "../results/stigmergy":
                     step_storage_sum += int(line[3])
                 else:
                     storage_capacity[folder_id, run, step - 1] = step_storage_sum
