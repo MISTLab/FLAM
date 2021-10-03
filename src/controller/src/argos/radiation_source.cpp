@@ -18,7 +18,7 @@ float RadiationSource::GetIntensity() {
 float RadiationSource::GetPerceivedIntensity(const int x, const int y) {
     float distance = sqrt(pow(this->x - x, 2.0) + pow(this->y - y, 2.0));
 
-    return this->intensity / (1 + 5.0*pow(distance, 2.0));
+    return this-> intensity / (1 + 1.0*pow(distance, 2.0));
 }
 
 CVector3 RadiationSource::GetCoordinates() {
