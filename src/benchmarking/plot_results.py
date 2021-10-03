@@ -93,7 +93,7 @@ def parse_data_lost():
                 previous_step = step
 
 
-            data_lost[folder_id, run, step:MAX_NB_STEPS] = data_lost[folder_id, run, step - 1]
+            data_lost[folder_id, run, step:MAX_NB_STEPS] = lost_sum
 
     return data_lost
 
@@ -145,6 +145,7 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_nam
     ax = fig.gca()
     ax.set_xlabel("Transfer speed (step)")
     ax.set_ylabel(dependant_variable)
+    ax.set_xlim([0,100])
     ax.legend(['DORA-Mesh', 'Hop-count', 'Stigmergy'])
     plt.savefig(figures_folder + file_name)
 

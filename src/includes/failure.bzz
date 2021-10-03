@@ -37,7 +37,7 @@ function data_corruption(){
             }
         })
 
-        log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
+        #log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
 
         foreach(to_delete, function(key, value) {
             storage_delete(value)

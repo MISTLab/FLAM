@@ -6,6 +6,9 @@ include "includes/constants.bzz"
 
 
 FITNESS_TOLERANCE = 1.2  # 120%
+RISK_GAIN = 2.0
+HOP_COUNT_GAIN = 1.0
+STORAGE_GAIN = 1.0
 
 
 max_neighbor_fitness = -1.0
@@ -40,9 +43,12 @@ function update_neighborhood_fitness() {
 function get_fitness() {
     if (id == 0) {
         return INFINITY  # Base station has infinite fitness
+    } else if (get_available_storage() == 0){
+        return 0
     }
-    
-    return get_available_storage() / (get_radiation_intensity() * get_min_hop_count() * STORAGE_CAPACITY) 
+
+    return 1 / (RISK_GAIN * get_radiation_intensity() * HOP_COUNT_GAIN * get_min_hop_count())
+    #return (STORAGE_GAIN * (get_available_storage() / STORAGE_CAPACITY)) / (RISK_GAIN * get_radiation_intensity() * HOP_COUNT_GAIN * get_min_hop_count()) 
 }
 
 function get_fitness_hop_only() {
@@ -84,4 +90,8 @@ function is_fit_hop_only() {
 
 function broadcast_fitness() {
     neighbors.broadcast("fitness", get_fitness())
+}
+
+function broadcast_fitness_hop_only() {
+    neighbors.broadcast("fitness", get_fitness_hop_only())
 }

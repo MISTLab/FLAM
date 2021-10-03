@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="10" />
-    <experiment length="300"
+    <experiment length="100"
                 ticks_per_second="5" 
                 random_seed="0"/>
     <!--profiling file="profile.txt"
@@ -96,7 +96,7 @@
   <!-- ****************** -->
   <!-- * Visualization * -->
   <!-- ****************** -->
-  <visualization>
+  <!-- <visualization>
     <qt-opengl>
       <camera>
         <placements>
@@ -109,6 +109,6 @@
                        quality="100" /> 
       <user_functions label="buzz_qt" show_buzz_editor="false"/>
     </qt-opengl>
-  </visualization>
+  </visualization> -->
 
 </argos-configuration>

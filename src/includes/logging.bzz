@@ -21,7 +21,7 @@ CSVLogger = {
     #
     .new = function(experiment, file_name, header) {
         full_file_path = string.concat(FILE_FOLDER, experiment, "/", string.tostring(id), "_", file_name)
-        CSVLogger.init_file(file_name, header)
+        CSVLogger.init_file(full_file_path, header)
 
         return {
             .file_name = full_file_path,
@@ -37,11 +37,11 @@ CSVLogger = {
     # RETURN: nil
     #
     .init_file = function(full_file_path, header) {
-        verification_file = io.fopen(string.concat(FILE_FOLDER, full_file_path), "r")
+        verification_file = io.fopen(full_file_path, "r")
 
         # If file is nil, it means it was not created before and we can initialize it
         if (verification_file == nil) {
-            result_file = io.fopen(string.concat(FILE_FOLDER, full_file_path), "w")
+            result_file = io.fopen(full_file_path, "w")
             io.fwrite(result_file, string.concat("id,run,step,", header))
             io.fclose(result_file)
         } else {

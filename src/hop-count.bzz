@@ -50,7 +50,18 @@ function log_metrics() {
 function step() {
     if (current_step < EXPERIMENT_LENGTH) {
         broadcast_lowest_hop_count()
-        broadcast_fitness()
+        broadcast_fitness_hop_only()
+
+        if (id == 0){
+            next_position.x = -4.0
+            next_position.y = -4.0
+
+            next_position_local = math.vec2.rotate(math.vec2.sub(next_position, pose.position), -pose.orientation.yaw)
+
+            scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
+
+            gotoc(scaled_direction.x, scaled_direction.y)
+        }
 
         if (id != 0){
             move_hexagon()
