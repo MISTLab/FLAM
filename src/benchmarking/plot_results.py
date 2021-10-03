@@ -6,13 +6,13 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-folders = ["../results/dora_mesh", "../results/hop_count"]
+folders = ["../results/dora_mesh"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
 
 def find_nb_run() -> int:
-    with open("../results/hop_count/concatenated_storage.csv", "r") as f1:
+    with open("../results/dora_mesh/concatenated_storage.csv", "r") as f1:
         last_line = f1.readlines()[-1]
 
     return int(last_line.split(",")[1]) + 1
@@ -45,7 +45,7 @@ def parse_storage() -> np.ndarray:
 
 def parse_reliability():
     reliability = np.zeros((len(folders), find_nb_run(), MAX_NB_STEPS))
-    print(reliability.shape)
+
     for folder_id, folder_name in enumerate(folders):
         print(f"---Processing {folder_name}---")
         with open(f"{folder_name}/concatenated_reliability.csv", "r") as res:
@@ -54,7 +54,7 @@ def parse_reliability():
             lost_sum = 0
             for line in csv.reader(res):
                 run = int(line[1])
-                step = int(line[2])
+                step = int(line[2]) - 1
                 created_sum += int(line[3])
                 lost_sum += int(line[4])
 
