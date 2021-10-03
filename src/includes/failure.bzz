@@ -30,11 +30,11 @@ function data_corruption(){
         intensity = get_radiation_intensity()
 
         foreach(storage, function(key, value) {
-            rand = math.rng.uniform(0.1, 1.0)
+            rand = math.rng.uniform(0.1, 0.5)
 
             if (rand < intensity){
                 table.append(to_delete, key)
-                log(id, " corrupted data: ", key)
+                log(id, " corrupted data")
             }
         })
 
