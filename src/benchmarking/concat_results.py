@@ -4,7 +4,7 @@ import csv
 FOLDER_RESULTS_DORA_MESH = "../results/dora_mesh"
 FOLDER_RESULTS_HOP_COUNT = "../results/hop_count"
 FOLDER_RESULTS_STIGMERGY = "../results/stigmergy"
-ROBOT_IDS = range(15)
+ROBOT_IDS = range(20)
 METRIC = ["storage", "reliability"]
 
 def aggregate_results(folder, metric) -> dict:
