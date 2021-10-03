@@ -30,7 +30,7 @@ def store_stepwise_results(file_reader, stepwise_results: dict) -> None:
 
 
 def main():
-    for folder in [FOLDER_RESULTS_DORA_MESH]:
+    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT]:
         for metric in METRIC:
             stepwise_results = aggregate_results(folder, metric)
 
