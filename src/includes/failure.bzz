@@ -34,9 +34,10 @@ function data_corruption(){
 
             if (rand < intensity){
                 table.append(to_delete, key)
-                log(id, " corrupted data")
             }
         })
+
+        log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
 
         foreach(to_delete, function(key, value) {
             storage_delete(value)
