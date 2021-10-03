@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-folders = ["../results/dora_mesh"]
+folders = ["../results/dora_mesh", "../results/hop_count"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
@@ -65,6 +65,46 @@ def parse_reliability():
 
     return reliability
 
+def parse_data_lost():
+    data_lost = np.zeros((len(folders), find_nb_run(), MAX_NB_STEPS))
+
+    for folder_id, folder_name in enumerate(folders):
+        print(f"---Processing {folder_name}---")
+        with open(f"{folder_name}/concatenated_reliability.csv", "r") as res:
+            step = 0
+            lost_sum = 0
+            for line in csv.reader(res):
+                run = int(line[1])
+                step = int(line[2]) - 1
+                lost_sum += int(line[4])
+
+                data_lost[folder_id, run, step] = lost_sum
+
+
+            data_lost[folder_id, run, step:MAX_NB_STEPS] = data_lost[folder_id, run, step]
+
+    return data_lost
+
+def parse_data_generated():
+    data_generated = np.zeros((len(folders), find_nb_run(), MAX_NB_STEPS))
+
+    for folder_id, folder_name in enumerate(folders):
+        print(f"---Processing {folder_name}---")
+        with open(f"{folder_name}/concatenated_reliability.csv", "r") as res:
+            step = 0
+            generated_sum = 0
+            for line in csv.reader(res):
+                run = int(line[1])
+                step = int(line[2]) - 1
+                generated_sum += int(line[3])
+
+                data_generated[folder_id, run, step] = generated_sum
+
+
+            data_generated[folder_id, run, step:MAX_NB_STEPS] = data_generated[folder_id, run, step]
+
+    return data_generated
+
 def parse_speed():
     speed_dict = {}
     for folder_id, folder_name in enumerate(folders):
@@ -109,13 +149,20 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_nam
 
     for f in range(len(folders)):
         plt.bar(list(metric_data[f].keys()), metric_data[f].values(), color=colors[f])
-        plt.savefig(figures_folder + file_name)
+
+    ax = fig.gca()
+    ax.set_xlabel("Transfer speed (step)")
+    ax.set_ylabel(dependant_variable)
+    ax.legend(['DORA-Mesh', 'Hop-count', 'Stigmergy'])
+    plt.savefig(figures_folder + file_name)
 
 
 def plot_metrics() -> None:       
     plot_single_metric(parse_reliability(), "Retained data (%)", "reliability.png")
+    plot_single_metric(parse_data_lost(), "Lost data", "lost_data.png")
+    plot_single_metric(parse_data_generated(), "Generated data", "generated_data.png")
     plot_single_metric(parse_storage(), "Amount of data stored", "storage.png")
-    plot_speed_metric(parse_speed(),"Transfer speed (step)","speed.png")
+    plot_speed_metric(parse_speed(),"Number of data","speed.png")
 
 
 def main() -> None:
