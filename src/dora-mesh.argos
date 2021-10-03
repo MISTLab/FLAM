@@ -67,10 +67,10 @@
 
     <!-- * Initial drones positions * -->
     <distribute>
-      <position method="uniform" min="-4,-4,0" max="4,4,0" />
+      <position method="uniform" min="-4.5,-4.5,0" max="4.5,4.5,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="15" max_trials="100">
-        <kheperaiv id="sp" rab_range="4" rab_data_size="100000">
+      <entity quantity="20" max_trials="100">
+        <kheperaiv id="sp" rab_range="3" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>
