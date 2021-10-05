@@ -44,7 +44,7 @@
   <!-- * Loop Functions * -->
   <!-- ****************** -->
   <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
-    <radiation radius="0.5"/>
+    <radiation radius="0.25"/>
   </loop_functions>
 
   <!-- *********************** -->
@@ -67,10 +67,10 @@
 
     <!-- * Initial drones positions * -->
     <distribute>
-      <position method="uniform" min="-4.5,-4.5,0" max="4.5,4.5,0" />
+      <position method="grid" center="0.0,0.0,0.0" distances="2.5,2.0,0" layout="4,5,1" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
       <entity quantity="20" max_trials="100">
-        <kheperaiv id="sp" rab_range="3" rab_data_size="100000">
+        <kheperaiv id="sp" rab_range="3.5" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>
