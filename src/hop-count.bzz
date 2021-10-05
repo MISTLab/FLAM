@@ -42,7 +42,7 @@ function init() {
 # RETURN: nil
 #
 function log_metrics() {
-    storage_logger.write_row({ .0 = get_storage_used()})
+    storage_logger.write_row({ .0 = size(storage)})
     reliability_logger.write_row({ .0 = get_nb_created_data(), .1 = get_nb_lost_data() })
 }
 
@@ -52,29 +52,18 @@ function step() {
         broadcast_lowest_hop_count()
         broadcast_fitness_hop_only()
 
-        if (id == 0){
-            next_position.x = -4.0
-            next_position.y = -4.0
-
-            next_position_local = math.vec2.rotate(math.vec2.sub(next_position, pose.position), -pose.orientation.yaw)
-
-            scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
-
-            gotoc(scaled_direction.x, scaled_direction.y)
-        }
 
         if (id != 0){
-            move_hexagon()
+            data_corruption()
 
             if ((not is_fit_hop_only()) and (neighbors.count() > 0)){
                 evict()
             }
 
-            if (current_step % 10 == 0){
+            if ((current_step + id) % 10 == 0){
                 generate_data()
             }
 
-            data_corruption()
         }
 
 

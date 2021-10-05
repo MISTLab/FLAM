@@ -44,12 +44,28 @@
   <!-- * Loop Functions * -->
   <!-- ****************** -->
   <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
-    <radiation radius="0.5"/>
+    <radiation radius="0.25"/>
   </loop_functions>
 
   <!-- *********************** -->
   <!-- * Arena configuration * -->
   <!-- *********************** -->
+  <!-- <arena size="24, 24, 2" center="0,0,1">
+
+    <box id="wall_north" size="24,0.1,0.5" movable="false">
+      <body position="0,12,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_south" size="24,0.1,0.5" movable="false">
+      <body position="0,-12,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_east" size="0.1,24,0.5" movable="false">
+      <body position="12,0,0" orientation="0,0,0" />
+    </box>
+    <box id="wall_west" size="0.1,24,0.5" movable="false">
+      <body position="-12,0,0" orientation="0,0,0" />
+    </box> -->
+
+
   <arena size="10, 10, 2" center="0,0,1">
 
     <box id="wall_north" size="10,0.1,0.5" movable="false">
@@ -66,11 +82,22 @@
     </box>
 
     <!-- * Initial drones positions * -->
-    <distribute>
-      <position method="uniform" min="-4.5,-4.5,0" max="4.5,4.5,0" />
+    <!-- <distribute>
+      <position method="grid" center="0.0,0.0,0.0" distances="2,2,0" layout="10,10,1" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="20" max_trials="100">
-        <kheperaiv id="sp" rab_range="3" rab_data_size="100000">
+      <entity quantity="100" max_trials="100">
+        <kheperaiv id="sp" rab_range="3.5" rab_data_size="100000">
+          <controller config="drone_controller" />
+        </kheperaiv>
+      </entity>
+    </distribute>
+  </arena> -->
+
+    <distribute>
+      <position method="grid" center="0.0,0.0,0.0" distances="2,2,0" layout="5,5,1" />
+      <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
+      <entity quantity="25" max_trials="100">
+        <kheperaiv id="sp" rab_range="3.5" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>
