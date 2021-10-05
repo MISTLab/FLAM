@@ -15,13 +15,13 @@ from random import uniform
 
 NB_SOURCE_FILES = 10
 NB_RADIATION_SOURCES = 1
-MIN_MAP_X = -4
-MAX_MAP_X = 4
-MIN_MAP_Y = -4
-MAX_MAP_Y = 4
+MIN_MAP_X = -1
+MAX_MAP_X = 1
+MIN_MAP_Y = -1
+MAX_MAP_Y = 1
 
 def generate_source() -> dict:
-    return {"x": uniform(MIN_MAP_X, MAX_MAP_X), "y": uniform(MIN_MAP_Y, MAX_MAP_Y), "intensity": uniform(0.2, 1.0)}
+    return {"x": uniform(MIN_MAP_X, MAX_MAP_X), "y": uniform(MIN_MAP_Y, MAX_MAP_Y), "intensity": uniform(0.5, 1.0)}
 
 
 def main():
