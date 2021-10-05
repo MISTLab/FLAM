@@ -197,12 +197,17 @@ static int BuzzGetCurrentKey(buzzvm_t vm){
 /****************************************/
 
 static int BuzzGetRadiationIntensity(buzzvm_t vm){
+   /* Get experiment number */
+   buzzvm_lload(vm, 1);
+   buzzobj_t buzzExperimentNumber = buzzvm_stack_at(vm, 1);
+   int experimentNumber = buzzExperimentNumber->i.value;
+
    /* Get pointer to the controller */
    buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
    buzzvm_gload(vm);
    /* Call function */
    float radiationIntensity = 
-      reinterpret_cast<CBuzzControllerDroneSim*>(buzzvm_stack_at(vm, 1)->u.value)->GetRadiationIntensity();
+      reinterpret_cast<CBuzzControllerDroneSim*>(buzzvm_stack_at(vm, 1)->u.value)->GetRadiationIntensity(experimentNumber);
    
    buzzvm_pushf(vm, radiationIntensity);
 

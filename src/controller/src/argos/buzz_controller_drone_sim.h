@@ -39,7 +39,7 @@ public:
 
    std::string GetCurrentKey();
 
-   float GetRadiationIntensity();
+   float GetRadiationIntensity(const int& experimentNumber);
 
    void LogDatum(const std::string& key, const float& data, const int& step);
    

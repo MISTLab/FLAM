@@ -82,10 +82,10 @@ std::string CBuzzControllerDroneSim::GetCurrentKey(){
 /****************************************/
 /****************************************/
 
-float CBuzzControllerDroneSim::GetRadiationIntensity(){
+float CBuzzControllerDroneSim::GetRadiationIntensity(const int& experimentNumber){
    Json::Value radiationValues;
    Json::Reader reader;
-   std::ifstream radiationFile(radiation_file_name_);
+   std::ifstream radiationFile(RADIATION_SOURCES_FILE + std::to_string(experimentNumber) + ".json");
 
    reader.parse(radiationFile, radiationValues);
 
@@ -102,10 +102,6 @@ float CBuzzControllerDroneSim::GetRadiationIntensity(){
       RadiationSource radiation = RadiationSource(source["x"].asFloat(), source["y"].asFloat(), source["intensity"].asFloat());
       totalRadiationIntensity += radiation.GetPerceivedIntensity(x, y);
    }
-
-   // Normal distribution (mean, std)
-   /*std::normal_distribution<float> noise_distribution(0.0, 0.05);
-   float noise = noise_distribution(random_engine_);*/
 
    // Compute belief elem [0,1]
    float radiation_belief = totalRadiationIntensity; // + noise;
