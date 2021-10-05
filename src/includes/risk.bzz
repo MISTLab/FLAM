@@ -13,7 +13,7 @@ function get_risk() {
 }
 
 function update_risk() {
-    new_value = get_radiation_intensity() + math.rng.gaussian(0,0.1)
+    new_value = get_radiation_intensity(CSVLogger.current_run) + math.rng.gaussian(0,0.1)
     current_key = get_current_key()
 
     if (risk_belief.get(current_key) != nil){

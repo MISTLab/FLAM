@@ -1,9 +1,12 @@
+include "includes/logging.bzz"
+
 
 failed = 0
 
+
 function failure() {
     rand = math.rng.uniform(0.2, 1.0)
-    intensity = get_radiation_intensity()
+    intensity = get_radiation_intensity(CSVLogger.current_run)
 
     if (rand < intensity and id != 0) {  
         failed = 1 
@@ -27,17 +30,19 @@ function is_failed(){
 function data_corruption(){
     if (id != 0) {
         to_delete = {}
-        intensity = get_radiation_intensity()
+        intensity = math.max(get_radiation_intensity(CSVLogger.current_run) + math.rng.uniform(-0.05, 0.05), 0.0)
 
         foreach(storage, function(key, value) {
-            rand = math.rng.uniform(0.1, 0.5)
+            rand = math.rng.uniform(0.15, 0.5)
 
             if (rand < intensity){
                 table.append(to_delete, key)
             }
         })
 
-        #log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
+        if (size(to_delete) != 0){
+            log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
+        }
 
         foreach(to_delete, function(key, value) {
             storage_delete(value)

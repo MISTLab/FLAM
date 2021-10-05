@@ -3,10 +3,10 @@ include "includes/risk.bzz"
 include "includes/routing.bzz"
 include "includes/storage.bzz"
 include "includes/constants.bzz"
+include "includes/logging.bzz"
 
-
-FITNESS_TOLERANCE = 1.2  # 120%
-RISK_GAIN = 2.0
+FITNESS_TOLERANCE = 1.0  # 100%
+RISK_GAIN = 10.0
 HOP_COUNT_GAIN = 1.0
 STORAGE_GAIN = 1.0
 
@@ -47,8 +47,8 @@ function get_fitness() {
         return 0
     }
 
-    return 1 / (RISK_GAIN * get_radiation_intensity() * HOP_COUNT_GAIN * get_min_hop_count())
-    #return (STORAGE_GAIN * (get_available_storage() / STORAGE_CAPACITY)) / (RISK_GAIN * get_radiation_intensity() * HOP_COUNT_GAIN * get_min_hop_count()) 
+    return 1.0 / (RISK_GAIN * get_radiation_intensity(CSVLogger.current_run) + HOP_COUNT_GAIN * get_min_hop_count())
+    #return (STORAGE_GAIN * (get_available_storage() / STORAGE_CAPACITY)) / (RISK_GAIN * get_radiation_intensity(CSVLogger.current_run) * HOP_COUNT_GAIN * get_min_hop_count()) 
 }
 
 function get_fitness_hop_only() {
@@ -58,7 +58,7 @@ function get_fitness_hop_only() {
         return 0
     }
 
-    return 1 / get_min_hop_count()
+    return (1.0 / get_min_hop_count())
 }
 
 function get_max_neighbor_fitness() {
