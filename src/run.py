@@ -12,7 +12,7 @@ NB_RUNS = 10
 
 
 def main() -> None:
-    command = ["argos3 -c dora-mesh.argos"]
+    command = ["argos3 -c hop-count.argos"]
     for i in range(NB_RUNS):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         
