@@ -24,22 +24,21 @@ def parse_storage() -> np.ndarray:
         print(f"---Processing {folder_name}---")
         with open(f"{folder_name}/concatenated_storage.csv", "r") as res:
             step = 0
-            previous_step = 0
+            previous_step, previous_run = 0, 0
             step_storage_sum = 0
             for line in csv.reader(res):
                 run = int(line[1])
                 step = int(line[2])
 
-                if step == previous_step and folder_name != "../results/stigmergy":
+                if step == previous_step and run == previous_run and folder_name != "../results/stigmergy":
                     step_storage_sum += int(line[3])
                 else:
                     storage_capacity[folder_id, run, step - 1] = step_storage_sum
                     step_storage_sum = int(line[3])
                 
-                previous_step = step
+                previous_step, previous_run = step, run
+                storage_capacity[folder_id, run, step] = step_storage_sum
 
-
-            storage_capacity[folder_id, run, step:MAX_NB_STEPS] = step_storage_sum
 
     return storage_capacity
 
@@ -50,24 +49,23 @@ def parse_reliability():
         print(f"---Processing {folder_name}---")
         with open(f"{folder_name}/concatenated_reliability.csv", "r") as res:
             step = 0
-            previous_step = 0
+            previous_step, previous_run = 0, 0
             created_sum = 0
             lost_sum = 0
             for line in csv.reader(res):
                 run = int(line[1])
-                step = int(line[2]) - 1
+                step = int(line[2])
 
-                if step == previous_step:
+                if step == previous_step and run == previous_run:
                     created_sum += int(line[3])
                     lost_sum += int(line[4])
-                else:
+                elif step < MAX_NB_STEPS:
                     reliability[folder_id, run, step - 1] = (created_sum - lost_sum) / created_sum if created_sum != 0 else 1
                     created_sum = int(line[3])
                     lost_sum = int(line[4])
                 
-                previous_step = step
-
-            reliability[folder_id, run, step:MAX_NB_STEPS] = reliability[folder_id, run, step - 1]
+                previous_step, previous_run = step, run
+                reliability[folder_id, run, step] = (created_sum - lost_sum) / created_sum if created_sum != 0 else 1
 
     return reliability
 
@@ -78,22 +76,20 @@ def parse_data_lost():
         print(f"---Processing {folder_name}---")
         with open(f"{folder_name}/concatenated_reliability.csv", "r") as res:
             step = 0
-            previous_step = 0
+            previous_step, previous_run = 0, 0
             lost_sum = 0
             for line in csv.reader(res):
                 run = int(line[1])
-                step = int(line[2]) - 1
+                step = int(line[2])
 
-                if step == previous_step:
+                if step == previous_step and run == previous_run:
                     lost_sum += int(line[4])
                 else:
                     data_lost[folder_id, run, step - 1] = lost_sum
                     lost_sum = int(line[4])
                 
-                previous_step = step
-
-
-            data_lost[folder_id, run, step:MAX_NB_STEPS] = lost_sum
+                previous_step, previous_run = step, run
+                data_lost[folder_id, run, step] = lost_sum
 
     return data_lost
 
@@ -118,14 +114,14 @@ def parse_speed():
                 
 def plot_single_metric(metric_data: np.ndarray, dependant_variable: str, file_name: str) -> None:
     x_axis = np.arange(MAX_NB_STEPS)
-    colors = ["lightcoral","orchid", "cornflowerblue"]
+    colors = ["cornflowerblue", "lightcoral","orchid"]
 
     fig = plt.figure()
     ax = fig.gca()
 
     for f in range(len(folders)):
         std = np.array([0.5 * np.nanstd(metric_data[f, :, i]) for i in range(MAX_NB_STEPS)])
-        mean = metric_data[f, :, :].mean(0)
+        mean = np.mean(metric_data[f, :, :], axis=0)
         ax.scatter(x_axis, mean, c=colors[f])
         ax.fill_between(x_axis, mean-std, mean+std, alpha=0.25, color=colors[f], label='_nolegend_')
     
@@ -136,16 +132,16 @@ def plot_single_metric(metric_data: np.ndarray, dependant_variable: str, file_na
 
 
 def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_name: str) -> None:
-    colors = ["lightcoral","orchid", "cornflowerblue"]
+    colors = ["cornflowerblue", "lightcoral","orchid"]
     fig = plt.figure()
 
     for f in range(len(folders)):
-        plt.bar(list(metric_data[f].keys()), metric_data[f].values(), color=colors[f])
+        plt.bar(list(metric_data[f].keys()), np.array(list(metric_data[f].values())) / find_nb_run(), color=colors[f])
 
     ax = fig.gca()
     ax.set_xlabel("Transfer speed (step)")
     ax.set_ylabel(dependant_variable)
-    ax.set_xlim([0,20])
+    ax.set_xlim([0,30])
     ax.legend(['DORA-Mesh', 'Hop-count', 'Stigmergy'])
     plt.savefig(figures_folder + file_name)
 
