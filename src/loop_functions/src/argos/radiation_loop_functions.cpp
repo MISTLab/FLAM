@@ -1,19 +1,42 @@
 #include "radiation_loop_functions.h"
 
 const std::string RADIATION_SOURCES_FILE = "data/radiation_sources";
-const std::string RESULT_FILE = "results/result";
+const std::string RESULT_FILE = "results/run_0.txt";
 
 /****************************************/
 /****************************************/
 
 CRadiationLoopFunctions::CRadiationLoopFunctions() : CLoopFunctions() {
     // Find experiment number and file
-    int experiment_number = -1;
-    do
-    {
-        experiment_number++;
-        result_file_name_ = RESULT_FILE + std::to_string(experiment_number) + ".csv";
-    } while (std::ifstream(result_file_name_).good());
+    int experiment_number = 0;
+    std::ifstream experimentFile;
+    experimentFile.open(RESULT_FILE);
+
+    if (experimentFile.is_open()) {
+        experimentFile.seekg(-1, std::ios_base::end);
+
+        while (true) {
+            char ch;
+            experimentFile.get(ch);                            // Get current byte's data
+        
+            if ((int)experimentFile.tellg() <= 1) {            // If the data was at or before the 0th byte
+                experimentFile.seekg(0);                       // The first line is the last line
+                break;
+            } else if(ch == '\n') {                            // If the data was a newline
+                experimentFile.seekg(-2, std::ios_base::cur);
+                break;
+            } else {                                           // If the data was neither a newline nor at the 0 byte
+                experimentFile.seekg(-2, std::ios_base::cur);  // Move to the front of that data, then to the front of the data before it
+            }
+        }
+
+        std::string lastLine;            
+        std::getline(experimentFile, lastLine);          // Read the current line
+        experiment_number = std::stoi(lastLine);
+
+        experimentFile.close();
+    }
+
     radiation_file_name_ = RADIATION_SOURCES_FILE + std::to_string(experiment_number) + ".json";
 
     sources = this->ReadRadiationSources();
