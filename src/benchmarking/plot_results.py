@@ -6,7 +6,7 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-folders = ["../results/dora_mesh", "../results/hop_count", "../results/stigmergy"]
+folders = ["../results/dora_mesh", "../results/hop_count"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
@@ -145,7 +145,7 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_nam
     ax = fig.gca()
     ax.set_xlabel("Transfer speed (step)")
     ax.set_ylabel(dependant_variable)
-    ax.set_xlim([0,100])
+    ax.set_xlim([0,20])
     ax.legend(['DORA-Mesh', 'Hop-count', 'Stigmergy'])
     plt.savefig(figures_folder + file_name)
 

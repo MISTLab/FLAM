@@ -35,7 +35,7 @@ def store_sorted_results(file_reader, sorted_results: dict) -> None:
 
 
 def main():
-    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_STIGMERGY]:
+    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT]:
         for metric in METRIC:
             sorted_results = aggregate_results(folder, metric)
 
