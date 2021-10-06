@@ -6,7 +6,7 @@ include "includes/constants.bzz"
 include "includes/logging.bzz"
 
 FITNESS_TOLERANCE = 1.0  # 100%
-RISK_GAIN = 10.0
+RISK_GAIN = 15.0
 HOP_COUNT_GAIN = 1.0
 STORAGE_GAIN = 1.0
 

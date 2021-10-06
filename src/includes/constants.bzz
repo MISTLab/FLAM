@@ -4,7 +4,7 @@ NO_FAIL_DELAY = 20
 SEARCH_SPACE = { .minx = -5.0, .miny = -5.0, .maxx = 5.0, .maxy = 5.0}
 
 # Searching drones parameters
-NUMBER_OF_ROBOTS = 5
+NUMBER_OF_ROBOTS = 100
 NEW_POSE_DELAY = 10
 SEARCH_SPEED = 100.0
 DELTA_REACHED_POS = 1.0
