@@ -8,7 +8,7 @@ in the experiment file (./dora-mesh.argos).
 import subprocess
 
 
-NB_RUNS = 10
+NB_RUNS = 30
 
 
 def main() -> None:

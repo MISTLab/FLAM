@@ -50,23 +50,23 @@
   <!-- *********************** -->
   <!-- * Arena configuration * -->
   <!-- *********************** -->
-  <!-- <arena size="24, 24, 2" center="0,0,1">
+  <arena size="22, 22, 2" center="0,0,1">
 
-    <box id="wall_north" size="24,0.1,0.5" movable="false">
-      <body position="0,12,0" orientation="0,0,0" />
+    <box id="wall_north" size="22,0.1,0.5" movable="false">
+      <body position="0,11,0" orientation="0,0,0" />
     </box>
-    <box id="wall_south" size="24,0.1,0.5" movable="false">
-      <body position="0,-12,0" orientation="0,0,0" />
+    <box id="wall_south" size="22,0.1,0.5" movable="false">
+      <body position="0,-11,0" orientation="0,0,0" />
     </box>
-    <box id="wall_east" size="0.1,24,0.5" movable="false">
-      <body position="12,0,0" orientation="0,0,0" />
+    <box id="wall_east" size="0.1,22,0.5" movable="false">
+      <body position="11,0,0" orientation="0,0,0" />
     </box>
-    <box id="wall_west" size="0.1,24,0.5" movable="false">
-      <body position="-12,0,0" orientation="0,0,0" />
-    </box> -->
+    <box id="wall_west" size="0.1,22,0.5" movable="false">
+      <body position="-11,0,0" orientation="0,0,0" />
+    </box>
 
 
-  <arena size="10, 10, 2" center="0,0,1">
+  <!-- <arena size="10, 10, 2" center="0,0,1">
 
     <box id="wall_north" size="10,0.1,0.5" movable="false">
       <body position="0,5,0" orientation="0,0,0" />
@@ -79,10 +79,10 @@
     </box>
     <box id="wall_west" size="0.1,10,0.5" movable="false">
       <body position="-5,0,0" orientation="0,0,0" />
-    </box>
+    </box> -->
 
     <!-- * Initial drones positions * -->
-    <!-- <distribute>
+    <distribute>
       <position method="grid" center="0.0,0.0,0.0" distances="2,2,0" layout="10,10,1" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
       <entity quantity="100" max_trials="100">
@@ -91,9 +91,9 @@
         </kheperaiv>
       </entity>
     </distribute>
-  </arena> -->
+  </arena>
 
-    <distribute>
+    <!-- <distribute>
       <position method="grid" center="0.0,0.0,0.0" distances="2,2,0" layout="5,5,1" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
       <entity quantity="25" max_trials="100">
@@ -102,7 +102,7 @@
         </kheperaiv>
       </entity>
     </distribute>
-  </arena>
+  </arena> -->
 
   <!-- ******************* -->
   <!-- * Physics engines * -->

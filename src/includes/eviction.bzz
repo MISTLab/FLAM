@@ -1,33 +1,17 @@
 include "includes/fitness.bzz"
 include "includes/querying/query_msg.bzz"
 include "includes/storage.bzz"
+include "includes/constants.bzz"
 
 
 function evict() {
+    for (i = 0, i < math.min(size(storage), BANDWIDTH), i = i + 1) {
+        evicted_coordinates = storage_least_recently_used_id()
+        item = storage_get(evicted_coordinates)
 
-    if (size(storage) != 0){
+        msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), item.value, evicted_coordinates, item.metadata.creation_time)
+        neighbors.broadcast("post", msg)
 
-        if (get_id_max_neighbor_fitness() == 0){
-
-            while (size(storage) > 2) {
-                evicted_coordinates = storage_least_recently_used_id()
-                item = storage_get(evicted_coordinates)
-
-                msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), item.value, evicted_coordinates, item.metadata.creation_time)
-                neighbors.broadcast("post", msg)
-
-                storage_delete(evicted_coordinates)
-            }
-
-        } else{
-
-            evicted_coordinates = storage_least_recently_used_id()
-            item = storage_get(evicted_coordinates)
-
-            msg = query_msg.new("eviction", id, get_id_max_neighbor_fitness(), item.value, evicted_coordinates, item.metadata.creation_time)
-            neighbors.broadcast("post", msg)
-
-            storage_delete(evicted_coordinates)
-        }
+        storage_delete(evicted_coordinates)
     }
 }

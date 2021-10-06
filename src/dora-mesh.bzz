@@ -67,7 +67,7 @@ function step() {
                 evict()
             }
 
-            if ((current_step + id) % 10 == 0){
+            if ((current_step + id) % 9 == 0){
                 generate_data()
             }
 
