@@ -50,7 +50,7 @@ function step() {
 
         if (id != 0){
 
-            if (current_step % 10 == 0) {
+            if (current_step % 9 == 0) {
                 generate_stigmergy_data(swarm_storage)
             }
         }

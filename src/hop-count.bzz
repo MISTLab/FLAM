@@ -28,6 +28,10 @@ function init() {
     init_queries()
     init_random_search()
 
+    if (id == 0){
+        init_move_to_corner()
+    }
+
     CSVLogger.update_current_run()
     reliability_logger = CSVLogger.new("hop_count", "reliability.csv", "nb_created_data,nb_lost_data")
     storage_logger = CSVLogger.new("hop_count", "storage.csv", "nb_data")
@@ -49,6 +53,11 @@ function log_metrics() {
 # Executed every time step
 function step() {
     if (current_step < EXPERIMENT_LENGTH) {
+
+        # if (id == 0){
+        #     move_to_corner()
+        # }
+
         broadcast_lowest_hop_count()
         broadcast_fitness_hop_only()
 

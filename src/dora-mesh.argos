@@ -93,10 +93,10 @@
   </arena>
 
     <!-- <distribute>
-      <position method="grid" center="0.0,0.0,0.0" distances="2,2,0" layout="5,5,1" />
+      <position method="uniform" min="-10,-10,0" max="10,10,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="25" max_trials="100">
-        <kheperaiv id="sp" rab_range="3.5" rab_data_size="100000">
+      <entity quantity="100" max_trials="100">
+        <kheperaiv id="sp" rab_range="5" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>
@@ -122,7 +122,7 @@
   <!-- ****************** -->
   <!-- * Visualization * -->
   <!-- ****************** -->
-  <!-- <visualization>
+  <visualization>
     <qt-opengl>
       <camera>
         <placements>
@@ -135,6 +135,6 @@
                        quality="100" /> 
       <user_functions label="buzz_qt" show_buzz_editor="false"/>
     </qt-opengl>
-  </visualization> -->
+  </visualization>
 
 </argos-configuration>
