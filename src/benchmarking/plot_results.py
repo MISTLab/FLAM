@@ -122,7 +122,7 @@ def plot_single_metric(metric_data: np.ndarray, dependant_variable: str, file_na
     for f in range(len(folders)):
         std = np.array([0.5 * np.nanstd(metric_data[f, :, i]) for i in range(MAX_NB_STEPS)])
         mean = np.mean(metric_data[f, :, :], axis=0)
-        ax.scatter(x_axis, mean, c=colors[f])
+        ax.scatter(x_axis, mean, c=colors[f], s = 5)
         ax.fill_between(x_axis, mean-std, mean+std, alpha=0.25, color=colors[f], label='_nolegend_')
     
     ax.set_xlabel("Step")
