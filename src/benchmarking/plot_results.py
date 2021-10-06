@@ -142,7 +142,7 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, file_nam
     ax.set_xlabel("Transfer speed (step)")
     ax.set_ylabel(dependant_variable)
     ax.set_xlim([0,30])
-    ax.legend(['DORA-Mesh', 'Hop-count', 'Stigmergy'])
+    ax.legend(['DORA-Mesh', 'Hop-count'])
     plt.savefig(figures_folder + file_name)
 
 
