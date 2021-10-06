@@ -6,13 +6,13 @@ matplotlib.use('Agg')
 
 
 figures_folder = "figures/"
-folders = ["../results/dora_mesh", "../results/hop_count"]
+folders = ["../results/results_grid_100/dora_mesh", "../results/results_grid_100/hop_count", "../results/results_grid_100/stigmergy"]
 MAX_NB_STEPS = 500
 METRIC = ["storage", "reliability", "speed"]
 
 
 def find_nb_run() -> int:
-    with open("../results/dora_mesh/concatenated_storage.csv", "r") as f1:
+    with open("../results/results_grid_100/dora_mesh/concatenated_storage.csv", "r") as f1:
         last_line = f1.readlines()[-1]
 
     return int(last_line.split(",")[1]) + 1
@@ -30,7 +30,7 @@ def parse_storage() -> np.ndarray:
                 run = int(line[1])
                 step = int(line[2])
 
-                if step == previous_step and run == previous_run and folder_name != "../results/stigmergy":
+                if step == previous_step and run == previous_run and folder_name != "../results/results_grid_100/stigmergy":
                     step_storage_sum += int(line[3])
                 else:
                     storage_capacity[folder_id, run, step - 1] = step_storage_sum

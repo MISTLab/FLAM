@@ -1,9 +1,9 @@
 import csv
 
 
-FOLDER_RESULTS_DORA_MESH = "../results/dora_mesh"
-FOLDER_RESULTS_HOP_COUNT = "../results/hop_count"
-FOLDER_RESULTS_STIGMERGY = "../results/stigmergy"
+FOLDER_RESULTS_DORA_MESH = "../results/results_grid_100/dora_mesh"
+FOLDER_RESULTS_HOP_COUNT = "../results/results_grid_100/hop_count"
+FOLDER_RESULTS_STIGMERGY = "../results/results_grid_100/stigmergy"
 ROBOT_IDS = range(100)
 METRIC = ["storage", "reliability"]
 
@@ -35,7 +35,7 @@ def store_sorted_results(file_reader, sorted_results: dict) -> None:
 
 
 def main():
-    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT]:
+    for folder in [FOLDER_RESULTS_DORA_MESH, FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_STIGMERGY]:
         for metric in METRIC:
             sorted_results = aggregate_results(folder, metric)
 
