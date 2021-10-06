@@ -40,9 +40,9 @@ function data_corruption(){
             }
         })
 
-        # if (size(to_delete) != 0){
-        #     log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
-        # }
+        if (size(to_delete) != 0){
+            log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
+        }
 
         foreach(to_delete, function(key, value) {
             storage_delete(value)
