@@ -51,3 +51,30 @@ function random_search()
 
   gotoc(scaled_direction.x, scaled_direction.y)
 }
+
+function init_move_to_corner(){
+    spawn_position = {}
+    corner_position = {}
+
+    spawn_position.x = pose.position.x
+    spawn_position.y = pose.position.y
+
+    if (spawn_position.x >= 0){
+        corner_position.x = 9.0
+    } else{
+        corner_position.x = -9.0
+    }
+
+    if (spawn_position.y >= 0){
+        corner_position.y = 9.0
+    } else{
+        corner_position.y = -9.0
+    }
+}
+
+function move_to_corner(){
+    corner_position_local = math.vec2.rotate(math.vec2.sub(corner_position, pose.position), -pose.orientation.yaw)
+    scaled_corner_direction = math.vec2.scale(corner_position_local, SEARCH_SPEED)
+
+    gotoc(scaled_corner_direction.x, scaled_corner_direction.y)
+}
