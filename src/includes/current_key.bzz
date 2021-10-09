@@ -1,5 +1,7 @@
+include "string.bzz"
 
 function get_current_key(x, y){
+ 
     return string.concat(scaled_floor_string(x), "_", scaled_floor_string(y))
 }
 
@@ -9,6 +11,6 @@ function scaled_floor_string(number) {
     if (scaled_number < 0) {
         scaled_number = scaled_number - 1
     }
-
+    
     return string.split(string.tostring(scaled_number), ".")[0]
 }

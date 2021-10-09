@@ -4,6 +4,8 @@ include "includes/routing.bzz"
 include "includes/storage.bzz"
 include "includes/constants.bzz"
 include "includes/logging.bzz"
+include "includes/radiation_sensor.bzz"
+
 
 FITNESS_TOLERANCE = 1.0  # 100%
 RISK_GAIN = 15.0
@@ -41,18 +43,18 @@ function update_neighborhood_fitness() {
 }
 
 function get_fitness() {
-    if (id == 0) {
+    if (id == 5) {
         return INFINITY  # Base station has infinite fitness
     } else if (get_available_storage() == 0){
         return 0
     }
 
-    return 1.0 / (RISK_GAIN * get_radiation_intensity(CSVLogger.current_run) + HOP_COUNT_GAIN * get_min_hop_count())
-    #return (STORAGE_GAIN * (get_available_storage() / STORAGE_CAPACITY)) / (RISK_GAIN * get_radiation_intensity(CSVLogger.current_run) * HOP_COUNT_GAIN * get_min_hop_count()) 
+    # return 1.0 / (RISK_GAIN *  get_radiation_intensity(CSVLogger.current_run) + HOP_COUNT_GAIN * get_min_hop_count())
+    return 1.0 / (RISK_GAIN * radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y) + HOP_COUNT_GAIN * get_min_hop_count())
 }
 
 function get_fitness_hop_only() {
-    if (id == 0) {
+    if (id == 5) {
         return INFINITY  # Base station has infinite fitness
     } else if (get_available_storage() == 0){
         return 0

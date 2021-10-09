@@ -38,7 +38,7 @@ function get_min_hop_count() {
 
     update_hop_count()
 
-    if (id == 0) {
+    if (id == 5) {
         return 0  # Base Station has 0 hop count to itself
     } else if (size(hop_counts) > 0) {
         return table.min(hop_counts)

@@ -77,11 +77,12 @@ CSVLogger = {
         CSVLogger.current_run = 0
 
         run_file = io.fopen(string.concat("results/run_", string.tostring(id), ".txt"), "a+")
+        log(run_file)
 
         io.fforeach(run_file, function(line) {
             CSVLogger.current_run = CSVLogger.current_run + 1
         })
-        
+
         io.fwrite(run_file, CSVLogger.current_run)
         io.fclose(run_file)
     }

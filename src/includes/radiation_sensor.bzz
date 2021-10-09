@@ -1,0 +1,22 @@
+include "includes/radiation.bzz"
+include "table.bzz"
+
+
+radiation_sensor = {
+    .new = function(radiation_sources) {
+        return {
+            .radiation_sources = radiation_sources  # Table of radiation_source
+        }
+    },
+
+    .get_radiatation_intensity = function(sensor, x_robot, y_robot) {
+        return reduce(sensor.radiation_sources,
+            function(key, source, total) {
+                return radiation_source.get_perceived_intensity(source, x_robot, y_robot) + total
+            },
+            0.0)
+    }
+}
+# function get_radiation_intensity(){
+#     return radiation_sensor.get_total_perceived_radiation(sensor, pose.position.x, pose.position.y)
+# }

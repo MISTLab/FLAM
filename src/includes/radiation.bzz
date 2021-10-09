@@ -1,0 +1,15 @@
+radiation_source = {
+    .new = function(x, y, intensity) {
+        return {
+            .x = x,
+            .y = y,
+            .intensity = intensity
+        }
+    },
+
+    .get_perceived_intensity = function(source, x_robot, y_robot) {
+        distance = math.sqrt((source.x - x_robot)^2 + (source.y - y_robot)^2)
+
+        return source.intensity / (1.0 + 5.0 * distance^2)
+    }
+}

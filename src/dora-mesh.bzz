@@ -15,29 +15,27 @@ include "includes/storage.bzz"
 include "includes/data.bzz"
 include "includes/failure.bzz"
 include "includes/logging.bzz"
+include "includes/radiation_sensor.bzz"
+include "includes/radiation.bzz"
+include "includes/current_key.bzz"
 
 
 function init() {
     current_step = 0
-    set_leds(0,255,0)
-    math.rng.setseed(id)
 
     init_available_storage()
     init_hop_count()
     init_fitness()
     init_queries()
-    init_random_search()
 
-    if (id == 0){
-        init_move_to_corner()
-    }
-
+    sources = { .0 = radiation_source.new(1.1, -0.37, 1.0)}
+    sensor = radiation_sensor.new(sources)
 
     CSVLogger.update_current_run()
     reliability_logger = CSVLogger.new("dora_mesh", "reliability.csv", "nb_created_data,nb_lost_data")
     storage_logger = CSVLogger.new("dora_mesh", "storage.csv", "nb_data")
 
-    if (id == 0) {
+    if (id == 5) {
         speed_logger = CSVLogger.new("dora_mesh", "speed.csv", "arrival_time,creation_time")
     }
 }
@@ -54,30 +52,22 @@ function log_metrics() {
 # Executed every time step
 function step() {
     if (current_step < EXPERIMENT_LENGTH) {
-
-        # if (id == 0){
-        #     move_to_corner()
-        # }
-
         broadcast_lowest_hop_count()
         broadcast_fitness()
-        
-        #log("Robot ", id, " has fitness of ", get_fitness())
 
-        # if (id == 18){
-        #     log(get_radiation_intensity(CSVLogger.current_run))
-        # }
+        #log(get_fitness())
+        #log(neighbors.count())
+        #log("current_risk = ", radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y))
+        #log(pose.position.x, " : ", pose.position.y )
 
-        if (id != 0){
-            #move_hexagon()
-            #update_risk()
+        if (id != 5){
             data_corruption() 
 
             if ((not is_fit()) and (neighbors.count() > 0)){
                 evict()
             }
 
-            if ((current_step + id) % 9 == 0){
+            if ((current_step + id) % 10 == 0){
                 generate_data()
             }
 
@@ -87,9 +77,10 @@ function step() {
     }
 
     # Stop robots when experiment is over
-    if (current_step == EXPERIMENT_LENGTH) {
-        set_wheels(0.0, 0.0)
-        set_leds(255, 0, 0)
+    if (current_step > EXPERIMENT_LENGTH) {
+        log("Experiment terminated")
+        # set_wheels(0.0, 0.0)
+        # set_leds(255, 0, 0)
     }
 
     current_step = current_step + 1

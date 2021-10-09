@@ -14,7 +14,7 @@ function storage_create(coordinates, value, creation_time) {
         .metadata = metadata.new(creation_time, current_step, get_data_size(value), coordinates)
     }
 
-    if (id == 0) {
+    if (id == 5) {
         speed_logger.write_row({ .0 = current_step, .1 = creation_time })
     }
 }
@@ -27,7 +27,7 @@ function storage_update(coordinates, value, creation_time) {
         storage[coordinates].metadata.timestamp_used = current_step
         storage[coordinates].metadata.size = get_data_size(value)
 
-        if (id == 0) {
+        if (id == 5) {
             speed_logger.write_row({ .0 = current_step, .1 = creation_time })
         }
     } else {
@@ -47,7 +47,7 @@ function storage_get(coordinates) {
 }
 
 function get_available_storage() {
-    if (id == 0){
+    if (id == 5){
         return INFINITY
     }
 

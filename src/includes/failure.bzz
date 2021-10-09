@@ -8,10 +8,9 @@ function failure() {
     rand = math.rng.uniform(0.2, 1.0)
     intensity = get_radiation_intensity(CSVLogger.current_run)
 
-    if (rand < intensity and id != 0) {  
+    if (rand < intensity and id != 5) {  
         failed = 1 
-        set_wheels(0.0, 0.0)
-        set_leds(255, 0, 0)
+
         nb_lost_data = nb_lost_data + size(storage)
         
         return 1
@@ -28,9 +27,9 @@ function is_failed(){
 }
 
 function data_corruption(){
-    if (id != 0) {
+    if (id != 5) {
         to_delete = {}
-        intensity = math.max(get_radiation_intensity(CSVLogger.current_run) + math.rng.uniform(-0.05, 0.05), 0.0)
+        intensity = math.max(radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y) + math.rng.uniform(-0.05, 0.05), 0.0)
 
         foreach(storage, function(key, value) {
             rand = math.rng.uniform(0.15, 0.5)

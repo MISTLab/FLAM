@@ -19,24 +19,21 @@ include "includes/logging.bzz"
 
 function init() {
     current_step = 0
-    set_leds(0,255,0)
     math.rng.setseed(id)
 
     init_available_storage()
     init_hop_count()
     init_fitness()
     init_queries()
-    init_random_search()
 
-    if (id == 0){
-        init_move_to_corner()
-    }
+    sources = { .0 = radiation_source.new(1.1, -0.37, 1.0)}
+    sensor = radiation_sensor.new(sources)
 
     CSVLogger.update_current_run()
     reliability_logger = CSVLogger.new("hop_count", "reliability.csv", "nb_created_data,nb_lost_data")
     storage_logger = CSVLogger.new("hop_count", "storage.csv", "nb_data")
 
-    if (id == 0) {
+    if (id == 5) {
         speed_logger = CSVLogger.new("hop_count", "speed.csv", "arrival_time,creation_time")
     }
 }
@@ -54,15 +51,10 @@ function log_metrics() {
 function step() {
     if (current_step < EXPERIMENT_LENGTH) {
 
-        # if (id == 0){
-        #     move_to_corner()
-        # }
-
         broadcast_lowest_hop_count()
         broadcast_fitness_hop_only()
 
-
-        if (id != 0){
+        if (id != 5){
             data_corruption()
 
             if ((not is_fit_hop_only()) and (neighbors.count() > 0)){
@@ -75,14 +67,12 @@ function step() {
 
         }
 
-
+        log("-----------------", current_step)
         log_metrics()
     }
 
     # Stop robots when experiment is over
     if (current_step == EXPERIMENT_LENGTH) {
-        set_wheels(0.0, 0.0)
-        set_leds(255, 0, 0)
     }
 
     current_step = current_step + 1

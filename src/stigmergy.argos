@@ -88,6 +88,17 @@
     </distribute>
   </arena>
 
+    <!-- <distribute>
+      <position method="uniform" min="-9,-9,0" max="9,9,0" />
+      <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
+      <entity quantity="100" max_trials="100">
+        <kheperaiv id="sp" rab_range="3.5" rab_data_size="100000">
+          <controller config="drone_controller" />
+        </kheperaiv>
+      </entity>
+    </distribute>
+  </arena> -->
+
   <!-- ******************* -->
   <!-- * Physics engines * -->
   <!-- ******************* -->
