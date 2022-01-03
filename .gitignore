@@ -1,6 +1,5 @@
 *.bdb
 *.bo
-results/
 .vscode/
 src/data/*.json
 build/

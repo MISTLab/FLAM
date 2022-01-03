@@ -11,7 +11,7 @@ METRIC = ["storage", "reliability"]
 def aggregate_results(folder, metric) -> dict:
     sorted_results = {}
 
-    for robot_id in ROBOT_IDS:
+    for robot_id in range(100):
         with open(f"{folder}/{robot_id}_{metric}.csv", "r") as result_file:
             store_sorted_results(csv.reader(result_file), sorted_results)
 
@@ -35,11 +35,11 @@ def store_sorted_results(file_reader, sorted_results: dict) -> None:
 
 
 def main():
-    for folder in [FOLDER_RESULTS_HOP_COUNT]:#, FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_STIGMERGY]:
+    for folder in [FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_DORA_MESH]:#, FOLDER_RESULTS_HOP_COUNT, FOLDER_RESULTS_STIGMERGY]:
         for metric in METRIC:
             sorted_results = aggregate_results(folder, metric)
 
-            with open(f"{folder}/concatenated_{metric}.csv", "w") as aggregated_file:
+            with open(f"{folder}/concatenated_{metric}.csv", "w", newline="") as aggregated_file:
                 writer = csv.writer(aggregated_file)
                 for run_results in sorted_results.values():
                     for step in run_results.values():
