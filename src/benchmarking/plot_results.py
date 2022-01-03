@@ -51,7 +51,7 @@ def parse_mean_storage() -> np.ndarray:
                     break
                 step = int(lines[0][2])
 
-                if step == previous_step and run == previous_run:
+                if step == previous_step and run == previous_run and "stigmergy" not in folder_name:
                     step_storage_sum += int(np.mean([int(lines[i][3]) for i in range(len(lines))]))
                 elif step < MAX_NB_STEPS:
                     storage_capacity[folder_id, run, step - 1] = step_storage_sum
@@ -307,13 +307,13 @@ def plot_speed_metric(metric_data: np.ndarray, dependant_variable: str, metric: 
 
 
 def plot_metrics() -> None:
-    reliability = parse_mean_reliability()
+    # reliability = parse_mean_reliability()
     # lost = parse_data_lost()
     storage = parse_mean_storage()
 
     #memory = parse_memory(lost, storage)
     # speed = parse_speed()
-    plot_single_metric(reliability, "Retained data (%)", "reliability", "Reliability")
+    # plot_single_metric(reliability, "Retained data (%)", "reliability", "Reliability")
     # plot_single_metric(lost, "Amount of data lost", "lost_data", "Lost Data")
     plot_single_metric(storage, "Amount of data stored in the system", "storage", "Total Storage Capacity")
     # plot_single_metric(parse_avg_storage(), "Average amount of data stored on individual robots", "storage_individual.png")
