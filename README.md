@@ -1,5 +1,5 @@
-# DORA-Mesh
-To run DORA-Mesh, it is important the perform the installation steps below IN ORDER.
+# RASS
+To run RASS (previously named DORA-Mesh), it is important the perform the installation steps below IN ORDER.
 
 * Install ARGoS: https://github.com/ilpincy/argos3
 
