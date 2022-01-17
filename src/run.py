@@ -12,7 +12,7 @@ NB_RUNS = 30
 
 
 def main() -> None:
-    command = ["argos3 -c stigmergy.argos"]
+    command = ["argos3 -c flam.argos"]
     for i in range(NB_RUNS):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         

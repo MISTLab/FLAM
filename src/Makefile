@@ -1,13 +1,7 @@
-all: dora-mesh stigmergy hop-count
+all: flam
 
-dora-mesh: dora-mesh.bzz
-	bzzc -I /usr/local/share/buzz/include dora-mesh.bzz
-
-stigmergy: stigmergy.bzz
-	bzzc -I /usr/local/share/buzz/include stigmergy.bzz
-
-hop-count: hop-count.bzz
-	bzzc -I /usr/local/share/buzz/include hop-count.bzz
+flam: flam.bzz
+	bzzc -I /usr/local/share/buzz/include flam.bzz
 
 clean:
 	rm *.bo *.bdb

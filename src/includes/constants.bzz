@@ -1,7 +1,7 @@
 NO_FAIL_DELAY = 20
 
 # Search space parameters
-SEARCH_SPACE = { .minx = -10.0, .miny = -10.0, .maxx = 10.0, .maxy = 10.0}
+SEARCH_SPACE = { .minx = -5.0, .miny = -5.0, .maxx = 5.0, .maxy = 5.0}
 
 # Searching drones parameters
 NUMBER_OF_ROBOTS = 5
@@ -14,7 +14,7 @@ TARGET_SPEED_MAX = 20.0
 TARGET_SPEED_STDEV = 0.5
 
 # Experiment parameters
-EXPERIMENT_LENGTH = 2000
+EXPERIMENT_LENGTH = 300
 
 #Storage parameters
 FILE_SIZE = 1
