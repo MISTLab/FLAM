@@ -6,7 +6,7 @@
   <!-- ************************* -->
   <framework>
     <system threads="10" />
-    <experiment length="100"
+    <experiment length="300"
                 ticks_per_second="5" 
                 random_seed="0"/>
     <!--profiling file="profile.txt"
@@ -27,7 +27,7 @@
       <sensors>
         <kheperaiv_proximity implementation="default" show_rays="false" />
         <range_and_bearing   implementation="medium" medium="rab"
-                             show_rays="true" noise_std_dev="0" />
+                             show_rays="false" noise_std_dev="0" />
         <positioning         implementation="default" />
       </sensors>
       <params bytecode_file="flam.bo" debug_file="flam.bdb">
@@ -65,19 +65,19 @@
       <body position="-11,0,0" orientation="0,0,0" />
     </box> -->
 
-  <arena size="10, 10, 2" center="0,0,1">
+  <arena size="20, 20, 2" center="0,0,1">
 
-    <box id="wall_north" size="10,0.1,0.5" movable="false">
-      <body position="0,5,0" orientation="0,0,0" />
+    <box id="wall_north" size="20,0.1,0.5" movable="false">
+      <body position="0,10,0" orientation="0,0,0" />
     </box>
-    <box id="wall_south" size="10,0.1,0.5" movable="false">
-      <body position="0,-5,0" orientation="0,0,0" />
+    <box id="wall_south" size="20,0.1,0.5" movable="false">
+      <body position="0,-10,0" orientation="0,0,0" />
     </box>
-    <box id="wall_east" size="0.1,10,0.5" movable="false">
-      <body position="5,0,0" orientation="0,0,0" />
+    <box id="wall_east" size="0.1,20,0.5" movable="false">
+      <body position="10,0,0" orientation="0,0,0" />
     </box>
-    <box id="wall_west" size="0.1,10,0.5" movable="false">
-      <body position="-5,0,0" orientation="0,0,0" />
+    <box id="wall_west" size="0.1,20,0.5" movable="false">
+      <body position="-10,0,0" orientation="0,0,0" />
     </box>
 
     <!-- * Initial drones positions * -->
@@ -93,10 +93,10 @@
   </arena> -->
 
     <distribute>
-      <position method="uniform" min="-9,-9,0" max="9,9,0" />
+      <position method="uniform" min="-4,-4,0" max="4,4,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="100" max_trials="100">
-        <kheperaiv id="sp" rab_range="30" rab_data_size="100000">
+      <entity quantity="10" max_trials="100">
+        <kheperaiv id="sp" rab_range="10" rab_data_size="100000">
           <controller config="drone_controller" />
         </kheperaiv>
       </entity>

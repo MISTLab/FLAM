@@ -42,8 +42,8 @@ function init_random_search(){
 
 function random_search()
 { 
-  next_position.x = uniform(math.max(next_position.x-SEARCH_SPEED/100, SEARCH_SPACE.minx), math.min(next_position.x+SEARCH_SPEED/100, SEARCH_SPACE.maxx))
-  next_position.y = uniform(math.max(next_position.y-SEARCH_SPEED/100, SEARCH_SPACE.miny), math.min(next_position.y+SEARCH_SPEED/100, SEARCH_SPACE.maxy))
+  next_position.x = uniform(math.max(next_position.x-SEARCH_SPEED/10, SEARCH_SPACE.minx), math.min(next_position.x+SEARCH_SPEED/10, SEARCH_SPACE.maxx))
+  next_position.y = uniform(math.max(next_position.y-SEARCH_SPEED/10, SEARCH_SPACE.miny), math.min(next_position.y+SEARCH_SPEED/10, SEARCH_SPACE.maxy))
 
   next_position_local = math.vec2.rotate(math.vec2.sub(next_position, pose.position), -pose.orientation.yaw)
 
