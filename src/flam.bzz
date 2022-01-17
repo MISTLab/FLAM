@@ -5,17 +5,22 @@ include "queue.bzz"
 
 include "includes/move.bzz"
 include "includes/constants.bzz"
+include "includes/failure.bzz"
+include "includes/radiation_sensor.bzz"
+include "includes/radiation.bzz"
 
 function init() {
     current_step = 0
     set_leds(0, 255, 0)
-
     init_random_search()
+
+    sources = { .0 = radiation_source.new(0.0, 0.0, 1.0)}
+    sensor = radiation_sensor.new(sources)
 }
 
 # Executed every time step
 function step() {
-    if (current_step < EXPERIMENT_LENGTH) {
+    if (current_step < EXPERIMENT_LENGTH and (not is_failed())) {
         random_search()
     }
 
