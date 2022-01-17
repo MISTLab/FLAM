@@ -6,13 +6,10 @@ failed = 0
 
 function failure() {
     rand = math.rng.uniform(0.2, 1.0)
-    intensity = get_radiation_intensity(CSVLogger.current_run)
+    intensity = math.max(radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y) + math.rng.uniform(-0.05, 0.05), 0.0)
 
-    if (rand < intensity and id != 5) {  
-        failed = 1 
-
-        nb_lost_data = nb_lost_data + size(storage)
-        
+    if (rand < intensity) {  
+        failed = 1         
         return 1
     }
     return 0
@@ -26,26 +23,3 @@ function is_failed(){
     return failed
 }
 
-function data_corruption(){
-    if (id != 5) {
-        to_delete = {}
-        intensity = math.max(radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y) + math.rng.uniform(-0.05, 0.05), 0.0)
-
-        foreach(storage, function(key, value) {
-            rand = math.rng.uniform(0.15, 0.5)
-
-            if (rand < intensity){
-                table.append(to_delete, key)
-            }
-        })
-
-        if (size(to_delete) != 0){
-            log("Robot ", id, " lost ", size(to_delete), " data because of corruption")
-        }
-
-        foreach(to_delete, function(key, value) {
-            storage_delete(value)
-            nb_lost_data = nb_lost_data + 1
-        })
-    }
-}
