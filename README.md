@@ -1,5 +1,5 @@
-# RASS
-To run RASS (previously named DORA-Mesh), it is important the perform the installation steps below IN ORDER.
+# FLAM
+To run FLAM, it is important the perform the installation steps below IN ORDER.
 
 * Install ARGoS: https://github.com/ilpincy/argos3
 
@@ -8,7 +8,7 @@ To run RASS (previously named DORA-Mesh), it is important the perform the instal
 * Compile the C++ controller:
 
 ```bash
-cd /DORA-Mesh/src/controller
+cd /FLAM/src/controller
 mkdir build
 cd build/
 cmake ../src
@@ -19,7 +19,7 @@ sudo make install
 * Compile the ARGoS loop functions:
 
 ```bash
-cd DORA-Mesh/src/loop_functions
+cd FLAM/src/loop_functions
 mkdir build
 cd build/
 cmake ../src
@@ -31,7 +31,7 @@ sudo make install
 * Run the experiment with ARGoS:
 
 ```bash
-cd DORA-Mesh/src
+cd FLAM/src
 make
-argos3 -c dora-mesh.argos
+argos3 -c flam.argos
 ```
