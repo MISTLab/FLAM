@@ -8,25 +8,29 @@ set(CMAKE_BUILD_TYPE Debug)
 # Options
 #
 option(ARGOS_SIMULATION "Build for ARGoS Simulation" ON)
-#
-# Find pkg-config
-#
-find_package(PkgConfig REQUIRED)
 
 if(ARGOS_SIMULATION)
 #
 # Look for the optional ARGoS package
 #
-pkg_check_modules(ARGOS argos3_simulator)
+find_package(ARGoS)
 if(ARGOS_FOUND)
   include_directories(${ARGOS_INCLUDE_DIRS})
-  link_directories(${ARGOS_LIBRARY_DIRS})
+  link_directories(${ARGOS_LIBRARY_DIR})
   set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARGOS_PREFIX}/share/argos3/cmake)
-  include(ARGoSCheckQTOpenGL)
   # Look for Lua
   find_package(Lua REQUIRED)
   include_directories(${LUA_INCLUDE_DIR})
   link_directories(${ARGOS_PREFIX}/lib/argos3/)
+
+  #
+  # Find pkg-config
+  #
+  find_package(PkgConfig REQUIRED)
+
+  # Look for JSONCPP
+  pkg_check_modules(JSONCPP jsoncpp)
+  include_directories(${JSONCPP_INCLUDE_DIRS})
 endif(ARGOS_FOUND)
 
 set(ARGOS_BUZZ_SOURCES
