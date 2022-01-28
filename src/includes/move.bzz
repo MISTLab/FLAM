@@ -50,6 +50,7 @@ function random_search()
   scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
 
   gotoc(scaled_direction.x, scaled_direction.y)
+  #gotoc_buzz(scaled_direction)
 }
 
 function init_move_to_corner(){
@@ -77,4 +78,33 @@ function move_to_corner(){
     scaled_corner_direction = math.vec2.scale(corner_position_local, 100)
 
     gotoc(scaled_corner_direction.x, scaled_corner_direction.y)
+}
+
+function gotoc_buzz(vec){
+    vec_norm = math.vec2.norm(vec)
+    target_x = vec_norm.x
+    target_y = vec_norm.y  
+
+    if (target_x > 0){
+        if (target_y > 0) {
+            # Turn left
+            left_wheel_speed = (1 - target_y) * SEARCH_SPEED
+            right_wheel_speed = SEARCH_SPEED
+        } else {
+            # Turn right
+            left_wheel_speed = SEARCH_SPEED
+            right_wheel_speed =  (1 + target_y) * SEARCH_SPEED
+        }
+    } else if (target_y > 0) {
+        # Turn around left
+        left_wheel_speed = -0.5*SEARCH_SPEED
+        right_wheel_speed =  0.5*SEARCH_SPEED
+    } else {
+        # Turn around right
+        left_wheel_speed = 0.5*SEARCH_SPEED
+        right_wheel_speed = -0.5*SEARCH_SPEED
+    }
+
+    set_wheels(left_wheel_speed, right_wheel_speed)
+
 }
