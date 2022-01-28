@@ -1,0 +1,29 @@
+
+function init_stigmergy(){
+    #FV1: distance traversed
+    stigmergy_fv1 = stigmergy.create(1)
+    stigmergy_fv1.onconflict(function(k, l, r){
+        return l
+    })
+
+    #Initialize FV1
+    previous_position = math.vec2.new(pose.position.x, pose.position.y)
+    actual_position = math.vec2.new(pose.position.x, pose.position.y)
+    distance_vec = math.vec2.new(actual_position.x - previous_position.x, actual_position.y - previous_position.y)
+    stigmergy_fv1.put(id, 0)
+}
+
+function update_stigmergy(){
+    #FV1: distance traversed 
+    actual_position.x = pose.position.x
+    actual_position.y = pose.position.y
+
+    distance_vec.x = actual_position.x - previous_position.x
+    distance_vec.y = actual_position.y - previous_position.y
+
+    distance = math.vec2.length(distance_vec)
+    stigmergy_fv1.put(id, distance)
+    
+    previous_position.x = actual_position.x
+    previous_position.y = actual_position.y
+}
