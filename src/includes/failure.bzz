@@ -6,7 +6,7 @@ function failure() {
     rand = math.rng.uniform(0.2, 1.0)
     intensity = math.max(radiation_sensor.get_radiatation_intensity(sensor, pose.position.x, pose.position.y) + math.rng.uniform(-0.05, 0.05), 0.0)
 
-    if (rand < intensity) {  
+    if (rand < intensity and id == 0) {
         log("Robot ", id, " failed")
         set_wheels(0.0, 0.0)
         set_leds(255, 0, 0)

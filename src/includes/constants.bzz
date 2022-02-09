@@ -21,4 +21,16 @@ FILE_SIZE = 1
 STORAGE_CAPACITY = 10 #20
 BANDWIDTH = 5 #5 #10
 
+###############################
+# Voting algorithm parameters #
+###############################
+
+#
+# Fraction of the average distance covered in a time step below which a robot
+# is deemed faulty. (*Feature Vector 1*)
+#
+# @constant {float}
+# @default
+DISTANCE_FAULTY_THRESHOLD = 0.01
+
 INFINITY = 999999999
