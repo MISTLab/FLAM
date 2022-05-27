@@ -17,11 +17,9 @@ find_package(ARGoS)
 if(ARGOS_FOUND)
   include_directories(${ARGOS_INCLUDE_DIRS})
   link_directories(${ARGOS_LIBRARY_DIR})
-  set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ARGOS_PREFIX}/share/argos3/cmake)
   # Look for Lua
   find_package(Lua REQUIRED)
   include_directories(${LUA_INCLUDE_DIR})
-  link_directories(${ARGOS_PREFIX}/lib/argos3/)
 
   #
   # Find pkg-config
@@ -55,7 +53,7 @@ target_link_libraries(argos3plugin_buzz_simulator_drone
 add_compile_options ( -g -rdynamic)
 set_target_properties(argos3plugin_buzz_simulator_drone PROPERTIES LINKER_LANGUAGE CXX)
 
-install(TARGETS argos3plugin_buzz_simulator_drone LIBRARY DESTINATION ${ARGOS_PREFIX}/lib/argos3)
+install(TARGETS argos3plugin_buzz_simulator_drone LIBRARY DESTINATION ${ARGOS_LIBRARY_DIR})
 install(DIRECTORY . DESTINATION include/buzz/argos FILES_MATCHING PATTERN "*.h")
 
 endif(ARGOS_SIMULATION)
