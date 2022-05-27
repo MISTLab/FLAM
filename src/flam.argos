@@ -43,9 +43,9 @@
   <!-- ****************** -->
   <!-- * Loop Functions * -->
   <!-- ****************** -->
-  <!-- <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
+  <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
     <radiation radius="0.25"/>
-  </loop_functions> -->
+  </loop_functions>
 
   <!-- *********************** -->
   <!-- * Arena configuration * -->
@@ -66,6 +66,7 @@
     </box> -->
 
   <arena size="20, 20, 2" center="0,0,1">
+    <floor id="floor" source="loop_functions" pixels_per_meter="50"/>
 
     <box id="wall_north" size="20,0.1,0.5" movable="false">
       <body position="0,10,0" orientation="0,0,0" />

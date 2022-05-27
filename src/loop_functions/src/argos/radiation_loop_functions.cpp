@@ -6,7 +6,7 @@ const std::string RESULT_FILE = "results/result";
 /****************************************/
 /****************************************/
 
-CRadiationLoopFunctions::CRadiationLoopFunctions() : CLoopFunctions() {
+CRadiationLoopFunctions::CRadiationLoopFunctions() : CLoopFunctions(), m_max_intensity_(0.0f) {
     // Find experiment number and file
     int experiment_number = -1;
     do
@@ -23,6 +23,7 @@ CRadiationLoopFunctions::~CRadiationLoopFunctions() {
 }
 
 void CRadiationLoopFunctions::Init(TConfigurationNode &t_node) {
+    m_floor = &GetSpace().GetFloorEntity();
     try {
         /* Get the radius of radiation items from XML */
         TConfigurationNode &tRadiation = GetNode(t_node, "radiation");
@@ -36,6 +37,26 @@ void CRadiationLoopFunctions::Init(TConfigurationNode &t_node) {
     }
 }
 
+CColor CRadiationLoopFunctions::GetFloorColor(const CVector2 &c_position_on_plane) {
+  float intensity = 0.0f;
+  for (int i = 0; i < sources.size(); ++i) {
+    CVector3 sourceCoord = sources[i].GetCoordinates();
+    CVector2 sourcePos(sourceCoord.GetX(), sourceCoord.GetY());
+    intensity += sources[i].GetPerceivedIntensity(
+        c_position_on_plane.GetX(),
+        c_position_on_plane.GetY()
+    );
+  }
+  if (intensity > m_max_intensity_) {
+    m_max_intensity_ = intensity;
+  }
+  float ratio = intensity / m_max_intensity_;
+  const CVector3 red(255, 0, 0);
+  const CVector3 grey(128, 128, 128);
+  CVector3 color = ratio * red + (1.0f - ratio) * grey;
+  return CColor(color.GetX(), color.GetY(), color.GetZ());
+}
+
 void CRadiationLoopFunctions::AddRadiationCylinder(RadiationSource source) {
     CCylinderEntity* cylinder = new CCylinderEntity("c" + source.ToString(),
                                                     source.GetCoordinates(),
@@ -45,6 +66,7 @@ void CRadiationLoopFunctions::AddRadiationCylinder(RadiationSource source) {
                                                     1.0);
 
    AddEntity(*cylinder);
+   m_floor->SetChanged();
 }
 
 std::vector<RadiationSource> CRadiationLoopFunctions::ReadRadiationSources() {
