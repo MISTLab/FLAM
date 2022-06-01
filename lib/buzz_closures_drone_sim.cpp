@@ -1,5 +1,5 @@
 #include "buzz_controller_drone_sim.h"
-#include "utils/buzz_utils.h"
+#include "buzz_utils.h"
 
 using namespace buzz_utils;
 

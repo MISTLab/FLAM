@@ -1,7 +1,7 @@
 #ifndef FORAGING_LOOP_FUNCTIONS_H
 #define FORAGING_LOOP_FUNCTIONS_H
 
-#include "../../../controller/src/argos/radiation_source.h"
+#include "radiation_source.h"
 
 #include <argos3/core/simulator/loop_functions.h>
 #include <argos3/core/simulator/simulator.h>

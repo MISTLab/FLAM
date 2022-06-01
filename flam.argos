@@ -18,7 +18,8 @@
   <!-- * Controllers * -->
   <!-- *************** -->
   <controllers>
-    <buzz_controller_drone_sim id="drone_controller">
+    <buzz_controller_drone_sim id="drone_controller"
+      library="build/libbuzz_controller_drone">
       <actuators>
         <differential_steering implementation="default" />
         <leds                  implementation="default" medium="leds" />
@@ -43,7 +44,7 @@
   <!-- ****************** -->
   <!-- * Loop Functions * -->
   <!-- ****************** -->
-  <loop_functions library="libargos3plugin_loop_functions.so" label="radiation_loop_functions">
+  <loop_functions library="build/libflam_loop_functions" label="radiation_loop_functions">
     <radiation radius="0.25"/>
   </loop_functions>
 
