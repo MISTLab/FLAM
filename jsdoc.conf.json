@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "./doc/transform",
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": ["./src"],
+    "includePattern": ".+\\.bzz$"
+  },
+  "opts": {
+    "destination": "./doc/html",
+    "recurse": true
+  }
+}

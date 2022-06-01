@@ -9,6 +9,7 @@ include "includes/failure.bzz"
 include "includes/radiation_sensor.bzz"
 include "includes/radiation.bzz"
 include "includes/stigmergy.bzz"
+include "includes/voting.bzz"
 
 function init() {
     current_step = 0
@@ -25,6 +26,7 @@ function init() {
 function step() {
 
     update_stigmergy()
+    update_voting()
 
     if (current_step < EXPERIMENT_LENGTH and (not is_failed())) {
         random_search()

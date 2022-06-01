@@ -1,24 +1,166 @@
+##
+# @file constants.bzz
+#
+# Global experiment constants
+#
+# @author Guillaume RICARD <guillaume.ricard@polymtl.ca>
+
+##
+# Number of steps after which a failed robot is considered
+# to have recovered.
+#
+# @const {int}
+# @default
 NO_FAIL_DELAY = 20
 
+##
 # Search space parameters
-SEARCH_SPACE = { .minx = -10.0, .miny = -10.0, .maxx = 10.0, .maxy = 10.0}
+#
+# Configure the searchable area within
+# the experiment environment.
+#
+# **REQUIRES** Must match the arena defined in `flam.argos`
+#
+# **GUARANTEES** Random search target points within the arena
+#
+# @namespace
+SEARCH_SPACE = {
+  ##
+  # Left wall
+  #
+  # @const {float}
+  # @default
+  .minx = -10.0,
+
+  ##
+  # Top wall
+  #
+  # @const {float}
+  # @default
+  .miny = -10.0,
+
+  ##
+  # Right wall
+  #
+  # @const {float}
+  # @default
+  .maxx = 10.0,
+
+  ##
+  # Bottom wall
+  #
+  # @const {float}
+  # @default
+  .maxy = 10.0
+}
 
 # Searching drones parameters
+
+##
+# Number of agents in the simulation.
+#
+# **REQUIRES** Must match entity distribution `quantity` in `flam.argos`
+#
+# **GUARANTEES** Stable routing and fitness calculation for
+# chain formations
+#
+# Each agent represents one wheeled Khepera IV robot.
+#
+# @const {int}
+# @default
 NUMBER_OF_ROBOTS = 10
+
+##
+# Number of steps required to apply a pose
+# to a robot.
+#
+# @const {int}
+# @default
 NEW_POSE_DELAY = 10
+
+##
+# Wheel speed during search phase in meters/second.
+#
+# @const {float}
+# @default
 SEARCH_SPEED = 20.0
+
+##
+# Distance threshold in meters within which an agent is deemed to have reached
+# its destination
+#
+# @const {float}
+# @default
 DELTA_REACHED_POS = 1.0
 
 # Targets parameters
+
+##
+# Moving target maximum speed in meters/second.
+#
+# @cosnt {float}
+# @default
 TARGET_SPEED_MAX = 20.0
+
+##
+# Standard deviation for the distribution of moving target speeds,
+# in meters/second.
+#
+# @const {float}
+# @default
 TARGET_SPEED_STDEV = 0.5
 
 # Experiment parameters
+
+##
+# Experiment duration in time steps.
+#
+# **REQUIRES** Should match the `length` value in `flam.argos`
+#
+# @const {int}
+# @default
 EXPERIMENT_LENGTH = 300
 
-#Storage parameters
+# Storage parameters
+
+##
+# Number of output files.
+#
+# @const {int}
+# @default
 FILE_SIZE = 1
+
+##
+# Number of maximum stored coordinates
+#
+# @const {int}
+# @default
 STORAGE_CAPACITY = 10 #20
+
+##
+# Maximum number of storage queries per iteration.
+#
+# **REQUIRES** Actual value should accomodate physical router bandwidth.
+#
+# @const {int}
+# @default
 BANDWIDTH = 5 #5 #10
 
+###############################
+# Voting algorithm parameters #
+###############################
+
+##
+# Fraction of the average distance covered in a time step below which a robot
+# is deemed faulty. (*Feature Vector 1*)
+#
+# @constant {float}
+# @default
+DISTANCE_FAULTY_THRESHOLD = 0.01
+
+##
+# Large helper constant.
+#
+# @const {int}
+# @default
 INFINITY = 999999999
