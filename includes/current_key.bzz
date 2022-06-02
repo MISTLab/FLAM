@@ -1,13 +1,43 @@
+##
+# @file Storage key generation
+#
+# Generate unique storage keys based on current position
+#
+# @author Guillaume RICARD <guillaume.ricard@polymtl.ca>
+#
+
 include "string.bzz"
 
+##
+# Compute storage key for a given position.
+#
+# The arena is divided in 20 cm square cells which are
+# identified by a unique key.
+#
+# **REQUIRES** Valid horizontal and vertical positions
+#
+# **GUARANTEES** Unique storage keys with a precision of
+# 5 cells per meter
+#
+# @param {float} x Horizontal position, eg. from `pose`
+# @param {float} y Vertical position, eg. from `pose`
+# @return {string} Storage hashmap key for current position
 function get_current_key(x, y){
- 
     return string.concat(scaled_floor_string(x), "_", scaled_floor_string(y))
 }
 
+##
+# Perform cell rounding and output elementary coordinate
+# identifiers.
+#
+# @private
+# @param {int} number Input position
+# @return {string} Rounded coordinate identifier
 function scaled_floor_string(number) {
     scaled_number = 5 * number
 
+    # Account for floor rounding for negative numbers
+    # (eg. -2.1 rounds to -3)
     if (scaled_number < 0) {
         scaled_number = scaled_number - 1
     }

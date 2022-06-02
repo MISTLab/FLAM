@@ -4,11 +4,12 @@
     "plugins/markdown"
   ],
   "source": {
-    "include": ["./src"],
+    "include": ["./includes"],
     "includePattern": ".+\\.bzz$"
   },
   "opts": {
     "destination": "./doc/html",
-    "recurse": true
+    "recurse": true,
+    "access": "all"
   }
 }
