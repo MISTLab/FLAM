@@ -1,0 +1,55 @@
+##
+# @file crossregulation.bzz
+#
+# Crossregulation model
+#
+# @author Guillaume RICARD <guillaume.ricard@polymtl.ca>
+
+##
+# Number of values in each feature vector
+#
+# @const {int}
+# @default
+FEATURE_VECTOR_LENGTH = 6
+
+##
+# Compute feature vector distribution as a histogram.
+#
+# Boolean vector feature vector values describe indexes in the histogram when
+# interpreted as binary number encoding (eg. `0110` &rarr; 6)
+#
+# **REQUIRES** All feature vectors must have the same length
+# **GUARANTEES** Output table size is `2**FEATURE_VECTOR_LENGTH`
+#
+# @param {int[][]} feature_vectors Table of feature vectors
+# @return {int[][]} Histogram distribution of the feature vectors
+# @private
+function crossregulation_estimate_distribution(feature_vectors) {
+  var distribution = {}
+  for (i = 0, i < (1 << FEATURE_VECTOR_LENGTH), i = i + 1) {
+    distribution[i] = 0
+  }
+  foreach(feature_vectors, function(robot_index, fv) {
+      value_index = reduce(fv, function(item_index, fv_value, acc) {
+          return acc + (fv_value << item_index)
+      }, 0)
+      distribution[value_index] = distribution[value_index] + 1
+  });
+  return distribution
+}
+
+##
+# Update local classification of neighboring robots.
+#
+# **REQUIRES** All feature vectors must have the same length
+# **GUARANTEES** Normal/abnormal classification for all robots
+#
+# @param {int[][]} feature_vectors Table of feature vectors
+# @return {int[][]} Binary classification for each robot (0: normal, 1: faulty)
+function crossregulation_update(feature_vectors) {
+  var distribution = crossregulation_estimate_distribution(feature_vectors)
+  # TODO(gricard): Implement CRM
+  return map(distribution, function(robot_index, value) {
+    return 0
+  })
+}
