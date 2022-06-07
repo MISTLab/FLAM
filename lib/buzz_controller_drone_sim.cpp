@@ -8,6 +8,8 @@
 #include <cmath>
 #include <json/json.h>
 
+CProprioceptiveFeatureVector::RobotData CProprioceptiveFeatureVector::m_sRobotData;
+
 namespace buzz_drone_sim {
 
 const std::string RESULT_FILE = "results/result";
@@ -17,7 +19,7 @@ const std::string DATA_TRANSMITTED_FILE = "results/data_transmitted";
 /****************************************/
 /****************************************/
 
-CBuzzControllerDroneSim::CBuzzControllerDroneSim() : CBuzzControllerKheperaIV() {
+CBuzzControllerDroneSim::CBuzzControllerDroneSim() : CBuzzControllerKheperaIV(), timer_(0), crminAgent_(new CRMinRobotAgentOptimised(RobotIdStrToInt(), CProprioceptiveFeatureVector::NUMBER_OF_FEATURES)) {
    std::chrono::high_resolution_clock::time_point previous = 
       std::chrono::high_resolution_clock::now();
    usleep(10);
@@ -47,6 +49,11 @@ CBuzzControllerDroneSim::~CBuzzControllerDroneSim() {
 
 void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node)  {
    CBuzzControllerKheperaIV::Init(t_node);
+}
+
+void CBuzzControllerDroneSim::ControlStep() {
+  ++timer_;
+  crminAgent_->SimulationStepUpdatePosition(timer_, &featureVectors_);
 }
 
 /****************************************/
@@ -140,6 +147,14 @@ void CBuzzControllerDroneSim::LogDataSize(const int& total_data, const int& step
    result_file.open(data_transmitted_file_name_, std::ios::out | std::ios::app);
 
    result_file << total_data << "," << step << "," << m_unRobotId << std::endl;
+}
+
+unsigned CBuzzControllerDroneSim::RobotIdStrToInt() {
+  std::string id = GetId();
+  id.erase(0, 2);
+  std::string::size_type size = 0;
+  unsigned outId = std::stoi(id, &size);
+  return outId;
 }
 
 }

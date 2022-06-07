@@ -7,6 +7,7 @@
 #include <chrono>
 #include <vector>
 
+#include "crm/crminrobotagent_optimised.h"
 #include "radiation_source.h"
 
 using namespace argos;
@@ -25,6 +26,8 @@ public:
    virtual ~CBuzzControllerDroneSim();
 
    virtual void Init(TConfigurationNode& t_node);
+
+   virtual void ControlStep();
 
    // Control functions
 
@@ -50,6 +53,14 @@ protected:
    virtual buzzvm_state RegisterFunctions();
 
 private:
+   unsigned RobotIdStrToInt();
+
+   // Fault detection and robot classification data
+   unsigned int timer_;
+   CRMinRobotAgentOptimised *crminAgent_;
+   std::list<StructFVsSensed> featureVectors_;
+
+   // Radiation source data
 
    std::default_random_engine random_engine_;
 
