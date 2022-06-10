@@ -315,6 +315,40 @@ static int BuzzLogDataSize(buzzvm_t vm){
    return buzzvm_ret0(vm);
 }
 
+static int BuzzUpdateFV(buzzvm_t vm) {
+  buzzvm_lload(vm, 1);
+
+  buzzobj_t inputValues = buzzvm_stack_at(vm, 1);
+  if (inputValues->o.type != BUZZTYPE_TABLE) {
+    buzzvm_seterror(vm,
+                    BUZZVM_ERROR_TYPE,
+                    "update_fv(values): expected %s, got %s in first argument",
+                    buzztype_desc[BUZZTYPE_TABLE],
+                    buzztype_desc[inputValues->o.type]
+    );
+    return vm->state;
+  }
+
+  buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
+  buzzvm_gload(vm);
+  CBuzzControllerDroneSim *controller = reinterpret_cast<CBuzzControllerDroneSim*>(buzzvm_stack_at(vm, 1)->u.value);
+
+  int i = 0;
+  buzzvm_push(vm, inputValues);
+  buzzvm_pushi(vm, i);
+  buzzvm_tget(vm);
+  while (!buzzobj_isnil(buzzvm_stack_at(vm, 1))) {
+    int value = buzzvm_stack_at(vm, 1)->i.value;
+    std::cout << value << std::endl;
+    controller->UpdateFV(i++, static_cast<unsigned int>(value));
+    buzzvm_push(vm, inputValues);
+    buzzvm_pushi(vm, i);
+    buzzvm_tget(vm);
+  }
+
+  return buzzvm_ret0(vm);
+}
+
 static int BuzzRunCRM(buzzvm_t vm) {
   buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
   buzzvm_gload(vm);
@@ -374,6 +408,10 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "log_datasize", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzLogDataSize));
+   buzzvm_gstore(m_tBuzzVM);
+
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "update_fv", 1));
+   buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzUpdateFV));
    buzzvm_gstore(m_tBuzzVM);
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "run_crm", 1));

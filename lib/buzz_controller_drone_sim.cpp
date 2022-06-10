@@ -53,12 +53,6 @@ CBuzzControllerDroneSim::~CBuzzControllerDroneSim() {
 void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
    CBuzzControllerKheperaIV::Init(t_node);
 
-   featureVectors_.emplace_back(12, 3.0);
-   featureVectors_.emplace_back(11, 3.0);
-   featureVectors_.emplace_back(7, 3.0);
-   featureVectors_.emplace_back(1, 1.0);
-   featureVectors_.emplace_back(0, 0.5);
-
    crminAgent_ =  new CRMinRobotAgentOptimised(
        RobotIdStrToInt(),
        CProprioceptiveFeatureVector::NUMBER_OF_FEATURES
@@ -68,10 +62,27 @@ void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
 void CBuzzControllerDroneSim::ControlStep() {
   CBuzzControllerKheperaIV::ControlStep();
   ++timer_;
+  featureVectors_.erase(featureVectors_.begin(), featureVectors_.end());
+}
+
+void CBuzzControllerDroneSim::UpdateFV(int i, unsigned int value) {
+  bool ok = false;
+  for (auto it = featureVectors_.begin(); it != featureVectors_.end(); ++it) {
+    if (it->uFV == value) {
+      it->fRobots += 1.0f;
+      ok = true;
+      break;
+    }
+  }
+  if (!ok) {
+    featureVectors_.emplace_back(value, 1.0f);
+  }
 }
 
 const std::list<StructFVsSensed> &CBuzzControllerDroneSim::RunCRM() {
-  crminAgent_->SimulationStepUpdatePosition(timer_, &featureVectors_);
+  if (featureVectors_.size() > 0) {
+    crminAgent_->SimulationStepUpdatePosition(timer_, &featureVectors_);
+  }
   return featureVectors_;
 }
 

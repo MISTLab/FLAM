@@ -31,6 +31,8 @@ public:
 
    virtual void ControlStep();
 
+   void UpdateFV(int i, unsigned int value);
+
    const std::list<StructFVsSensed> &RunCRM();
 
    // Control functions
