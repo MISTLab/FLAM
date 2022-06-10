@@ -6,11 +6,13 @@
 #include <random>
 #include <chrono>
 #include <vector>
+#include <list>
 
-#include "crm/crminrobotagent_optimised.h"
+#include "crm/featurevectorsinrobotagent.h"
+
 #include "radiation_source.h"
 
-using namespace argos;
+class CRMinRobotAgentOptimised;
 
 namespace buzz_drone_sim {
 
@@ -28,6 +30,8 @@ public:
    virtual void Init(TConfigurationNode& t_node);
 
    virtual void ControlStep();
+
+   const std::list<StructFVsSensed> &RunCRM();
 
    // Control functions
 
@@ -48,12 +52,13 @@ public:
    
    void LogDataSize(const int& total_data, const int& step);
 
+   unsigned RobotIdStrToInt();
+
 protected:
 
    virtual buzzvm_state RegisterFunctions();
 
 private:
-   unsigned RobotIdStrToInt();
 
    // Fault detection and robot classification data
    unsigned int timer_;

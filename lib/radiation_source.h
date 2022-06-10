@@ -1,3 +1,6 @@
+#ifndef FLAM_DRONE_SIM_RADIATION_SOURCE
+#define FLAM_DRONE_SIM_RADIATION_SOURCE
+
 #include <math.h>
 #include <argos3/core/utility/math/vector3.h>
 
@@ -21,3 +24,5 @@ class RadiationSource
 };
 
 }
+
+#endif // FLAM_DRONE_SIM_RADIATION_SOURCE

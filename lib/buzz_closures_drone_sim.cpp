@@ -1,5 +1,7 @@
 #include "buzz_controller_drone_sim.h"
+
 #include "buzz_utils.h"
+#include "radiation_loop_functions.h"
 
 using namespace buzz_utils;
 
@@ -313,6 +315,38 @@ static int BuzzLogDataSize(buzzvm_t vm){
    return buzzvm_ret0(vm);
 }
 
+static int BuzzRunCRM(buzzvm_t vm) {
+  buzzvm_lload(vm, 1);
+  buzzobj_t buzz_id = buzzvm_stack_at(vm, 1);
+  int id;
+  if (buzz_id->o.type == BUZZTYPE_INT) {
+    id = buzz_id->i.value;
+  } else {
+    buzzvm_seterror(vm,
+                    BUZZVM_ERROR_TYPE,
+                    "run_crm(id): expected %s, got %s in first argument",
+                    buzztype_desc[BUZZTYPE_INT],
+                    buzztype_desc[buzz_id->o.type]
+    );
+    return vm->state;
+  }
+
+  buzzobj_t result = buzzheap_newobj(vm, BUZZTYPE_TABLE);
+
+  int i = 0;
+  const std::list<StructFVsSensed> &featureVectors = CRadiationLoopFunctions::RunCRM(id);
+  for (auto it = featureVectors.cbegin(); it != featureVectors.cend(); ++it) {
+    buzzvm_push(vm, result);
+    buzzvm_pushi(vm, i);
+    buzzvm_pushi(vm, it->uMostWantedState);
+    buzzvm_tput(vm);
+    ++i;
+  }
+
+  buzzvm_push(vm, result);
+  return buzzvm_ret1(vm);
+}
+
 /****************************************/
 /************ Registration **************/
 /****************************************/
@@ -350,6 +384,10 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "log_datasize", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzLogDataSize));
+   buzzvm_gstore(m_tBuzzVM);
+
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "run_crm", 1));
+   buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzRunCRM));
    buzzvm_gstore(m_tBuzzVM);
 
    return m_tBuzzVM->state;

@@ -8,6 +8,8 @@
 #include <cmath>
 #include <json/json.h>
 
+#include "crm/crminrobotagent_optimised.h"
+
 CProprioceptiveFeatureVector::RobotData CProprioceptiveFeatureVector::m_sRobotData;
 
 namespace buzz_drone_sim {
@@ -66,7 +68,11 @@ void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
 void CBuzzControllerDroneSim::ControlStep() {
   CBuzzControllerKheperaIV::ControlStep();
   ++timer_;
+}
+
+const std::list<StructFVsSensed> &CBuzzControllerDroneSim::RunCRM() {
   crminAgent_->SimulationStepUpdatePosition(timer_, &featureVectors_);
+  return featureVectors_;
 }
 
 
