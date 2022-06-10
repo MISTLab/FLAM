@@ -5,14 +5,8 @@
 #include <argos3/core/simulator/simulator.h>
 #include <argos3/plugins/robots/kheperaiv/simulator/kheperaiv_entity.h>
 
-#include "buzz_controller_drone_sim.h"
-
-using buzz_drone_sim::CBuzzControllerDroneSim;
-
 const std::string RADIATION_SOURCES_FILE = "data/radiation_sources";
 const std::string RESULT_FILE = "results/result";
-
-std::map<int, CBuzzControllerDroneSim*> CRadiationLoopFunctions::robots_;
 
 /****************************************/
 /****************************************/
@@ -46,18 +40,6 @@ void CRadiationLoopFunctions::Init(TConfigurationNode &t_node) {
     } catch (CARGoSException &ex) {
         THROW_ARGOSEXCEPTION_NESTED("Error parsing loop functions!", ex);
     }
-
-    // Store initialized robots
-    CSpace::TMapPerType &robots = GetSpace().GetEntitiesByType("kheperaiv");
-    for (CSpace::TMapPerType::iterator it = robots.begin();
-        it != robots.end(); ++it) {
-      CKheperaIVEntity *bot = any_cast<CKheperaIVEntity*>(it->second);
-      CBuzzControllerDroneSim &controller =
-        dynamic_cast<CBuzzControllerDroneSim&>(
-            bot->GetControllableEntity().GetController()
-        );
-      robots_[controller.RobotIdStrToInt()] = &controller;
-    }
 }
 
 CColor CRadiationLoopFunctions::GetFloorColor(const CVector2 &c_position_on_plane) {
@@ -78,10 +60,6 @@ CColor CRadiationLoopFunctions::GetFloorColor(const CVector2 &c_position_on_plan
   const CVector3 grey(128, 128, 128);
   CVector3 color = ratio * red + (1.0f - ratio) * grey;
   return CColor(color.GetX(), color.GetY(), color.GetZ());
-}
-
-const std::list<StructFVsSensed> &CRadiationLoopFunctions::RunCRM(int id) {
-  return robots_[id]->RunCRM();
 }
 
 void CRadiationLoopFunctions::AddRadiationCylinder(RadiationSource source) {

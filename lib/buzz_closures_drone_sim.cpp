@@ -316,25 +316,15 @@ static int BuzzLogDataSize(buzzvm_t vm){
 }
 
 static int BuzzRunCRM(buzzvm_t vm) {
-  buzzvm_lload(vm, 1);
-  buzzobj_t buzz_id = buzzvm_stack_at(vm, 1);
-  int id;
-  if (buzz_id->o.type == BUZZTYPE_INT) {
-    id = buzz_id->i.value;
-  } else {
-    buzzvm_seterror(vm,
-                    BUZZVM_ERROR_TYPE,
-                    "run_crm(id): expected %s, got %s in first argument",
-                    buzztype_desc[BUZZTYPE_INT],
-                    buzztype_desc[buzz_id->o.type]
-    );
-    return vm->state;
-  }
+  buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
+  buzzvm_gload(vm);
+
+  CBuzzControllerDroneSim *controller = reinterpret_cast<CBuzzControllerDroneSim*>(buzzvm_stack_at(vm, 1)->u.value);
+  const std::list<StructFVsSensed> &featureVectors = controller->RunCRM();
 
   buzzobj_t result = buzzheap_newobj(vm, BUZZTYPE_TABLE);
 
   int i = 0;
-  const std::list<StructFVsSensed> &featureVectors = CRadiationLoopFunctions::RunCRM(id);
   for (auto it = featureVectors.cbegin(); it != featureVectors.cend(); ++it) {
     buzzvm_push(vm, result);
     buzzvm_pushi(vm, i);
