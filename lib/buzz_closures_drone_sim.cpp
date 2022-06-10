@@ -358,13 +358,11 @@ static int BuzzRunCRM(buzzvm_t vm) {
 
   buzzobj_t result = buzzheap_newobj(vm, BUZZTYPE_TABLE);
 
-  int i = 0;
   for (auto it = featureVectors.cbegin(); it != featureVectors.cend(); ++it) {
     buzzvm_push(vm, result);
-    buzzvm_pushi(vm, i);
+    buzzvm_pushi(vm, it->uFV);
     buzzvm_pushi(vm, it->uMostWantedState);
     buzzvm_tput(vm);
-    ++i;
   }
 
   buzzvm_push(vm, result);
