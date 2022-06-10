@@ -19,7 +19,8 @@ const std::string DATA_TRANSMITTED_FILE = "results/data_transmitted";
 /****************************************/
 /****************************************/
 
-CBuzzControllerDroneSim::CBuzzControllerDroneSim() : CBuzzControllerKheperaIV(), timer_(0), crminAgent_(new CRMinRobotAgentOptimised(RobotIdStrToInt(), CProprioceptiveFeatureVector::NUMBER_OF_FEATURES)) {
+CBuzzControllerDroneSim::CBuzzControllerDroneSim() : CBuzzControllerKheperaIV(),
+  timer_(0), crminAgent_(nullptr) {
    std::chrono::high_resolution_clock::time_point previous = 
       std::chrono::high_resolution_clock::now();
    usleep(10);
@@ -47,14 +48,27 @@ CBuzzControllerDroneSim::~CBuzzControllerDroneSim() {
 /****************************************/
 /****************************************/
 
-void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node)  {
+void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
    CBuzzControllerKheperaIV::Init(t_node);
+
+   featureVectors_.emplace_back(12, 3.0);
+   featureVectors_.emplace_back(11, 3.0);
+   featureVectors_.emplace_back(7, 3.0);
+   featureVectors_.emplace_back(1, 1.0);
+   featureVectors_.emplace_back(0, 0.5);
+
+   crminAgent_ =  new CRMinRobotAgentOptimised(
+       RobotIdStrToInt(),
+       CProprioceptiveFeatureVector::NUMBER_OF_FEATURES
+   );
 }
 
 void CBuzzControllerDroneSim::ControlStep() {
+  CBuzzControllerKheperaIV::ControlStep();
   ++timer_;
   crminAgent_->SimulationStepUpdatePosition(timer_, &featureVectors_);
 }
+
 
 /****************************************/
 /****************************************/
