@@ -1,14 +1,17 @@
 include "includes/constants.bzz"
 
+##
+# Swarm statistics used as a reference to classify abnormal behavior
+#
 # @namespace
 voting = {
-  #
+  ##
   # Avergage distance covered in a time step for all robots.
   # @type {float}
   # @default
   .mean_distance = 0.0,
 
-  #
+  ##
   # Robot count in the feature vector stigmergy.
   #
   # @type {float}
@@ -16,23 +19,33 @@ voting = {
   .num_robots = 0
 }
 
-#
+##
 # Update current robot estimation of other robots normal / abnormal behaviour
 # based on collected feature vectors.
 #
 # **REQUIRES** Feature vector stigmergy to have been initialized using
-# `init_stigmergy`. The feature vector stigmergy **must not** be empty.
+# @link {init_stigmergy}. The feature vector stigmergy **must not** be empty.
 #
 function update_voting() {
-  stigmergy_fv1.foreach(function(key, value, robot_id) {
-    voting.mean_distance = voting.mean_distance + value
-    voting.num_robots = voting.num_robots + 1
+  var fvs = {}
+  fv_index = 0
+  stigmergy_fv.foreach(function(key, value, robot_id) {
+    fvs[fv_index] = value
+    fv_index = fv_index + 1
   })
-  voting.mean_distance = voting.mean_distance / voting.num_robots
+  # Log all robot feature vectors
+  if (id == 0) {
+    foreach(fvs, function(key, value) {
+      log(key, ", ", value)
+    })
+  }
+  update_fv(fvs)
 
-  stigmergy_fv1.foreach(function(key, value, robot_id) {
-    if (value < DISTANCE_FAULTY_THRESHOLD * voting.mean_distance) {
-      log("Robot ", id, " believes robot ", robot_id, " is faulty")
-    }
-  })
+  # Log all votes
+  if (current_step % 10 == 5) {
+    var local_vote = run_crm()
+    foreach(local_vote, function(robot_id, vote) {
+      log(id, " -> ", robot_id, ": ", vote)
+    })
+  }
 }

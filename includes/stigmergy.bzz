@@ -1,19 +1,28 @@
+include "includes/fv.bzz"
 
-function init_stigmergy(){
-    #FV1: distance traversed
-    stigmergy_fv1 = stigmergy.create(1)
-    stigmergy_fv1.onconflict(function(k, l, r){
+##
+# Setup shared feature vector stigmergy
+#
+# Initialize self feature vector with 0
+#
+function init_stigmergy() {
+    stigmergy_fv = stigmergy.create(1)
+    stigmergy_fv.onconflict(function(k, l, r){
         return l
     })
 
-    #Initialize FV1
+    # Initialize FV
     previous_position = math.vec2.new(pose.position.x, pose.position.y)
     actual_position = math.vec2.new(pose.position.x, pose.position.y)
     distance_vec = math.vec2.new(actual_position.x - previous_position.x, actual_position.y - previous_position.y)
-    stigmergy_fv1.put(id, 0)
+    stigmergy_fv.put(id, 0)
 }
 
-function update_stigmergy(){
+##
+# Update self feature vector with sensed values
+#
+# **REQUIRES** Initialized feature vector stigmergy (see {@link init_stigmergy}])
+function update_stigmergy() {
     #FV1: distance traversed 
     actual_position.x = pose.position.x
     actual_position.y = pose.position.y
@@ -22,7 +31,13 @@ function update_stigmergy(){
     distance_vec.y = actual_position.y - previous_position.y
 
     distance = math.vec2.length(distance_vec)
-    stigmergy_fv1.put(id, distance)
+
+    var fv =
+      ((robot_density_inner()) << 6)
+    | ((robot_density_outer()) << 5)
+    | ((distance < 0.15 * 10.0) << 4)
+
+    stigmergy_fv.put(id, fv)
     
     previous_position.x = actual_position.x
     previous_position.y = actual_position.y

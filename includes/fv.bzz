@@ -1,0 +1,7 @@
+function robot_density_inner() {
+  return 0
+}
+
+function robot_density_outer() {
+  return 1
+}
