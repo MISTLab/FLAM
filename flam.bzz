@@ -8,25 +8,30 @@ include "includes/constants.bzz"
 include "includes/failure.bzz"
 include "includes/radiation_sensor.bzz"
 include "includes/radiation.bzz"
+include "includes/comm.bzz"
 include "includes/stigmergy.bzz"
 include "includes/voting.bzz"
 
 function init() {
-    current_step = 0
+    current_step = 1
 
     sources = { .0 = radiation_source.new(0.0, 0.0, 1.0)}
     sensor = radiation_sensor.new(sources)
 
     set_leds(0, 255, 0)
     init_random_search()
+    init_comm()
     init_stigmergy()
 }
 
 # Executed every time step
 function step() {
 
-    update_stigmergy()
-    update_voting()
+    update_comm()
+    if (current_step % FLAM_OBSERVATION_WINDOW == 0) {
+      update_stigmergy()
+      update_voting()
+    }
 
     if (current_step < EXPERIMENT_LENGTH and (not is_failed())) {
         random_search()

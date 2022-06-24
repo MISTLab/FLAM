@@ -1,7 +1,37 @@
+##
+# @file fv.bzz
+#
+# Compute feature vector values from sensor readings and local neighbor
+# information
+
+##
+# Observed neighbor feature estimation time window, in time steps
+#
+# Feature vector components based on estimated local neighbor data are updated
+# every FLAM_OBSERVATION_WINDOW time steps.
+#
+# @const {int}
+# @default
+FLAM_OBSERVATION_WINDOW = 50
+
+##
+# Check close neighbor density
+#
+# **REQUIRES** Up-to-date neighbor observations @link {update_comm}
+#
+# @return {boolean} At least one 'close' neighbor was observed for half the
+# sliding observation window @link {FLAM_OBSERVATION_WINDOW}
 function robot_density_inner() {
-  return 0
+  return (flam_comm_observed_inner > (FLAM_OBSERVATION_WINDOW / 2.0))
 }
 
+##
+# Check distant neighbor density
+#
+# **REQUIRES** Up-to-date neighbor observations @link {update_comm}
+#
+# @return {boolean} At least one 'distant' neighbor was observed for half the
+# sliding observation window @link {FLAM_OBSERVATION_WINDOW}
 function robot_density_outer() {
-  return 1
+  return (flam_comm_observed_outer > (FLAM_OBSERVATION_WINDOW / 2.0))
 }
