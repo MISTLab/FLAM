@@ -55,6 +55,15 @@ function random_search()
   var delta_pos = chassis_delta_pos(scaled_direction.x, scaled_direction.y)
   flam_comm_travelled_distance = flam_comm_travelled_distance + math.vec2.length(delta_pos)
 
+  var delta_w = chassis_delta_heading(scaled_direction.x, scaled_direction.y)
+  flam_comm_angular_speed_prev_prev = flam_comm_angular_speed_prev
+  flam_comm_angular_speed_prev = flam_comm_angular_speed_current
+  flam_comm_angular_speed_current = delta_w / TIMESTEP_DURATION
+  flam_comm_angular_accel = 2.0 * (flam_comm_angular_speed_current - flam_comm_angular_speed_prev_prev) / TIMESTEP_DURATION
+  if (robot_turning()) {
+    flam_comm_num_heading_changes = flam_comm_num_heading_changes + 1
+  }
+
   gotoc(scaled_direction.x, scaled_direction.y)
   #gotoc_buzz(scaled_direction)
 }

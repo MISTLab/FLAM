@@ -4,6 +4,9 @@
 # Compute feature vector values from sensor readings and local neighbor
 # information
 
+include "includes/constants.bzz"
+include "includes/chassis.bzz"
+
 ##
 # Observed neighbor feature estimation time window, in time steps
 #
@@ -21,6 +24,22 @@ FLAM_OBSERVATION_WINDOW = 50
 # @const {float}
 # @default
 FLAM_MOTOR_SPEED_ODOMETRIC_THRESHOLD = 0.15
+
+##
+# Tolerance threshold accomodating for odometric noise in observed
+# robot heading change speed.
+#
+# @const {float}
+# @default
+FLAM_HEADING_ODOMETRIC_THRESHOLD = 0.1
+
+##
+# Tolerance threshold accomodating for odometric noise in estimated
+# robot heading change probability.
+#
+# @const {float}
+# @default
+FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD = 0.05
 
 ##
 # Check close neighbor density
@@ -55,4 +74,30 @@ function robot_density_outer() {
 # @return {boolean} Robot is moving
 function robot_moving() {
   return (flam_comm_travelled_distance > FLAM_MOTOR_SPEED_ODOMETRIC_THRESHOLD * FLAM_OBSERVATION_WINDOW * SEARCH_SPEED)
+}
+
+##
+# Check if current robot is displaying angular motion
+#
+# **REQUIRES** Up-to-date self speed readings @link {random_search}
+# **REQUIRES** Up-to-date neighbor speed readings @link {update_comm}
+#
+# @private
+# @return {boolean} Robot is turning
+function robot_turning() {
+  return (((flam_comm_angular_accel / FLAM_MAX_ANGULAR_ACCEL) *
+           (flam_comm_travelled_distance / FLAM_OBSERVATION_WINDOW /
+            SEARCH_SPEED)) > FLAM_HEADING_ODOMETRIC_THRESHOLD)
+}
+
+##
+# Check the proportion of time steps where the robot changed its heading.
+#
+# **REQUIRES** Up-to-date self speed readings @link {random_search}
+# **REQUIRES** Up-to-date neighbor speed readings @link {update_comm}
+#
+# @return {boolean} Robot has been turning more than 5% of the time
+function robot_bayes_turning() {
+  return ((flam_comm_num_heading_changes / FLAM_OBSERVATION_WINDOW) >
+          FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
 }

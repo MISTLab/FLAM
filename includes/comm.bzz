@@ -30,6 +30,11 @@ function init_comm() {
   flam_comm_observed_outer = 0
 
   flam_comm_travelled_distance = 0.0
+  flam_comm_angular_accel = 0.0
+  flam_comm_num_heading_changes = 0
+  flam_comm_angular_speed_current = 0.0
+  flam_comm_angular_speed_prev = 0.0
+  flam_comm_angular_speed_prev_prev = 0.0
 }
 
 ##

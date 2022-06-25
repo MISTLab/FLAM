@@ -16,6 +16,13 @@ include "vec2.bzz"
 INTERWHEEL_DISTANCE = 10.5875
 
 ##
+# Maximum robot angular acceleration, in radians/s^2
+#
+# @const {float}
+# @default
+FLAM_MAX_ANGULAR_ACCEL = 7.556
+
+##
 # Simulation time step duration, in seconds
 #
 # @const {float}

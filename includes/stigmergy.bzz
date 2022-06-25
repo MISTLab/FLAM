@@ -36,6 +36,7 @@ function update_stigmergy() {
       ((robot_density_inner()) << 6)
     | ((robot_density_outer()) << 5)
     | ((robot_moving()) << 4)
+    | ((robot_bayes_turning() << 3))
 
     stigmergy_fv.put(id, fv)
     
