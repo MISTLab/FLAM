@@ -28,6 +28,8 @@ function init_comm() {
   flam_comm_neighbor_outer_count = 0
   flam_comm_observed_inner = 0
   flam_comm_observed_outer = 0
+
+  flam_comm_travelled_distance = 0.0
 }
 
 ##

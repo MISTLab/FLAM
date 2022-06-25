@@ -1,3 +1,5 @@
+include "includes/chassis.bzz"
+
 # Lennard-Jones parameters
 TARGET     = 283.0
 EPSILON    = 150.0
@@ -48,6 +50,10 @@ function random_search()
   next_position_local = math.vec2.rotate(math.vec2.sub(next_position, pose.position), -pose.orientation.yaw)
 
   scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
+
+  # Update self motion speed readings
+  var delta_pos = chassis_delta_pos(scaled_direction.x, scaled_direction.y)
+  flam_comm_travelled_distance = flam_comm_travelled_distance + math.vec2.length(delta_pos)
 
   gotoc(scaled_direction.x, scaled_direction.y)
   #gotoc_buzz(scaled_direction)

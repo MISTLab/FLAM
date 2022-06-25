@@ -15,6 +15,14 @@
 FLAM_OBSERVATION_WINDOW = 50
 
 ##
+# Tolerance threshold accomodating for odometric noise in observed
+# robot motion speed.
+#
+# @const {float}
+# @default
+FLAM_MOTOR_SPEED_ODOMETRIC_THRESHOLD = 0.15
+
+##
 # Check close neighbor density
 #
 # **REQUIRES** Up-to-date neighbor observations @link {update_comm}
@@ -34,4 +42,17 @@ function robot_density_inner() {
 # sliding observation window @link {FLAM_OBSERVATION_WINDOW}
 function robot_density_outer() {
   return (flam_comm_observed_outer > (FLAM_OBSERVATION_WINDOW / 2.0))
+}
+
+##
+# Check if current robot is displaying forward motion
+#
+# Compute feature vector based on observed linear speed.
+#
+# **REQUIRES** Up-to-date self speed readings @link {random_search}
+# **REQUIRES** Up-to-date neighbor speed readings @link {update_comm}
+#
+# @return {boolean} Robot is moving
+function robot_moving() {
+  return (flam_comm_travelled_distance > FLAM_MOTOR_SPEED_ODOMETRIC_THRESHOLD * FLAM_OBSERVATION_WINDOW * SEARCH_SPEED)
 }

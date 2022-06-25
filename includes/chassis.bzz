@@ -1,0 +1,51 @@
+##
+# @file chassis.bzz
+#
+# Expose technical data sheet information about the target
+# Khepera IV robot and provide motion compute utilities
+#
+# @author Guillaume RICARD <guillaume.ricard@polymtl.ca>
+
+include "vec2.bzz"
+
+##
+# Khepera IV inter wheel distance, in centimeters
+#
+# @const {float}
+# @default
+INTERWHEEL_DISTANCE = 10.5875
+
+##
+# Simulation time step duration, in seconds
+#
+# @const {float}
+# @default
+TIMESTEP_DURATION = 0.2
+
+chassis_heading = 0.0
+
+##
+# Compute the change in robot heading direction over one time step given
+# current wheel speeds.
+#
+# @param {float} left_speed Left robot wheel speed, in centimeters per second
+# @param {float} right_speed Right robot wheel speed, in centimeters per second
+# @return {float} Change in robot heading, in radians
+function chassis_delta_heading(left_speed, right_speed) {
+  return (right_speed - left_speed) / INTERWHEEL_DISTANCE * TIMESTEP_DURATION
+}
+
+##
+# Compute position offset over one time step given current wheel speeds.
+#
+# @param {float} left_speed Left robot wheel speed, in centimeters per second
+# @param {float} right_speed Right robot wheel speed, in centimeters per second
+# @return {vec2} Change in robot position, in centimeters
+function chassis_delta_pos(left_speed, right_speed) {
+  var diff_heading = chassis_delta_heading(left_speed, right_speed)
+  return math.vec2.new(
+    (left_speed + right_speed) / 2.0 * TIMESTEP_DURATION * math.cos(chassis_heading + diff_heading / 2.0),
+    (left_speed + right_speed) / 2.0 * TIMESTEP_DURATION * math.sin(chassis_heading + diff_heading / 2.0)
+  )
+  chassis_heading = chassis_heading + diff_heading
+}

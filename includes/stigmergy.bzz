@@ -35,7 +35,7 @@ function update_stigmergy() {
     var fv =
       ((robot_density_inner()) << 6)
     | ((robot_density_outer()) << 5)
-    | ((distance < 0.15 * 10.0) << 4)
+    | ((robot_moving()) << 4)
 
     stigmergy_fv.put(id, fv)
     
