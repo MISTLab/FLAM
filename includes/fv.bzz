@@ -101,3 +101,25 @@ function robot_bayes_turning() {
   return ((flam_comm_num_heading_changes / FLAM_OBSERVATION_WINDOW) >
           FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
 }
+
+##
+# Check for heading changes in presence of sensor input.
+#
+# **REQUIRES** Up-to-date self speed readings @link {random_search}
+# **REQUIRES** Up-to-date neighbor speed readings @link {update_comm}
+#
+# @return {boolean} Robot alters its heading in response to sensor input
+function robot_turning_sensor() {
+  return ((flam_comm_num_heading_changes_sensor / FLAM_OBSERVATION_WINDOW) > FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
+}
+
+##
+# Check for heading changes in the absence of sensor input.
+#
+# **REQUIRES** Up-to-date self speed readings @link {random_search}
+# **REQUIRES** Up-to-date neighbor speed readings @link {update_comm}
+#
+# @return {boolean} Robot alters its heading without sensor input
+function robot_turning_no_sensor() {
+  return ((flam_comm_num_heading_changes_no_sensor / FLAM_OBSERVATION_WINDOW) > FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
+}

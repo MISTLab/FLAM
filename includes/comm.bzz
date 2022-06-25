@@ -35,6 +35,9 @@ function init_comm() {
   flam_comm_angular_speed_current = 0.0
   flam_comm_angular_speed_prev = 0.0
   flam_comm_angular_speed_prev_prev = 0.0
+
+  flam_comm_num_heading_changes_sensor = 0
+  flam_comm_num_heading_changes_no_sensor = 0
 }
 
 ##
@@ -52,8 +55,16 @@ function update_comm() {
 
   if (flam_comm_neighbor_inner_count > 0) {
     flam_comm_observed_inner = flam_comm_observed_inner + 1
+
+    if (robot_turning()) {
+      flam_comm_num_heading_changes_sensor = flam_comm_num_heading_changes_sensor + 1
+    }
   } else {
     flam_comm_observed_inner = math.max(flam_comm_observed_inner - 1, 0)
+
+    if (robot_turning()) {
+      flam_comm_num_heading_changes_no_sensor = flam_comm_num_heading_changes_no_sensor + 1
+    }
   }
 
   if (flam_comm_neighbor_outer_count > 0) {

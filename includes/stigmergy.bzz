@@ -33,10 +33,12 @@ function update_stigmergy() {
     distance = math.vec2.length(distance_vec)
 
     var fv =
-      ((robot_density_inner()) << 6)
-    | ((robot_density_outer()) << 5)
-    | ((robot_moving()) << 4)
-    | ((robot_bayes_turning() << 3))
+     ((robot_density_inner() << 5)
+    | (robot_density_outer() << 4)
+    | (robot_moving() << 3)
+    | (robot_bayes_turning() << 2)
+    | (robot_turning_sensor() << 1)
+    | (robot_turning_no_sensor()))
 
     stigmergy_fv.put(id, fv)
     
