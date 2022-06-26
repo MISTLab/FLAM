@@ -1,3 +1,5 @@
+include "string.bzz"
+
 include "includes/fv.bzz"
 
 ##
@@ -41,6 +43,7 @@ function update_stigmergy() {
     | (robot_turning_no_sensor()))
 
     stigmergy_fv.put(id, fv)
+    stigmergy_fv.put(string.concat("t", string.tostring(id)), current_step)
     
     previous_position.x = actual_position.x
     previous_position.y = actual_position.y

@@ -74,7 +74,7 @@ void CBuzzControllerDroneSim::UpdateFV(int i, unsigned int value) {
       break;
     }
   }
-  if (!ok) {
+  if (!ok && value != 0) {
     featureVectors_.emplace_back(value, 1.0f);
   }
 }
