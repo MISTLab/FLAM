@@ -32,7 +32,7 @@ function update_voting() {
   for (i = 0, i < 10, i = i + 1) {
     var value = stigmergy_fv.get(i)
     var time = stigmergy_fv.get(string.concat("t", string.tostring(i)))
-    if (time == current_step - FLAM_OBSERVATION_WINDOW) {
+    if (time == current_step - 1) {
       fvs[i] = value
     } else {
       fvs[i] = 0
@@ -49,7 +49,14 @@ function update_voting() {
 
   # Log all votes
   var local_vote = run_crm()
-  foreach(local_vote, function(robot_id, vote) {
-    log(id, " -> ", robot_id, ": ", vote)
+  foreach(local_vote, function(fv_value, vote) {
+    foreach(fvs, function(robot_id, fv) {
+      if (fv == fv_value) {
+        stigmergy_fv.put(
+          string.concat("v", string.tostring(id), string.tostring(robot_id)),
+          vote
+        )
+      }
+    })
   })
 }

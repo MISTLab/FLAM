@@ -1,0 +1,19 @@
+function update_consensus() {
+  for (i = 0, i < 10, i = i + 1) {
+    var num_for = 0
+    var num_against = 0
+    for (j = 0, j < 10, j = j + 1) {
+      vote = stigmergy_fv.get(string.concat("v", string.tostring(i), string.tostring(j)))
+      if (vote == 2) {
+        num_for = num_for + 1
+      } else if (vote == 1) {
+        num_against = num_against + 1
+      }
+    }
+    if (id == 0 and num_for >= num_against) {
+      log("Robot ", i, " is ok")
+    } else if (id == 0) {
+      log("Robot ", i, " is faulty")
+    }
+  }
+}
