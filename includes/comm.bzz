@@ -24,8 +24,8 @@ FLAM_OUTER_NEIGHBOR_RADIUS = 300.0
 ##
 # Register local neighbor sliding window observation.
 function init_comm() {
-  flam_comm_neighbor_inner_count = 0
-  flam_comm_neighbor_outer_count = 0
+  flam_comm_neighbor_inner_count = {.0=0,.1=0,.2=0,.3=0,.4=0,.5=0,.6=0,.7=0,.8=0,.9=0}
+  flam_comm_neighbor_outer_count = {.0=0,.1=0,.2=0,.3=0,.4=0,.5=0,.6=0,.7=0,.8=0,.9=0}
   flam_comm_observed_inner = 0
   flam_comm_observed_outer = 0
 
@@ -43,17 +43,38 @@ function init_comm() {
 ##
 # Count local neighbors and update observations.
 function update_comm() {
-  flam_comm_neighbor_inner_count = 0
-  flam_comm_neighbor_outer_count = 0
+  flam_comm_neighbor_inner_count[id] = 0
+  flam_comm_neighbor_outer_count[id] = 0
   neighbors.foreach(function(robot_id, data) {
     if (data.distance < FLAM_INNER_NEIGHBOR_RADIUS) {
-      flam_comm_neighbor_inner_count = flam_comm_neighbor_inner_count + 1
+      flam_comm_neighbor_inner_count[id] = flam_comm_neighbor_inner_count[id] + 1
+      flam_comm_neighbor_inner_count[robot_id] = flam_comm_neighbor_inner_count[robot_id] + 1
     } else if (data.distance < FLAM_OUTER_NEIGHBOR_RADIUS) {
-      flam_comm_neighbor_outer_count = flam_comm_neighbor_outer_count + 1
+      flam_comm_neighbor_outer_count[id] = flam_comm_neighbor_outer_count[id] + 1
+      flam_comm_neighbor_outer_count[robot_id] = flam_comm_neighbor_outer_count[robot_id] + 1
     }
+
+    neighbors.foreach(function(other_id, other_data) {
+        var di = data.distance
+        var dj = other_data.distance
+        var ai = data.azimuth
+        var aj = other_data.azimuth
+        var estimated_distance = math.sqrt((di^2) + (dj^2) + 2.0 * di * dj * math.cos(ai - aj))
+        if (estimated_distance < FLAM_INNER_NEIGHBOR_RADIUS) {
+          flam_comm_neighbor_inner_count[other_id] =
+            flam_comm_neighbor_inner_count[other_id] + 1
+          flam_comm_neighbor_inner_count[robot_id] =
+            flam_comm_neighbor_inner_count[robot_id] + 1
+        } else if (estimated_distance < FLAM_OUTER_NEIGHBOR_RADIUS) {
+          flam_comm_neighbor_outer_count[other_id] =
+            flam_comm_neighbor_outer_count[other_id] + 1
+          flam_comm_neighbor_outer_count[robot_id] =
+            flam_comm_neighbor_outer_count[robot_id] + 1
+        }
+    })
   })
 
-  if (flam_comm_neighbor_inner_count > 0) {
+  if (flam_comm_neighbor_inner_count[id] > 0) {
     flam_comm_observed_inner = flam_comm_observed_inner + 1
 
     if (robot_turning()) {
@@ -67,7 +88,7 @@ function update_comm() {
     }
   }
 
-  if (flam_comm_neighbor_outer_count > 0) {
+  if (flam_comm_neighbor_outer_count[id] > 0) {
     flam_comm_observed_outer = flam_comm_observed_outer + 1
   } else {
     flam_comm_observed_outer = math.max(flam_comm_observed_outer - 1, 0)
