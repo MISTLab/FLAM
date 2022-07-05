@@ -119,7 +119,7 @@ TARGET_SPEED_STDEV = 0.5
 #
 # @const {int}
 # @default
-EXPERIMENT_LENGTH = 300
+EXPERIMENT_LENGTH = 3000
 
 # Storage parameters
 

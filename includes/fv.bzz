@@ -15,7 +15,7 @@ include "includes/chassis.bzz"
 #
 # @const {int}
 # @default
-FLAM_OBSERVATION_WINDOW = 50
+FLAM_OBSERVATION_WINDOW = 10
 
 ##
 # Tolerance threshold accomodating for odometric noise in observed

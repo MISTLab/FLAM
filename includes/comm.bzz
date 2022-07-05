@@ -10,7 +10,7 @@
 #
 # @const {float}
 # @default
-FLAM_INNER_NEIGHBOR_RADIUS = 150.0
+FLAM_INNER_NEIGHBOR_RADIUS = 1500.0
 
 ##
 # Radius beyond which robots are no longer considered as neighbors for feature
@@ -19,7 +19,7 @@ FLAM_INNER_NEIGHBOR_RADIUS = 150.0
 #
 # @const {float}
 # @default
-FLAM_OUTER_NEIGHBOR_RADIUS = 300.0
+FLAM_OUTER_NEIGHBOR_RADIUS = 3000.0
 
 ##
 # Register local neighbor sliding window observation.
