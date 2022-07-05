@@ -96,6 +96,8 @@ function update_comm() {
 }
 
 function reset_comm() {
+  flam_comm_travelled_distance = 0.0
+
   flam_comm_num_heading_changes = 0
   flam_comm_num_heading_changes_sensor = 0
   flam_comm_num_heading_changes_no_sensor = 0

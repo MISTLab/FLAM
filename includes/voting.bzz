@@ -35,7 +35,7 @@ function update_voting() {
     if (time == current_step - 1) {
       fvs[i] = value
     } else {
-      fvs[i] = 0
+      fvs[i] = 32
     }
   }
 
