@@ -6,9 +6,9 @@
   <!-- ************************* -->
   <framework>
     <system threads="10" />
-    <experiment length="300"
+:   <experiment length="3000"
                 ticks_per_second="5" 
-                random_seed="0"/>
+                random_seed="907998"/>
     <!--profiling file="profile.txt"
              format="human_readable"
              truncate_file="true" /-->

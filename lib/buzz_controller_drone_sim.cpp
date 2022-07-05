@@ -28,7 +28,6 @@ CBuzzControllerDroneSim::CBuzzControllerDroneSim() : CBuzzControllerKheperaIV(),
    usleep(10);
    std::chrono::high_resolution_clock::duration duration(
       std::chrono::high_resolution_clock::now() -  previous);
-   random_engine_.seed(duration.count());
 
    // Find experiment number and file
    int experiment_number = -1;
@@ -53,6 +52,8 @@ CBuzzControllerDroneSim::~CBuzzControllerDroneSim() {
 void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
    CBuzzControllerKheperaIV::Init(t_node);
 
+   random_engine_.seed(907998 + RobotIdStrToInt());
+
    crminAgent_ =  new CRMinRobotAgentOptimised(
        RobotIdStrToInt(),
        CProprioceptiveFeatureVector::NUMBER_OF_FEATURES
@@ -69,7 +70,7 @@ void CBuzzControllerDroneSim::UpdateFV(int i, unsigned int value) {
   bool ok = false;
   for (auto it = featureVectors_.begin(); it != featureVectors_.end(); ++it) {
     if (it->uFV == value) {
-      it->fRobots += 1.0f;
+      it->fRobots += 0.1f;
       ok = true;
       break;
     }

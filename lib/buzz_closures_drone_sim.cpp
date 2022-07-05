@@ -339,7 +339,6 @@ static int BuzzUpdateFV(buzzvm_t vm) {
   buzzvm_tget(vm);
   while (!buzzobj_isnil(buzzvm_stack_at(vm, 1))) {
     int value = buzzvm_stack_at(vm, 1)->i.value;
-    std::cout << value << std::endl;
     controller->UpdateFV(i++, static_cast<unsigned int>(value));
     buzzvm_push(vm, inputValues);
     buzzvm_pushi(vm, i);
