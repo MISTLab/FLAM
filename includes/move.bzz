@@ -51,6 +51,11 @@ function random_search()
 
   scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
 
+  if (pose.position.x < -4.0 and pose.position.y > 6.0) {
+    #log("[slippage] ", id, " ", pose.position.x, " ", pose.position.y)
+    scaled_direction = math.vec2.scale(scaled_direction, 0.10)
+  }
+
   # Update self motion speed readings
   var delta_pos = chassis_delta_pos(scaled_direction.x, scaled_direction.y)
   flam_comm_travelled_distance = flam_comm_travelled_distance + math.vec2.length(delta_pos)

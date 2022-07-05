@@ -43,14 +43,16 @@ void CRadiationLoopFunctions::Init(TConfigurationNode &t_node) {
 }
 
 CColor CRadiationLoopFunctions::GetFloorColor(const CVector2 &c_position_on_plane) {
+  float x = c_position_on_plane.GetX();
+  float y = c_position_on_plane.GetY();
+  if (x < -4.0f && y > 6.0f) {
+    return CColor(51, 122, 183);
+  }
   float intensity = 0.0f;
   for (int i = 0; i < sources.size(); ++i) {
     CVector3 sourceCoord = sources[i].GetCoordinates();
     CVector2 sourcePos(sourceCoord.GetX(), sourceCoord.GetY());
-    intensity += sources[i].GetPerceivedIntensity(
-        c_position_on_plane.GetX(),
-        c_position_on_plane.GetY()
-    );
+    intensity += sources[i].GetPerceivedIntensity(x, y);
   }
   if (intensity > m_max_intensity_) {
     m_max_intensity_ = intensity;
