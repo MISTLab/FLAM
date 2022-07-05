@@ -11,9 +11,10 @@ include "includes/radiation.bzz"
 include "includes/comm.bzz"
 include "includes/stigmergy.bzz"
 include "includes/voting.bzz"
+include "includes/consensus.bzz"
 
 function init() {
-    current_step = 1
+    current_step = 3
 
     sources = { .0 = radiation_source.new(0.0, 0.0, 1.0)}
     sensor = radiation_sensor.new(sources)
@@ -26,16 +27,19 @@ function init() {
 
 # Executed every time step
 function step() {
-
-    update_comm()
-    if (current_step % FLAM_OBSERVATION_WINDOW == 0) {
-      update_stigmergy()
-      update_voting()
-      reset_comm()
+    if (current_step >= EXPERIMENT_LENGTH or is_failed()) {
+      return
     }
 
-    if (current_step < EXPERIMENT_LENGTH and (not is_failed())) {
-        random_search()
+    update_comm()
+    stage = current_step % FLAM_OBSERVATION_WINDOW
+    if (stage == 0) {
+      update_stigmergy()
+    } else if (stage == 1) {
+      update_voting()
+      reset_comm()
+    } else if (stage == 2) {
+      update_consensus()
     }
 
     # Stop robots when experiment is over
@@ -45,6 +49,7 @@ function step() {
         set_leds(255, 0, 0)
     }
 
+    random_search()
     current_step = current_step + 1
 }
 
