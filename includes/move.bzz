@@ -55,24 +55,28 @@ function random_search()
 
   if (pose.position.x < -4.0 and pose.position.y > 6.0) {
     slippage = slippage + 1
-    if (slippage == FLAM_OBSERVATION_WINDOW) {
+    if (slippage == 5*FLAM_OBSERVATION_WINDOW) {
       flog("[flt] enter slippage")
     }
 
     #log("[slippage] ", id, " ", pose.position.x, " ", pose.position.y)
     scaled_direction = math.vec2.scale(scaled_direction, 0.10)
-  } else if (slippage > FLAM_OBSERVATION_WINDOW) {
-    flog("[flt] exit slippage")
+  } else {
+    if (slippage > 5*FLAM_OBSERVATION_WINDOW) {
+      flog("[flt] exit slippage")
+    }
     slippage = 0
   }
   if (pose.position.x > 4.0 and pose.position.y < -6.0) {
     sensor_saturation = sensor_saturation + 1
-    if (sensor_saturation == FLAM_OBSERVATION_WINDOW) {
-      log("[flt] enter saturation")
+    if (sensor_saturation == 5*FLAM_OBSERVATION_WINDOW) {
+      flog("[flt] enter saturation")
     }
-  } else if (sensor_saturation > FLAM_OBSERVATION_WINDOW) {
+  } else {
+    if (sensor_saturation > 5*FLAM_OBSERVATION_WINDOW) {
+      flog("[flt] exit saturation")
+    }
     sensor_saturation = 0
-    log("[flt] exit saturation")
   }
 
   # Update self motion speed readings
