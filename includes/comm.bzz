@@ -32,6 +32,10 @@ function init_comm() {
       if (num_shutdown_requests > 2) {
         failed_robots[id] = 1
         failed = 1
+        flog(string.concat("[map] Failed at ",
+            string.tostring(pose.position.x), ", ",
+            string.tostring(pose.position.y)
+        ))
       }
     }
   })

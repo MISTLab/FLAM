@@ -33,6 +33,12 @@ function update_consensus() {
         flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] Robot ", string.tostring(i), " failed"))
         failed_robots[i] = 1
         neighbors.broadcast("shutdown", i)
+        if (i == id) {
+          flog(string.concat("[map] Failed at ",
+              string.tostring(pose.position.x), ", ",
+              string.tostring(pose.position.y)
+          ))
+        }
       }
     } else {
       num_faulty = 0
