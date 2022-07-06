@@ -29,7 +29,7 @@ function init_comm() {
   neighbors.listen("shutdown", function(value_id, value, robot_id) {
     if (value == id) {
       num_shutdown_requests = num_shutdown_requests + 1
-      if (num_shutdown_requests > 5) {
+      if (num_shutdown_requests > 2) {
         failed_robots[id] = 1
       }
     }
