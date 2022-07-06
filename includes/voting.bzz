@@ -1,4 +1,5 @@
 include "includes/constants.bzz"
+include "includes/knn.bzz"
 
 ##
 # Swarm statistics used as a reference to classify abnormal behavior
@@ -39,6 +40,11 @@ function update_voting() {
     } else {
       fvs[i] = 32
     }
+  }
+
+  if (1) {
+    flam_knn(fvs)
+    return
   }
 
   update_fv(fvs)
