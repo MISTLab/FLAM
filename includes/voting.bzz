@@ -44,7 +44,7 @@ function update_voting() {
 
   if (verbose) {
     foreach(fvs, function(k,v) {
-      flog(string.concat("[fv] ", string.tostring(k), ", ", string.tostring(v))
+      flog(string.concat("[fv] ", string.tostring(k), ", ", string.tostring(v)))
     })
   }
 
