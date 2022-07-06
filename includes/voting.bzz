@@ -38,7 +38,7 @@ function update_voting() {
     } else if (failed_robots[i]) {
       fvs[i] = 256
     } else {
-      fvs[i] = 32
+      fvs[i] = 255
     }
   }
 
