@@ -5,12 +5,12 @@ FILE_FOLDER = "results/"
 verbose = 0
 
 function init_log() {
-  out = io.fopen(string.concat(FILE_FOLDER, "907998_", string.tostring(id), ".log"), "w")
+  out = io.fopen(string.concat(FILE_FOLDER, string.tostring(FLAM_SEED), "_", string.tostring(id), ".log"), "w")
   io.fclose(out)
 }
 
 function flog(message) {
-  out = io.fopen(string.concat(FILE_FOLDER, "907998_", string.tostring(id), ".log"), "a")
+  out = io.fopen(string.concat(FILE_FOLDER, string.tostring(FLAM_SEED), "_", string.tostring(id), ".log"), "a")
   io.fwrite(out, current_step, " Robot", id, " ", message)
   io.fclose(out)
 }

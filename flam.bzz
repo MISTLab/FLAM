@@ -14,10 +14,12 @@ include "includes/stigmergy.bzz"
 include "includes/voting.bzz"
 include "includes/consensus.bzz"
 
+FLAM_SEED = 907998
+
 function init() {
     current_step = 3
 
-    math.rng.setseed(907998 + id)
+    math.rng.setseed(FLAM_SEED + id)
 
     sources = {
       .0 = radiation_source.new(-6.5, -5.5, 0.25),
