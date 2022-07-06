@@ -375,6 +375,10 @@ static int BuzzRunCRM(buzzvm_t vm) {
 buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
    CBuzzControllerKheperaIV::RegisterFunctions();
 
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "FLAM_SEED", 1));
+   buzzvm_pushi(m_tBuzzVM, seed_);
+   buzzvm_gstore(m_tBuzzVM);
+
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "uniform", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzRandUniform));
    buzzvm_gstore(m_tBuzzVM);

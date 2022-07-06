@@ -50,14 +50,18 @@ CBuzzControllerDroneSim::~CBuzzControllerDroneSim() {
 /****************************************/
 
 void CBuzzControllerDroneSim::Init(TConfigurationNode& t_node) {
-   CBuzzControllerKheperaIV::Init(t_node);
+   GetNode(*t_node.Parent()->Parent()->Parent()->FirstChildElement(), "experiment")
+     .GetAttributeOrDefault("random_seed", &seed_, 907998);
 
-   random_engine_.seed(907998 + RobotIdStrToInt());
+
+   random_engine_.seed(1168202547 + RobotIdStrToInt());
 
    crminAgent_ =  new CRMinRobotAgentOptimised(
        RobotIdStrToInt(),
        CProprioceptiveFeatureVector::NUMBER_OF_FEATURES
    );
+
+   CBuzzControllerKheperaIV::Init(t_node);
 }
 
 void CBuzzControllerDroneSim::ControlStep() {

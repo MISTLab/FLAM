@@ -14,7 +14,13 @@ include "includes/stigmergy.bzz"
 include "includes/voting.bzz"
 include "includes/consensus.bzz"
 
-FLAM_SEED = 907998
+##
+# Global random generator seed for reproducible results
+#
+# Seed can be supplied via C++ to match the random seed in flam.argos
+# @const {int}
+# @default
+#FLAM_SEED = 907998
 
 function init() {
     current_step = 3
