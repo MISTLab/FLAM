@@ -1,0 +1,19 @@
+function hamming_bit(a, b, i) {
+  return (a & (1 << i)) != (b & (1 << i))
+}
+
+function hamming(a, b) {
+  var dist = 0
+  for (bit_index = 0, bit_index < 8, bit_index = bit_index + 1) {
+    dist = dist + hamming_bit(a, b, bit_index)
+  }
+  return dist
+}
+
+function hamming_flip(x) {
+  var out = 0
+  for (bit_index = 0, bit_index < 8, bit_index = bit_index + 1) {
+    out = out | ((not (x & (1 << bit_index))) << bit_index)
+  }
+  return out
+}
