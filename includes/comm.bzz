@@ -31,6 +31,7 @@ function init_comm() {
       num_shutdown_requests = num_shutdown_requests + 1
       if (num_shutdown_requests > 2) {
         failed_robots[id] = 1
+        failed = 1
       }
     }
   })
