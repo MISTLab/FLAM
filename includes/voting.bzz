@@ -41,15 +41,9 @@ function update_voting() {
     }
   }
 
-  # Log all robot feature vectors
-  if (id == 0) {
-    foreach(fvs, function(key, value) {
-      log(key, ", ", value)
-    })
-  }
   update_fv(fvs)
 
-  # Log all votes
+  # Update all votes
   var local_vote = run_crm()
   foreach(local_vote, function(fv_value, vote) {
     foreach(fvs, function(robot_id, fv) {

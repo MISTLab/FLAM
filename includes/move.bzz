@@ -4,6 +4,7 @@ include "includes/chassis.bzz"
 TARGET     = 283.0
 EPSILON    = 150.0
 
+slippage = 0
 
 # Lennard-Jones interaction magnitude
 function lj_magnitude(dist, target, epsilon) {
@@ -52,8 +53,18 @@ function random_search()
   scaled_direction = math.vec2.scale(next_position_local, SEARCH_SPEED)
 
   if (pose.position.x < -4.0 and pose.position.y > 6.0) {
+    slippage = slippage + 1
+    if (slippage == FLAM_OBSERVATION_WINDOW) {
+      flog("[flt] enter slippage")
+    }
+
     #log("[slippage] ", id, " ", pose.position.x, " ", pose.position.y)
     scaled_direction = math.vec2.scale(scaled_direction, 0.10)
+  } else if (slippage == 1) {
+    if (slippage > FLAM_OBSERVATION_WINDOW) {
+      flog("[flt] exit slippage")
+    }
+    slippage = 0
   }
 
   # Update self motion speed readings

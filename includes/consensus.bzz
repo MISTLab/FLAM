@@ -16,9 +16,7 @@ function update_consensus() {
         num_against = num_against + 1
       }
     }
-    if (id == 1) {
-      against = string.concat(against, string.tostring(num_against))
-    }
+    against = string.concat(against, string.tostring(num_against))
 
     var num_faulty = stigmergy_fv.get(string.concat("n", string.tostring(i)))
     if (num_faulty == nil) {
@@ -26,12 +24,10 @@ function update_consensus() {
     }
 
     if (num_for < num_against) {
-      if (id == 1) {
-        log("Robot ", i, " is faulty")
-      }
+      #flog(string.concat("[cns] Robot ", string.tostring(i), " is faulty"))
       num_faulty = num_faulty + 1
       if (num_faulty == 4) {
-        log("Robot ", i, " failed")
+        flog(string.concat("[cns] Robot ", string.tostring(i), " failed"))
         failed_robots[i] = 1
       }
     } else {
@@ -40,7 +36,5 @@ function update_consensus() {
 
     stigmergy_fv.put(string.concat("n", string.tostring(i)), num_faulty)
   }
-  if (id == 1) {
-    log(against)
-  }
+  flog(string.concat("[cns] ", against))
 }

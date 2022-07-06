@@ -3,6 +3,7 @@ include "string.bzz"
 include "table.bzz"
 include "queue.bzz"
 
+include "includes/logging.bzz"
 include "includes/move.bzz"
 include "includes/constants.bzz"
 include "includes/failure.bzz"
@@ -22,6 +23,7 @@ function init() {
     sensor = radiation_sensor.new(sources)
 
     set_leds(0, 255, 0)
+    init_log()
     init_random_search()
     init_comm()
     init_stigmergy()
