@@ -21,9 +21,20 @@ FLAM_INNER_NEIGHBOR_RADIUS = 1500.0
 # @default
 FLAM_OUTER_NEIGHBOR_RADIUS = 3000.0
 
+num_shutdown_requests = 0
+
 ##
 # Register local neighbor sliding window observation.
 function init_comm() {
+  neighbors.listen("shutdown", function(value_id, value, robot_id) {
+    if (value == id) {
+      num_shutdown_requests = num_shutdown_requests + 1
+      if (num_shutdown_requests > 5) {
+        failed_robots[id] = 1
+      }
+    }
+  })
+
   flam_comm_neighbor_inner_count = {.0=0,.1=0,.2=0,.3=0,.4=0,.5=0,.6=0,.7=0,.8=0,.9=0}
   flam_comm_neighbor_outer_count = {.0=0,.1=0,.2=0,.3=0,.4=0,.5=0,.6=0,.7=0,.8=0,.9=0}
   flam_comm_observed_inner = 0
@@ -96,6 +107,8 @@ function update_comm() {
 }
 
 function reset_comm() {
+  num_shutdown_requests = 0
+
   flam_comm_travelled_distance = 0.0
 
   flam_comm_num_heading_changes = 0

@@ -29,6 +29,7 @@ function update_consensus() {
       if (num_faulty == 4) {
         flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] Robot ", string.tostring(i), " failed"))
         failed_robots[i] = 1
+        neighbors.broadcast("shutdown", i)
       }
     } else {
       num_faulty = 0
