@@ -30,6 +30,8 @@ function init() {
 # Executed every time step
 function step() {
     if (current_step >= EXPERIMENT_LENGTH or is_failed()) {
+      set_wheels(0.0, 0.0)
+      set_leds(255, 0, 0)
       return
     }
 

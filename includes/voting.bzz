@@ -34,6 +34,8 @@ function update_voting() {
     var time = stigmergy_fv.get(string.concat("t", string.tostring(i)))
     if (time == current_step - 1) {
       fvs[i] = value
+    } else if (failed_robots[i]) {
+      fvs[i] = 256
     } else {
       fvs[i] = 32
     }
@@ -51,7 +53,7 @@ function update_voting() {
   var local_vote = run_crm()
   foreach(local_vote, function(fv_value, vote) {
     foreach(fvs, function(robot_id, fv) {
-      if (fv == fv_value) {
+      if (fv == fv_value and failed_robots[robot_id] == 0) {
         stigmergy_fv.put(
           string.concat("v", string.tostring(id), string.tostring(robot_id)),
           vote
