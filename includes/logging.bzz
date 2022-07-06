@@ -1,7 +1,8 @@
 include "string.bzz"
 
-
 FILE_FOLDER = "results/"
+
+verbose = 0
 
 function init_log() {
   out = io.fopen(string.concat(FILE_FOLDER, "907998_", string.tostring(id), ".log"), "w")

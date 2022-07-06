@@ -65,6 +65,19 @@ function flam_knn(fvs) {
         next_acc[2] = dist
       }
 
+      if (verbose == 2) {
+        foreach(local_values, function(vk, vv) {
+          flog(string.concat("v ", string.tostring(vk), ", ",string.tostring(vv))
+        })
+        foreach(local_classes, function(ck, cv) {
+          flog(string.concat("c ", string.tostring(ck), ", ",string.tostring(cv))
+        })
+        foreach(next_acc, function(ak, av) {
+          flog(string.concat("ak", string.tostring(ak), ", ",string.tostring(av))
+        })
+        flog("")
+      }
+
       return next_acc
     }, {.0=INFINITY,.1=INFINITY,.2=INFINITY})
 

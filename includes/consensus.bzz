@@ -24,7 +24,9 @@ function update_consensus() {
     }
 
     if (num_for < num_against) {
-      #flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] Robot ", string.tostring(i), " is faulty"))
+      if (verbose == 2) {
+        flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] Robot ", string.tostring(i), " is faulty"))
+      }
       num_faulty = num_faulty + 1
       if (num_faulty == 4) {
         flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] Robot ", string.tostring(i), " failed"))
@@ -37,5 +39,7 @@ function update_consensus() {
 
     stigmergy_fv.put(string.concat("n", string.tostring(i)), num_faulty)
   }
-  flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] ", against))
+  if (verbose) {
+    flog(string.concat("[cns:", string.tostring(stigmergy_fv.id), "] ", against))
+  }
 }
