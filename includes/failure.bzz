@@ -14,8 +14,24 @@ function failure() {
         set_wheels(0.0, 0.0)
         set_leds(255, 0, 0)
 
-        failed = 1         
+        failed = 1
         return 1
+    } else if (rand < intensity and id == 1) {
+      flog(string.concat("[flt] Robot #", string.tostring(id)," Network fault"))
+      for (i = 0, i < 10, i = i + 1) {
+        stigmergy_fv.put(string.concat("v", string.tostring(id), string.tostring(i)), 2)
+      }
+      # Make a local copy of the stigmergy and
+      # mock the shared storage
+      stigmergy_local = {
+        .id = 10 + id,
+        .put = function(k,v) { stigmergy_local[k] = v },
+        .get = function(k) { return stigmergy_local[k] }
+      }
+      stigmergy_fv.foreach(function(key, value, robot_id) {
+          stigmergy_local.put(key, value)
+      })
+      stigmergy_fv = stigmergy_local
     }
     return 0
 }
