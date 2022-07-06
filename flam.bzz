@@ -19,7 +19,7 @@ function init() {
 
     math.rng.setseed(907998 + id)
 
-    sources = { .0 = radiation_source.new(9.5, -9.5, 1.0)}
+    sources = { .0 = radiation_source.new(9.5, 9.5, 1.0)}
     sensor = radiation_sensor.new(sources)
 
     set_leds(0, 255, 0)

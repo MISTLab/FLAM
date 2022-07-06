@@ -49,6 +49,9 @@ FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD = 0.05
 # @return {boolean} At least one 'close' neighbor was observed for half the
 # sliding observation window @link {FLAM_OBSERVATION_WINDOW}
 function robot_density_inner() {
+  if (sensor_saturation > 0) {
+    return 1
+  }
   return (flam_comm_observed_inner > (FLAM_OBSERVATION_WINDOW / 2.0))
 }
 
@@ -60,6 +63,9 @@ function robot_density_inner() {
 # @return {boolean} At least one 'distant' neighbor was observed for half the
 # sliding observation window @link {FLAM_OBSERVATION_WINDOW}
 function robot_density_outer() {
+  if (sensor_saturation > 0) {
+    return 1
+  }
   return (flam_comm_observed_outer > (FLAM_OBSERVATION_WINDOW / 2.0))
 }
 
@@ -110,6 +116,9 @@ function robot_bayes_turning() {
 #
 # @return {boolean} Robot alters its heading in response to sensor input
 function robot_turning_sensor() {
+  if (sensor_saturation > 0) {
+    return robot_bayes_turning()
+  }
   return ((flam_comm_num_heading_changes_sensor / FLAM_OBSERVATION_WINDOW) > FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
 }
 
@@ -121,5 +130,8 @@ function robot_turning_sensor() {
 #
 # @return {boolean} Robot alters its heading without sensor input
 function robot_turning_no_sensor() {
+  if (sensor_saturation > 0) {
+    return 1
+  }
   return ((flam_comm_num_heading_changes_no_sensor / FLAM_OBSERVATION_WINDOW) > FLAM_HEADING_CHANGE_PROBABILITY_ODOMETRIC_THRESHOLD)
 }

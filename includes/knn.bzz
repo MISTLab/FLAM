@@ -4,8 +4,8 @@ include "includes/hamming.bzz"
 knn_neighbors = {
   .10 = 32,
   .11 = 48,
-  .12 = 1,
-  .13 = 3,
+  .12 = 57,
+  .13 = 57,
   .14 = 4,
   .15 = 7,
   .16 = 9,

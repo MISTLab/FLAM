@@ -47,6 +47,8 @@ CColor CRadiationLoopFunctions::GetFloorColor(const CVector2 &c_position_on_plan
   float y = c_position_on_plane.GetY();
   if (x < -4.0f && y > 6.0f) {
     return CColor(51, 122, 183);
+  } else if (x > 4.0f && y < -6.0f) {
+    return CColor(25, 135, 84);
   }
   float intensity = 0.0f;
   for (int i = 0; i < sources.size(); ++i) {
