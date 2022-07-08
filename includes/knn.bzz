@@ -28,7 +28,7 @@ function flam_knn(fvs) {
     }
   })
 
-  for (i = 0, i < 10, i = i + 1) {
+  for (i = 0, i < NUMBER_OF_ROBOTS, i = i + 1) {
     var flip = hamming_flip(fvs[i])
 
     local_values = {.0=flip,.1=flip,.2=flip}
@@ -96,6 +96,6 @@ function flam_knn(fvs) {
     } else {
       vote = 2
     }
-    stigmergy_fv.put(string.concat("v", string.tostring(id), string.tostring(i)), vote)
+    stigmergy_fv.put(string.concat("v", string.tostring(id), "_", string.tostring(i)), vote)
   }
 }

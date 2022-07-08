@@ -30,7 +30,7 @@ voting = {
 function update_voting() {
   var fvs = {}
 
-  for (i = 0, i < 10, i = i + 1) {
+  for (i = 0, i < NUMBER_OF_ROBOTS, i = i + 1) {
     var value = stigmergy_fv.get(i)
     var time = stigmergy_fv.get(string.concat("t", string.tostring(i)))
     if (time == current_step - 1) {
@@ -41,6 +41,7 @@ function update_voting() {
       fvs[i] = 255
     }
   }
+
 
   if (verbose) {
     foreach(fvs, function(k,v) {

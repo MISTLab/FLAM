@@ -19,8 +19,8 @@ function failure() {
     } else if (rand < intensity) {
       # Network faults
       flog("[flt] Network failure")
-      for (i = 0, i < 10, i = i + 1) {
-        stigmergy_fv.put(string.concat("v", string.tostring(id), string.tostring(i)), 2)
+      for (i = 0, i < NUMBER_OF_ROBOTS, i = i + 1) {
+        stigmergy_fv.put(string.concat("v", string.tostring(id), "_", string.tostring(i)), 2)
       }
       # Make a local copy of the stigmergy and
       # mock the shared storage

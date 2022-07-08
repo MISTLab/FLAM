@@ -1,6 +1,6 @@
 function update_consensus() {
   var against = ""
-  for (i = 0, i < 10, i = i + 1) {
+  for (i = 0, i < NUMBER_OF_ROBOTS, i = i + 1) {
     if (failed_robots[i] == 1) {
       against = string.concat(against, "X")
       i = i + 1
@@ -9,8 +9,8 @@ function update_consensus() {
 
     var num_for = 0
     var num_against = 0
-    for (j = 0, j < 10, j = j + 1) {
-      vote = stigmergy_fv.get(string.concat("v", string.tostring(j), string.tostring(i)))
+    for (j = 0, j < NUMBER_OF_ROBOTS, j = j + 1) {
+      vote = stigmergy_fv.get(string.concat("v", string.tostring(j), "_", string.tostring(i)))
       if (vote == 2 and failed_robots[j] == 0) {
         num_for = num_for + 1
       } else if (vote == 1 and failed_robots[j] == 0) {
