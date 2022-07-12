@@ -42,7 +42,6 @@ function update_voting() {
     }
   }
 
-
   if (verbose) {
     foreach(fvs, function(k,v) {
       flog(string.concat("[fv] ", string.tostring(k), ", ", string.tostring(v)))
@@ -62,7 +61,7 @@ function update_voting() {
     foreach(fvs, function(robot_id, fv) {
       if (fv == fv_value and failed_robots[robot_id] == 0) {
         stigmergy_fv.put(
-          string.concat("v", string.tostring(id), string.tostring(robot_id)),
+          string.concat("v", string.tostring(id), "_", string.tostring(robot_id)),
           vote
         )
       }

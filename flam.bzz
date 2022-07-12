@@ -38,6 +38,7 @@ function init() {
     set_leds(0, 255, 0)
     init_log()
     init_random_search()
+    init_failure()
     init_comm()
     init_stigmergy()
 }
