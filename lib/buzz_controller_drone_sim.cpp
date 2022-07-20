@@ -104,6 +104,7 @@ size_t CBuzzControllerDroneSim::HashString(const std::string data) {
 /****************************************/
 /****************************************/
 
+#if 0
 bool CBuzzControllerDroneSim::HasReached(const CVector2& position, const float& delta) {
    float difference = std::sqrt(
       std::pow(m_pcPos->GetReading().Position.GetX() - position.GetX(),2)+
@@ -156,6 +157,7 @@ float CBuzzControllerDroneSim::GetRadiationIntensity(const int& experimentNumber
 
    return radiation_belief;
 }
+#endif
 
 /****************************************/
 /****************************************/

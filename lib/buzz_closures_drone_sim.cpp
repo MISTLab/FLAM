@@ -1,7 +1,9 @@
 #include "buzz_controller_drone_sim.h"
 
 #include "buzz_utils.h"
+#if 0
 #include "radiation_loop_functions.h"
+#endif
 
 using namespace buzz_utils;
 
@@ -126,6 +128,7 @@ static int BuzzHashString(buzzvm_t vm){
 /****************************************/
 /****************************************/
 
+#if 0
 static int BuzzHasReached(buzzvm_t vm) {
    /* Push the vector components */
    buzzvm_lload(vm, 1);
@@ -178,10 +181,12 @@ static int BuzzHasReached(buzzvm_t vm) {
 
    return buzzvm_ret1(vm);
 }
+#endif
 
 /****************************************/
 /****************************************/
 
+#if 0
 static int BuzzGetCurrentKey(buzzvm_t vm){
    /* Get pointer to the controller */
    buzzvm_pushs(vm, buzzvm_string_register(vm, "controller", 1));
@@ -194,10 +199,12 @@ static int BuzzGetCurrentKey(buzzvm_t vm){
 
    return buzzvm_ret1(vm);
 }
+#endif
 
 /****************************************/
 /****************************************/
 
+#if 0
 static int BuzzGetRadiationIntensity(buzzvm_t vm){
    /* Get experiment number */
    buzzvm_lload(vm, 1);
@@ -215,6 +222,7 @@ static int BuzzGetRadiationIntensity(buzzvm_t vm){
 
    return buzzvm_ret1(vm);
 }
+#endif
 
 /****************************************/
 /****************************************/
@@ -387,14 +395,17 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzRandGauss));
    buzzvm_gstore(m_tBuzzVM);
 
+#if 0
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "has_reached", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzHasReached));
    buzzvm_gstore(m_tBuzzVM);
+#endif
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "hash_string", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzHashString));
    buzzvm_gstore(m_tBuzzVM);
 
+#if 0
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "get_current_key", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzGetCurrentKey));
    buzzvm_gstore(m_tBuzzVM);
@@ -402,6 +413,7 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "get_radiation_intensity", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzGetRadiationIntensity));
    buzzvm_gstore(m_tBuzzVM);
+#endif
 
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "log_datum", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzLogDatum));

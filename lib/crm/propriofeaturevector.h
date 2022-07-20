@@ -136,9 +136,9 @@ public:
        {
            /*normalises to range [-1 to 1] */
            if ((AngularAcceleration / m_sRobotData.MaxAngularAcceleration) >= 0.0f)
-               return std::min(AngularAcceleration / m_sRobotData.MaxAngularAcceleration,   1.0);
+               return static_cast<Real>(std::min(static_cast<double>(AngularAcceleration / m_sRobotData.MaxAngularAcceleration),   1.0));
            else
-                return std::max(AngularAcceleration / m_sRobotData.MaxAngularAcceleration, -1.0);
+                return static_cast<Real>(std::max(static_cast<double>(AngularAcceleration / m_sRobotData.MaxAngularAcceleration), -1.0));
        }
     };
 

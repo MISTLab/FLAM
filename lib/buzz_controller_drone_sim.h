@@ -44,11 +44,13 @@ public:
 
    size_t HashString(std::string data);
 
+#if 0
    bool HasReached(const CVector2& position, const float& delta);
 
    std::string GetCurrentKey();
 
    float GetRadiationIntensity(const int& experimentNumber);
+#endif
 
    void LogDatum(const std::string& key, const float& data, const int& step);
    
