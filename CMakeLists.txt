@@ -46,6 +46,7 @@ if(ARGOS_BUILD_FOR STREQUAL "khiv")
     argos3plugin_khiv_buzz
     argos3plugin_khiv_genericrobot
     argos3core_khiv
+    lua
     buzzdbg
     buzz
   )

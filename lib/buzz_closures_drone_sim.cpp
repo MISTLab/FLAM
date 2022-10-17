@@ -387,6 +387,43 @@ buzzvm_state CBuzzControllerDroneSim::RegisterFunctions() {
    buzzvm_pushi(m_tBuzzVM, seed_);
    buzzvm_gstore(m_tBuzzVM);
 
+#if ARGOS_BUILD_FOR == "khiv"
+   // Initialize sensor variables
+   buzzobj_t position = buzzheap_newobj(m_tBuzzVM, BUZZTYPE_TABLE);
+
+   buzzvm_push(m_tBuzzVM, position);
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "x", 1));
+   buzzvm_pushf(m_tBuzzVM, 0.0);
+   buzzvm_tput(m_tBuzzVM);
+
+   buzzvm_push(m_tBuzzVM, position);
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "y", 1));
+   buzzvm_pushf(m_tBuzzVM, 0.0);
+   buzzvm_tput(m_tBuzzVM);
+
+   buzzobj_t orientation = buzzheap_newobj(m_tBuzzVM, BUZZTYPE_TABLE);
+
+   buzzvm_push(m_tBuzzVM, orientation);
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "yaw", 1));
+   buzzvm_pushf(m_tBuzzVM, 0.0);
+   buzzvm_tput(m_tBuzzVM);
+
+   buzzobj_t pose = buzzheap_newobj(m_tBuzzVM, BUZZTYPE_TABLE);
+   buzzvm_push(m_tBuzzVM, pose);
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "position", 1));
+   buzzvm_push(m_tBuzzVM, position);
+   buzzvm_tput(m_tBuzzVM);
+
+   buzzvm_push(m_tBuzzVM, pose);
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "orientation", 1));
+   buzzvm_push(m_tBuzzVM, orientation);
+   buzzvm_tput(m_tBuzzVM);
+
+   buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "pose", 1));
+   buzzvm_push(m_tBuzzVM, pose);
+   buzzvm_gstore(m_tBuzzVM);
+#endif
+
    buzzvm_pushs(m_tBuzzVM, buzzvm_string_register(m_tBuzzVM, "uniform", 1));
    buzzvm_pushcc(m_tBuzzVM, buzzvm_function_register(m_tBuzzVM, BuzzRandUniform));
    buzzvm_gstore(m_tBuzzVM);
